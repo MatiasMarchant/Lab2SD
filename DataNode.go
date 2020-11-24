@@ -26,5 +26,9 @@ func main() {
 
 	respuesta, err := cNameNode.EnvioMensajeTest(context.Background(), &mensajetest)
 
+	log.Printf("?")
+	log.Printf(respuesta)
+
+
 	log.Printf("El mensaje de prueba es: %s", respuesta.Mensaje)
 }
