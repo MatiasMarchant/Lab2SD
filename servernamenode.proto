@@ -1,0 +1,10 @@
+syntax = "proto3";
+package servernamenode;
+
+message MensajeTest {
+    string mensaje = 1;
+}
+
+service NameNodeService {
+    rpc EnvioMensajeTest(MensajeTest) returns (MensajeTest) {}
+}
