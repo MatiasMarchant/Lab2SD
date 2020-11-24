@@ -16,7 +16,7 @@ func main() {
 	//lis, err := net.Listen("tcp", ":9000")
     lis, err := net.Listen("tcp", fmt.Sprintf(":%d", 9000))
 	if err != nil {
-		log.Fatalf("NameNode falla al escuchar puerto 9000: %v", err)
+		fmt.Println("NameNode falla al escuchar puerto 9000: %v", err)
 	}
 
 	s := servernamenode.Server{}
@@ -27,6 +27,6 @@ func main() {
 	servernamenode.RegisterNameNodeServiceServer(grpcServer, &s)
 
 	if err := grpcServer.Serve(lis); err != nil {
-		log.Fatalf("NameNode falla siendo un servidor gRPC en el puerto 9000: %v", err)
+		fmt.Println("NameNode falla siendo un servidor gRPC en el puerto 9000: %v", err)
 	}
 }
