@@ -25,7 +25,7 @@ func main() {
 	cNameNode := servernamenode.NewNameNodeServiceClient(conn)
 
 	mensajetest := servernamenode.MensajeTest{
-		Mensaje: "Este es un mensaje de pruebac",
+		Mensaje: "Este es un mensaje de pruebac\n",
 	}
 
 	respuesta, err := cNameNode.EnvioMensajeTest(context.Background(), &mensajetest)
