@@ -26,9 +26,11 @@ func main() {
 		Mensaje: "Este es un mensaje de pruebac",
 	}
 
-	fmt.Printf("?\n")
-
 	respuesta, err := cNameNode.EnvioMensajeTest(context.Background(), &mensajetest)
+
+	if err != nil {
+		log.Fatalf("Error when calling: %s", err)
+	}
 
 	fmt.Printf("El mensaje de prueba es: %s", respuesta.Mensaje)
 	//log.Printf("El mensaje de prueba es: %s", respuesta.Mensaje)
