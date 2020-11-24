@@ -9,5 +9,6 @@ type Server struct {
 }
 
 func (s *Server) EnvioMensajeTest(ctx context.Context, message *MensajeTest) (*MensajeTest, error) {
-	return message, nil
+	mensajeDeServidor = "Servidor recibe: " + message
+	return mensajeDeServidor, nil
 }

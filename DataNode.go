@@ -35,5 +35,4 @@ func main() {
 	}
 
 	fmt.Printf("El mensaje de prueba es: %s", respuesta.Mensaje)
-	//log.Printf("El mensaje de prueba es: %s", respuesta.Mensaje)
 }
