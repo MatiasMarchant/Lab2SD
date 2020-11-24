@@ -13,7 +13,8 @@ func main() {
 	// Conexion gRPC
 	fmt.Printf("#### NameNode ####\n")
 
-	lis, err := net.Listen("tcp", ":9000")
+	//lis, err := net.Listen("tcp", ":9000")
+    lis, err := net.Listen("tcp", fmt.Sprintf(":%d", 9000))
 	if err != nil {
 		log.Fatalf("NameNode falla al escuchar puerto 9000: %v", err)
 	}
