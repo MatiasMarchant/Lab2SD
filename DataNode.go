@@ -23,13 +23,13 @@ func main() {
 	cNameNode := servernamenode.NewNameNodeServiceClient(conn)
 
 	mensajetest := servernamenode.MensajeTest{
-		Mensaje: "Este es un mensaje de pruebac",
+		Mensaje: "Este es un mensaje de pruebac"
 	}
 
 	respuesta, err := cNameNode.EnvioMensajeTest(context.Background(), &mensajetest)
 
 	if err != nil {
-		log.Fatalf("Error cuando al llamar: %s", err)
+		log.Fatalf("Error al llamar: %s", err)
 	}
 
 	fmt.Printf("El mensaje de prueba es: %s", respuesta.Mensaje)
