@@ -29,7 +29,7 @@ func main() {
 	}
 
 	respuesta, err := cNameNode.EnvioMensajeTest(context.Background(), &mensajetest)
-
+	
 	if err != nil {
 		fmt.Printf("Error al llamar: %s", err)
 	}
