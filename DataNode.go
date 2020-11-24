@@ -29,7 +29,7 @@ func main() {
 	respuesta, err := cNameNode.EnvioMensajeTest(context.Background(), &mensajetest)
 
 	if err != nil {
-		log.Fatalf("Error when calling: %s", err)
+		log.Fatalf("Error cuando al llamar: %s", err)
 	}
 
 	fmt.Printf("El mensaje de prueba es: %s", respuesta.Mensaje)

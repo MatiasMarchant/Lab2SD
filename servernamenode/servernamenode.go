@@ -9,6 +9,6 @@ type Server struct {
 }
 
 func (s *Server) EnvioMensajeTest(ctx context.Context, message *MensajeTest) (*MensajeTest, error) {
-	log.Printf("Receive message body from client: %s", in.Body)
+	log.Printf("Recibido message body from client: %s", in.Body)
 	return message, nil
 }
