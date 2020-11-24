@@ -3,7 +3,6 @@ package main
 import (
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
-	"log"
 	"servernamenode"
 
 	"fmt"
@@ -19,7 +18,7 @@ func main() {
 	var conn *grpc.ClientConn
 	conn, err := grpc.Dial("dist38:9000", grpc.WithInsecure())
 	if err != nil {
-		log.Fatalf("Error en grpc.Dial?(...): %s", err)
+		fmt.Printf("Error en grpc.Dial?(...): %s", err)
 	}
 	defer conn.Close()
 
@@ -32,7 +31,7 @@ func main() {
 	respuesta, err := cNameNode.EnvioMensajeTest(context.Background(), &mensajetest)
 
 	if err != nil {
-		log.Fatalf("Error al llamar: %s", err)
+		fmt.Printf("Error al llamar: %s", err)
 	}
 
 	fmt.Printf("El mensaje de prueba es: %s", respuesta.Mensaje)
