@@ -16,7 +16,7 @@ func main() {
 	fmt.Printf("#### DataNode ####\n")
 
 	var conn *grpc.ClientConn
-	conn, err := grpc.Dial("dist38:9000", grpc.WithInsecure())
+	conn, err := grpc.Dial("dist38:9001", grpc.WithInsecure())
 	if err != nil {
 		fmt.Printf("Error en grpc.Dial?(...): %s", err)
 	}
