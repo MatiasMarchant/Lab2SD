@@ -7,7 +7,7 @@ import (
 type Server struct {
 }
 
-func (s *Server) EnvioMensajeTest(ctx context.Context, message *MensajeTest) (*MensajeTest, error) {
+func (s *Server) EnvioMensajeTest(ctx context.Context, message *MensajeTest) (string, error) {
 	mensajeDeServidor := "Servidor recibe: " + message.Mensaje
 	return mensajeDeServidor, nil
 }
