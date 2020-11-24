@@ -34,5 +34,5 @@ func main() {
 		fmt.Printf("Error al llamar: %s", err)
 	}
 
-	fmt.Printf("El mensaje de prueba es: %s", respuesta.Mensaje)
+	fmt.Printf("Servidor responde : %s", respuesta.Mensaje)
 }
