@@ -5,6 +5,8 @@ import (
 	"google.golang.org/grpc"
 	"log"
 	"servernamenode"
+
+	"fmt"
 )
 
 func main() {
@@ -26,8 +28,8 @@ func main() {
 
 	respuesta, err := cNameNode.EnvioMensajeTest(context.Background(), &mensajetest)
 
-	log.Printf("?")
-	log.Printf(respuesta)
+	fmt.Printf("????")
+	fmt.Printf(respuesta)
 
 
 	log.Printf("El mensaje de prueba es: %s", respuesta.Mensaje)
