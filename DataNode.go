@@ -13,7 +13,7 @@ func main() {
 
 	 */
 
-	fmt.Printf("#### DataNode ####\n")
+	fmt.Printf("#### DataNode ####\n\n")
 
 	var conn *grpc.ClientConn
 	conn, err := grpc.Dial("dist40:9000", grpc.WithInsecure())

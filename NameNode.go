@@ -10,7 +10,7 @@ import (
 
 func main() {
 	// Conexion gRPC
-	fmt.Printf("#### NameNode ####\n")
+	fmt.Printf("#### NameNode ####\n\n")
 
 	lis, err := net.Listen("tcp", ":9000")
 	if err != nil {
