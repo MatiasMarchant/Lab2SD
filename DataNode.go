@@ -34,5 +34,5 @@ func main() {
 		fmt.Printf("Error al llamar: %s", err)
 	}
 
-	fmt.Printf("Servidor responde : %s", respuesta.Body)
+	fmt.Printf("Servidor responde : %s", respuesta.Mensaje)
 }
