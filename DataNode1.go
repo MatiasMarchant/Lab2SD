@@ -9,7 +9,7 @@ import (
 	"net"
 	"serverdatanode"
 	"servernamenode"
-	"bufio"
+	//"bufio"
 	"os"
 
 	"strings"
@@ -20,10 +20,14 @@ func main() {
 
 
 	// Ejecutar como Cliente o Servidor
-	reader := bufio.NewReader(os.Stdin)
-	fmt.Println("¿Ejecutar 'cliente' o 'servidor'?")
+	fmt.Print("¿Ejecutar 'cliente' o 'servidor'?\n")
 	fmt.Printf("> ")
-	ejecucion, _ := reader.ReadBytes('\n')
+    var ejecucion string
+    _, err := fmt.Scanln(&ejecucion)
+    if err != nil {
+        fmt.Fprintln(os.Stderr, err)
+        return
+    }
 
 	if strings.TrimRight(ejecucion, "\n") == "servidor" {
 
