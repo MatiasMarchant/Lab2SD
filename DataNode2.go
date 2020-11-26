@@ -36,7 +36,7 @@ func main() {
 		if err_s != nil {
 			log.Fatalf("Error en DataNode 2 al escuchar en puerto 9002: %v", err_s)
 		}
-		fmt.Println("DataNode 2 escuchando en puerto 9002")
+		fmt.Println("DataNode 2 escuchando en puerto 9002\n")
 		s := serverdatanode.Server{}
 
 		// Servidor gRPC
@@ -74,12 +74,6 @@ func main() {
 
 		fmt.Printf("NameNode responde : %s", respuestaNN.Mensaje)
 
-		//#################################################################
-		// Esperar para que se abran los otros servidores DataNode
-		//reader := bufio.NewReader(os.Stdin)
-		//fmt.Println("Servidores listos? (Si/No)")
-		//fmt.Printf("> ")
-		//_, _ = reader.ReadBytes('\n')
 
 		//--------------------------------------------------------------------
 		// Conexion a DataNode 1
@@ -96,7 +90,7 @@ func main() {
 		}
 
 		respuesta_DN1, _ := cDataNode1.EnvioMensajeTest(context.Background(), &mensajetest_DN1)
-		log.Printf("DataNode 1 responde: %s", respuesta_DN1.Mensaje)
+		fmt.Printf("DataNode 1 responde: %s", respuesta_DN1.Mensaje)
 
 		//--------------------------------------------------------------------
 		// Conexion a DataNode 3
@@ -113,7 +107,7 @@ func main() {
 		}
 
 		respuesta_DN3, _ := cDataNode3.EnvioMensajeTest(context.Background(), &mensajetest_DN3)
-		log.Printf("DataNode 3 responde: %s", respuesta_DN3.Mensaje)
+		fmt.Printf("DataNode 3 responde: %s", respuesta_DN3.Mensaje)
 	}
 
 }
