@@ -11,6 +11,8 @@ import (
 	"servernamenode"
 	"bufio"
 	"os"
+
+	"strings"
 )
 
 func main() {
@@ -23,7 +25,7 @@ func main() {
 	fmt.Printf("> ")
 	ejecucion, _ := reader.ReadBytes('\n')
 
-	if ejecucion == "servidor" {
+	if strings.TrimRight(ejecucion, "\n") == "servidor" {
 
 		//##########################################################################	
 		// Escucha en el puerto 9001
