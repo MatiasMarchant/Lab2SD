@@ -97,12 +97,12 @@ func main() {
 	}
 	defer conn_DN3.Close()
 
-	cDataNode1 := serverdatanode.NewDataNodeServiceClient(conn_DN3)
-	mensajetest_DN1 := serverdatanode.MensajeTest{
+	cDataNode3 := serverdatanode.NewDataNodeServiceClient(conn_DN3)
+	mensajetest_DN3 := serverdatanode.MensajeTest{
 		Mensaje: "Mensaje de prueba DataNode 2 a DataNode 3",
 	}
 
-	respuesta_DN1, _ := cDataNode1.EnvioMensajeTest(context.Background(), &mensajetest_DN1)
-	log.Printf("DataNode 3 responde: %s", respuesta_DN1.Mensaje)
+	respuesta_DN3, _ := cDataNode3.EnvioMensajeTest(context.Background(), &mensajetest_DN3)
+	log.Printf("DataNode 3 responde: %s", respuesta_DN3.Mensaje)
 
 }

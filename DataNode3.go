@@ -14,7 +14,7 @@ import (
 )
 
 func main() {
-	fmt.Printf("#### DataNode 1 ####\n\n")
+	fmt.Printf("#### DataNode 3 ####\n\n")
 
 	// Ejecutar como Cliente o Servidor
 	//reader := bufio.NewReader(os.Stdin)
