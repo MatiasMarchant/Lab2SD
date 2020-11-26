@@ -10,6 +10,8 @@ import (
 	"serverdatanode"
 	"servernamenode"
 	
+	"time"
+
 	//"bufio"
 	//"os"
 	//"strings"
@@ -110,13 +112,13 @@ func main() {
 
 	serverdatanode.RegisterDataNodeServiceServer(grpcServer, &s)
 
-	if err_s := grpcServer.Serve(lis); err_s != nil {
-		log.Fatalf("Error DataNode 1 en servidor gRPC en el puerto 9001: %v", err_s)
-	}		
 
 	
 	go func() {
 		for {
+
+			time.Sleep(2 * time.Second)
+
 			fmt.Println("?\n")
 			mensajeaNN := "Mensaje de prueba DataNode 1 a NameNode\n"
 			mensajeaD2 := "Mensaje de prueba DataNode 1 a DataNode 2\n"
@@ -126,6 +128,12 @@ func main() {
 			enviar_a_DataNode3(mensajeaD3)			
 		}
 	}()
+
+
+
+	if err_s := grpcServer.Serve(lis); err_s != nil {
+		log.Fatalf("Error DataNode 1 en servidor gRPC en el puerto 9001: %v", err_s)
+	}		
 
 
     //} else {
