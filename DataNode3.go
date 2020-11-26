@@ -34,9 +34,9 @@ func enviar_a_NameNode(mensaje_cliente string) {
 		respuestaNN, err_NN := cNameNodeNN.EnvioMensajeTest(context.Background(), &mensajetestNN)
 
 		if err_NN != nil {
-			fmt.Printf("> Sin respuesta NameNode\n")
+			fmt.Printf("> Sin respuesta NameNode.\n")
 		} else {
-			fmt.Printf("|Cliente| NameNode responde : %s", respuestaNN.Mensaje)
+			fmt.Printf("|Cliente| NameNode responde : %s.", respuestaNN.Mensaje)
 		}
 		
 	}
@@ -60,9 +60,9 @@ func enviar_a_DataNode1(mensaje_cliente string) {
 		respuesta_DN1, err_DN1 := cDataNode1.EnvioMensajeTest(context.Background(), &mensajetest_DN1)
 
 		if err_DN1 != nil {
-			fmt.Printf("> Sin respuesta DataNode1\n")
+			fmt.Printf("> Sin respuesta DataNode1.\n")
 		} else {
-			fmt.Printf("|Cliente| DataNode 1 responde: %s", respuesta_DN1.Mensaje)
+			fmt.Printf("|Cliente| DataNode 1 responde: %s.", respuesta_DN1.Mensaje)
 		}
 		
 	}
@@ -86,9 +86,9 @@ func enviar_a_DataNode2(mensaje_cliente string) {
 		respuesta_DN2, err_DN2 := cDataNode2.EnvioMensajeTest(context.Background(), &mensajetest_DN2)
 
 		if err_DN2 != nil {
-			fmt.Printf("> Sin respuesta DataNode2\n")
+			fmt.Printf("> Sin respuesta DataNode2.\n")
 		} else {
-			fmt.Printf("|Cliente| DataNode 2 responde: %s", respuesta_DN2.Mensaje)
+			fmt.Printf("|Cliente| DataNode 2 responde: %s.", respuesta_DN2.Mensaje)
 		}
 		
 		
@@ -107,7 +107,7 @@ func main() {
 	if err_s != nil {
 		log.Fatalf("Error en DataNode 3 al escuchar en puerto 9003: %v", err_s)
 	}
-	fmt.Println("DataNode 3 escuchando en puerto 9003\n")
+	fmt.Println("DataNode 3 escuchando en puerto 9003.\n")
 	s := serverdatanode.Server{}
 
 	// Servidor gRPC
