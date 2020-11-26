@@ -20,7 +20,7 @@ func enviar_a_NameNode(mensaje_cliente string) {
 	var conn_NN *grpc.ClientConn
 	conn_NN, err_NN := grpc.Dial("dist40:9000", grpc.WithInsecure())
 	if err_NN != nil {
-		fmt.Printf("¡Sin conexión NameNode!")
+		fmt.Printf("¡Sin conexión NameNode!\n")
 	} else {
 
 		defer conn_NN.Close()
@@ -34,7 +34,7 @@ func enviar_a_NameNode(mensaje_cliente string) {
 		respuestaNN, err_NN := cNameNodeNN.EnvioMensajeTest(context.Background(), &mensajetestNN)
 
 		if err_NN != nil {
-			fmt.Printf("Sin respuesta NameNode")
+			fmt.Printf("> Sin respuesta NameNode\n")
 		} else {
 			fmt.Printf("|Cliente| NameNode responde : %s", respuestaNN.Mensaje)
 		}
@@ -48,7 +48,7 @@ func enviar_a_DataNode1(mensaje_cliente string) {
 	var conn_DN1 *grpc.ClientConn
 	conn_DN1, err_DN1 := grpc.Dial("dist37:9001", grpc.WithInsecure())
 	if err_DN1 != nil {
-		fmt.Printf("¡Sin conexión DataNode 1!")
+		fmt.Printf("¡Sin conexión DataNode 1!\n")
 	} else {
 		defer conn_DN1.Close()
 
@@ -60,7 +60,7 @@ func enviar_a_DataNode1(mensaje_cliente string) {
 		respuesta_DN1, err_DN1 := cDataNode1.EnvioMensajeTest(context.Background(), &mensajetest_DN1)
 
 		if err_DN1 != nil {
-			fmt.Printf("Sin respuesta DataNode1")
+			fmt.Printf("> Sin respuesta DataNode1\n")
 		} else {
 			fmt.Printf("|Cliente| DataNode 1 responde: %s", respuesta_DN1.Mensaje)
 		}
@@ -74,7 +74,7 @@ func enviar_a_DataNode2(mensaje_cliente string) {
 	var conn_DN2 *grpc.ClientConn
 	conn_DN2, err_DN2 := grpc.Dial("dist38:9002", grpc.WithInsecure())
 	if err_DN2 != nil {
-		fmt.Printf("¡Sin conexión DataNode 2!")
+		fmt.Printf("¡Sin conexión DataNode 2!\n")
 	} else { 
 		defer conn_DN2.Close()
 
@@ -86,7 +86,7 @@ func enviar_a_DataNode2(mensaje_cliente string) {
 		respuesta_DN2, err_DN2 := cDataNode2.EnvioMensajeTest(context.Background(), &mensajetest_DN2)
 
 		if err_DN2 != nil {
-			fmt.Printf("Sin respuesta DataNode2")
+			fmt.Printf("> Sin respuesta DataNode2\n")
 		} else {
 			fmt.Printf("|Cliente| DataNode 2 responde: %s", respuesta_DN2.Mensaje)
 		}
