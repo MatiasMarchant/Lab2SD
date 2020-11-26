@@ -9,8 +9,8 @@ import (
 	"net"
 	"serverdatanode"
 	"servernamenode"
-	//"bufio"
-	//"os"
+	"bufio"
+	"os"
 )
 
 func main() {
@@ -21,7 +21,7 @@ func main() {
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Println("¿Ejecutar 'cliente' o 'servidor'?")
 	fmt.Printf("> ")
-	ejecucion, _ = reader.ReadBytes('\n')
+	ejecucion, _ := reader.ReadBytes('\n')
 
 	if ejecucion == "servidor" {
 
@@ -45,7 +45,7 @@ func main() {
 
 
     } else {
-		
+
 		//##########################################################################			
 		//--------------------------------------------------------------------
 		// Conexion a NameNode
