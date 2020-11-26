@@ -10,7 +10,9 @@ import (
 	"serverdatanode"
 	"servernamenode"
 	//"bufio"
-	//"os"
+	
+	"os"
+	"strings"
 )
 
 func main() {
