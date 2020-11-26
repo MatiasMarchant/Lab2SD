@@ -35,9 +35,10 @@ func enviar_a_NameNode(mensaje_cliente string) {
 
 		if err_NN != nil {
 			fmt.Printf("Sin respuesta NameNode")
+		} else {
+			fmt.Printf("|Cliente| NameNode responde : %s", respuestaNN.Mensaje)
 		}
-
-		fmt.Printf("|Cliente| NameNode responde : %s", respuestaNN.Mensaje)
+		
 	}
 }
 
@@ -60,9 +61,10 @@ func enviar_a_DataNode1(mensaje_cliente string) {
 
 		if err_DN1 != nil {
 			fmt.Printf("Sin respuesta DataNode1")
+		} else {
+			fmt.Printf("|Cliente| DataNode 1 responde: %s", respuesta_DN1.Mensaje)
 		}
-
-		fmt.Printf("|Cliente| DataNode 1 responde: %s", respuesta_DN1.Mensaje)
+		
 	}
 }
 
@@ -85,9 +87,11 @@ func enviar_a_DataNode2(mensaje_cliente string) {
 
 		if err_DN2 != nil {
 			fmt.Printf("Sin respuesta DataNode2")
+		} else {
+			fmt.Printf("|Cliente| DataNode 2 responde: %s", respuesta_DN2.Mensaje)
 		}
 		
-		fmt.Printf("|Cliente| DataNode 2 responde: %s", respuesta_DN2.Mensaje)
+		
 	}
 }
 
