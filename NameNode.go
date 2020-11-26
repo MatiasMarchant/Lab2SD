@@ -17,7 +17,7 @@ func main() {
 	if err != nil {
 		fmt.Println("NameNode falla al escuchar puerto 9000: %v", err)
 	}
-	fmt.Println("NameNode escuchando en puerto 9000: %v", err)
+	fmt.Println("NameNode escuchando en puerto 9000")
 	s := servernamenode.Server{}
 
 	// Servidor gRPC

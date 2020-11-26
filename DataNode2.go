@@ -28,7 +28,7 @@ func main() {
 	if err_s != nil {
 		log.Fatalf("Error en DataNode 2 al escuchar en puerto 9002: %v", err_s)
 	}
-	fmt.Println("DataNode 2 escuchando en puerto 9002: %v", err)
+	fmt.Println("DataNode 2 escuchando en puerto 9002")
 	s := serverdatanode.Server{}
 
 	// Servidor gRPC
