@@ -24,9 +24,8 @@ func enviar_a_DataNode1(mensaje_cliente string) {
 	}
 	defer conn_DN1.Close()
 
-	cDataNode1 := servernamenode.NewNameNodeServiceClient(conn_DN1)
-
-	mensajetest_DN1 := servernamenode.MensajeTest{
+	cDataNode1 := serverdatanode.NewNameNodeServiceClient(conn_DN1)
+	mensajetest_DN1 := serverdatanode.MensajeTest{
 		Mensaje: mensaje_cliente,
 	}
 
@@ -36,7 +35,7 @@ func enviar_a_DataNode1(mensaje_cliente string) {
 		fmt.Printf("Sin respuesta DataNode1: %s", err_DN1)
 	}
 
-	fmt.Printf("|Cliente| DataNode 1 responde : %s", respuesta_DN1.Mensaje)
+	fmt.Printf("|Cliente| DataNode 1 responde: %s", respuesta_DN1.Mensaje)
 }
 
 func enviar_a_DataNode2(mensaje_cliente string) {
