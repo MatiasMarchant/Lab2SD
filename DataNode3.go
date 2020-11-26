@@ -36,7 +36,7 @@ func enviar_a_NameNode(mensaje_cliente string) {
 		fmt.Printf("Error: %s", err_NN)
 	}
 
-	fmt.Printf("NameNode responde : %s", respuestaNN.Mensaje)
+	fmt.Printf("|Cliente| NameNode responde : %s", respuestaNN.Mensaje)
 }
 
 func enviar_a_DataNode1(mensaje_cliente string) {
@@ -60,7 +60,7 @@ func enviar_a_DataNode1(mensaje_cliente string) {
 		fmt.Printf("Error: %s", err_DN1)
 	}
 
-	fmt.Printf("DataNode 1 responde: %s", respuesta_DN1.Mensaje)
+	fmt.Printf("|Cliente| DataNode 1 responde: %s", respuesta_DN1.Mensaje)
 }
 
 func enviar_a_DataNode2(mensaje_cliente string) {
@@ -84,7 +84,7 @@ func enviar_a_DataNode2(mensaje_cliente string) {
 		fmt.Printf("Error: %s", err_DN2)
 	}
 	
-	fmt.Printf("DataNode 2 responde: %s", respuesta_DN2.Mensaje)
+	fmt.Printf("|Cliente| DataNode 2 responde: %s", respuesta_DN2.Mensaje)
 }
 
 
