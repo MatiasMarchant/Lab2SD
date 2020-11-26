@@ -24,7 +24,7 @@ func enviar_a_DataNode1(mensaje_cliente string) {
 	}
 	defer conn_DN1.Close()
 
-	cDataNode1 := serverdatanode.NewNameNodeServiceClient(conn_DN1)
+	cDataNode1 := serverdatanode.NewDataNodeServiceClient(conn_DN1)
 	mensajetest_DN1 := serverdatanode.MensajeTest{
 		Mensaje: mensaje_cliente,
 	}
