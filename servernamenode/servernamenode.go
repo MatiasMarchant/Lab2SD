@@ -10,7 +10,7 @@ type Server struct {
 }
 
 func (s *Server) EnvioMensajeTest(ctx context.Context, message *MensajeTest) (*MensajeTest, error) {
-	fmt.Printf("Cliente envia: %s", message.Mensaje)
-	mensajeDeServidor := "Servidor recibe: " + message.Mensaje
-	return &MensajeTest{Mensaje: mensajeDeServidor}, nil
+	fmt.Printf("Se recibe: %s", message.Mensaje)
+	respuestaNameNode := "Name node recibe: " + message.Mensaje
+	return &MensajeTest{Mensaje: respuestaNameNode}, nil
 }
