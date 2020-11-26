@@ -1,7 +1,7 @@
 package main
 
 import (
-	"bufio"
+	//"bufio"
 	"fmt"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
@@ -99,6 +99,7 @@ func main() {
 			Chunk:  partBuffer,
 		}
 		respuesta, _ := cDataNode.UploaderSubeLibro(context.Background(), &ChunkLibro)
+		fmt.Println("Respuesta: ", respuesta)
 
 	}
 
