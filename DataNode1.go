@@ -93,7 +93,7 @@ func main() {
 
 		cDataNode2 := serverdatanode.NewDataNodeServiceClient(conn_DN2)
 		mensajetest_DN2 := serverdatanode.MensajeTest{
-			Mensaje: "Mensaje de prueba DataNode 1 a DataNode 2",
+			Mensaje: "Mensaje de prueba DataNode 1 a DataNode 2\n",
 		}
 
 		respuesta_DN2, _ := cDataNode2.EnvioMensajeTest(context.Background(), &mensajetest_DN2)
@@ -110,7 +110,7 @@ func main() {
 
 		cDataNode3 := serverdatanode.NewDataNodeServiceClient(conn_DN3)
 		mensajetest_3 := serverdatanode.MensajeTest{
-			Mensaje: "Mensaje de prueba DataNode 1 a DataNode 3",
+			Mensaje: "Mensaje de prueba DataNode 1 a DataNode 3\n",
 		}
 
 		respuesta_3, _ := cDataNode3.EnvioMensajeTest(context.Background(), &mensajetest_3)

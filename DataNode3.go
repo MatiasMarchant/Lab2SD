@@ -10,7 +10,7 @@ import (
 	"serverdatanode"
 	"servernamenode"
 	//"bufio"
-	
+
 	"os"
 	"strings"
 )
@@ -93,7 +93,7 @@ func main() {
 
 		cDataNode1 := serverdatanode.NewDataNodeServiceClient(conn_DN1)
 		mensajetest_DN1 := serverdatanode.MensajeTest{
-			Mensaje: "Mensaje de prueba DataNode 3 a DataNode 1",
+			Mensaje: "Mensaje de prueba DataNode 3 a DataNode 1\n",
 		}
 
 		respuesta_DN1, _ := cDataNode1.EnvioMensajeTest(context.Background(), &mensajetest_DN1)
@@ -111,7 +111,7 @@ func main() {
 
 		cDataNode2 := serverdatanode.NewDataNodeServiceClient(conn_DN2)
 		mensajetest_DN2 := serverdatanode.MensajeTest{
-			Mensaje: "Mensaje de prueba DataNode 3 a DataNode 2",
+			Mensaje: "Mensaje de prueba DataNode 3 a DataNode 2\n",
 		}
 
 		respuesta_DN2, _ := cDataNode2.EnvioMensajeTest(context.Background(), &mensajetest_DN2)
