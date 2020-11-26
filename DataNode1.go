@@ -117,7 +117,7 @@ func main() {
 	
 	go func() {
 		for {
-			
+			fmt.Println("?\n")
 			mensajeaNN := "Mensaje de prueba DataNode 1 a NameNode\n"
 			mensajeaD2 := "Mensaje de prueba DataNode 1 a DataNode 2\n"
 			mensajeaD3 := "Mensaje de prueba DataNode 1 a DataNode 3\n"
