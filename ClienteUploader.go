@@ -3,16 +3,29 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"golang.org/x/net/context"
+	"google.golang.org/grpc"
 	"io/ioutil"
 	"log"
 	"math"
 	"os"
+	"serverdatanode"
 	"strconv"
 	"strings"
 )
 
 func main() {
 	fmt.Printf("#### ClienteUploader ####\n\n")
+
+	// Conexion a un datanote (ahora lo hago especifico pero deberia ser a uno aleatorio)
+	var conn_DN *grpc.ClientConn
+	conn_DN, err_DN := grpc.Dial("dist37:9001", grpc.WithInsecure())
+	if err_DN != nil {
+		log.Fatalf("Error al conectar cliente uploader a (en este caso) DN1: %s", err_DN)
+	}
+	defer conn_DN.Close()
+
+	cDataNode := serverdatanode.NewDataNodeServiceClient(conn_DN)
 
 	fmt.Print("Ingresar nombre de carpeta donde están libros\n")
 	fmt.Print("> ")
@@ -80,6 +93,13 @@ func main() {
 		ioutil.WriteFile(fileName, partBuffer, os.ModeAppend)
 
 		fmt.Println("Split to : ", fileName)
+
+		ChunkLibro := serverdatanode.ChunkLibro{
+			Nombre: fileName,
+			Chunk:  partBuffer,
+		}
+		respuesta, _ := cDataNode.UploaderSubeLibro(context.Background(), &ChunkLibro)
+
 	}
 
 	/*
@@ -87,85 +107,87 @@ func main() {
 		enviar chunks a un DataNode, pero voy a rearmarlo para probar que funcione
 	*/
 
-	newFileName := strings.TrimRight(files[integerdice_libro_a_subir].Name(), ".pdf") + "_reconstruido" + ".pdf" // Estos trims y + no deberian ser necesario pq despues se reconstruye en otra carpeta
-	_, err5 := os.Create(newFileName)
+	/*
+		newFileName := strings.TrimRight(files[integerdice_libro_a_subir].Name(), ".pdf") + "_reconstruido" + ".pdf" // Estos trims y + no deberian ser necesario pq despues se reconstruye en otra carpeta
+		_, err5 := os.Create(newFileName)
 
-	if err5 != nil {
-		log.Fatalf("Error al crear archivo (err5): %s", err5)
-	}
-
-	// Set the newFileName file to APPEND MODE!!
-	// Open files r and w
-
-	file, err = os.OpenFile(newFileName, os.O_APPEND|os.O_WRONLY, os.ModeAppend)
-
-	if err != nil {
-		log.Fatalf("Error al abrir archivo: %s", err)
-	}
-
-	// IMPORTANTE! do not defer a file.Close when opening a file for APPEND mode!
-	// defer file.Close()
-
-	// just information on which part of the new file we are appending
-	var writePosition int64 = 0
-
-	for j := uint64(0); j < totalPartsNum; j++ {
-
-		// Read a chunk
-		currentChunkFileName := strings.TrimRight(files[integerdice_libro_a_subir].Name(), ".pdf") + "_" + strconv.FormatUint(j, 10)
-
-		newFileChunk, err := os.Open(currentChunkFileName)
-
-		if err != nil {
-			log.Fatalf("Error al abrir chunk: %s", err)
-		}
-		defer newFileChunk.Close()
-
-		chunkInfo, err := newFileChunk.Stat()
-		if err != nil {
-			log.Fatalf("Error al obtener info de newFileChunk: %s", err)
+		if err5 != nil {
+			log.Fatalf("Error al crear archivo (err5): %s", err5)
 		}
 
-		// Calculate the bytes size of each chunk
-		// We are not going to rely on previous data and constant
+		// Set the newFileName file to APPEND MODE!!
+		// Open files r and w
 
-		var chunkSize int64 = chunkInfo.Size()
-		chunkBufferBytes := make([]byte, chunkSize)
-
-		fmt.Println("Appending at position : [", writePosition, "] bytes")
-		writePosition = writePosition + chunkSize
-		// Read into chunkBufferBytes
-		reader := bufio.NewReader(newFileChunk)
-		_, err = reader.Read(chunkBufferBytes)
+		file, err = os.OpenFile(newFileName, os.O_APPEND|os.O_WRONLY, os.ModeAppend)
 
 		if err != nil {
-			log.Fatalf("Error al leer de chunk: %s", err)
+			log.Fatalf("Error al abrir archivo: %s", err)
 		}
 
-		// DON't USE ioutil.WriteFile -- it will overwrite the previous bytes!
-		// Write/save buffer to disk
-		//ioutilWriteFile(newFileName, chunkBufferBytes, os.ModeAppend)
+		// IMPORTANTE! do not defer a file.Close when opening a file for APPEND mode!
+		// defer file.Close()
 
-		n, err := file.Write(chunkBufferBytes)
+		// just information on which part of the new file we are appending
+		var writePosition int64 = 0
 
-		if err != nil {
-			log.Fatalf("Error al escribir en chunkBufferBytes: %s", err)
+		for j := uint64(0); j < totalPartsNum; j++ {
+
+			// Read a chunk
+			currentChunkFileName := strings.TrimRight(files[integerdice_libro_a_subir].Name(), ".pdf") + "_" + strconv.FormatUint(j, 10)
+
+			newFileChunk, err := os.Open(currentChunkFileName)
+
+			if err != nil {
+				log.Fatalf("Error al abrir chunk: %s", err)
+			}
+			defer newFileChunk.Close()
+
+			chunkInfo, err := newFileChunk.Stat()
+			if err != nil {
+				log.Fatalf("Error al obtener info de newFileChunk: %s", err)
+			}
+
+			// Calculate the bytes size of each chunk
+			// We are not going to rely on previous data and constant
+
+			var chunkSize int64 = chunkInfo.Size()
+			chunkBufferBytes := make([]byte, chunkSize)
+
+			fmt.Println("Appending at position : [", writePosition, "] bytes")
+			writePosition = writePosition + chunkSize
+			// Read into chunkBufferBytes
+			reader := bufio.NewReader(newFileChunk)
+			_, err = reader.Read(chunkBufferBytes)
+
+			if err != nil {
+				log.Fatalf("Error al leer de chunk: %s", err)
+			}
+
+			// DON't USE ioutil.WriteFile -- it will overwrite the previous bytes!
+			// Write/save buffer to disk
+			//ioutilWriteFile(newFileName, chunkBufferBytes, os.ModeAppend)
+
+			n, err := file.Write(chunkBufferBytes)
+
+			if err != nil {
+				log.Fatalf("Error al escribir en chunkBufferBytes: %s", err)
+			}
+
+			file.Sync() // flush to disk
+
+			// Free up the buffer for next cycle
+			// Should not be a problem if the chunk size is small, but
+			// Can be resource hogging if the chunk size is huge.
+			// Also a good practice to clean up your own plate after eating
+
+			chunkBufferBytes = nil // Reset or empty our buffer
+			fmt.Println("Written ", n, " bytes")
+
+			fmt.Println("Recombining part [", j, "] into: ", newFileName)
 		}
 
-		file.Sync() // flush to disk
 
-		// Free up the buffer for next cycle
-		// Should not be a problem if the chunk size is small, but
-		// Can be resource hogging if the chunk size is huge.
-		// Also a good practice to clean up your own plate after eating
-
-		chunkBufferBytes = nil // Reset or empty our buffer
-		fmt.Println("Written ", n, " bytes")
-
-		fmt.Println("Recombining part [", j, "] into: ", newFileName)
-	}
-
-	// Now, we close the newFileName
-	file.Close()
-
+		// Now, we close the newFileName
+		file.Close()
+	*/
 }

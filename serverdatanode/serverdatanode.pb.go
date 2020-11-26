@@ -76,6 +76,61 @@ func (x *MensajeTest) GetMensaje() string {
 	return ""
 }
 
+type ChunkLibro struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Nombre string `protobuf:"bytes,1,opt,name=Nombre,proto3" json:"Nombre,omitempty"`
+	Chunk  []byte `protobuf:"bytes,2,opt,name=Chunk,proto3" json:"Chunk,omitempty"`
+}
+
+func (x *ChunkLibro) Reset() {
+	*x = ChunkLibro{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_serverdatanode_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ChunkLibro) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ChunkLibro) ProtoMessage() {}
+
+func (x *ChunkLibro) ProtoReflect() protoreflect.Message {
+	mi := &file_serverdatanode_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ChunkLibro.ProtoReflect.Descriptor instead.
+func (*ChunkLibro) Descriptor() ([]byte, []int) {
+	return file_serverdatanode_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *ChunkLibro) GetNombre() string {
+	if x != nil {
+		return x.Nombre
+	}
+	return ""
+}
+
+func (x *ChunkLibro) GetChunk() []byte {
+	if x != nil {
+		return x.Chunk
+	}
+	return nil
+}
+
 var File_serverdatanode_proto protoreflect.FileDescriptor
 
 var file_serverdatanode_proto_rawDesc = []byte{
@@ -83,14 +138,23 @@ var file_serverdatanode_proto_rawDesc = []byte{
 	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x0e, 0x73, 0x65, 0x72, 0x76, 0x65, 0x72, 0x64, 0x61,
 	0x74, 0x61, 0x6e, 0x6f, 0x64, 0x65, 0x22, 0x27, 0x0a, 0x0b, 0x4d, 0x65, 0x6e, 0x73, 0x61, 0x6a,
 	0x65, 0x54, 0x65, 0x73, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x6e, 0x73, 0x61, 0x6a, 0x65,
-	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x6e, 0x73, 0x61, 0x6a, 0x65, 0x32,
-	0x61, 0x0a, 0x0f, 0x44, 0x61, 0x74, 0x61, 0x4e, 0x6f, 0x64, 0x65, 0x53, 0x65, 0x72, 0x76, 0x69,
-	0x63, 0x65, 0x12, 0x4e, 0x0a, 0x10, 0x45, 0x6e, 0x76, 0x69, 0x6f, 0x4d, 0x65, 0x6e, 0x73, 0x61,
-	0x6a, 0x65, 0x54, 0x65, 0x73, 0x74, 0x12, 0x1b, 0x2e, 0x73, 0x65, 0x72, 0x76, 0x65, 0x72, 0x64,
-	0x61, 0x74, 0x61, 0x6e, 0x6f, 0x64, 0x65, 0x2e, 0x4d, 0x65, 0x6e, 0x73, 0x61, 0x6a, 0x65, 0x54,
-	0x65, 0x73, 0x74, 0x1a, 0x1b, 0x2e, 0x73, 0x65, 0x72, 0x76, 0x65, 0x72, 0x64, 0x61, 0x74, 0x61,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x6e, 0x73, 0x61, 0x6a, 0x65, 0x22,
+	0x3a, 0x0a, 0x0a, 0x43, 0x68, 0x75, 0x6e, 0x6b, 0x4c, 0x69, 0x62, 0x72, 0x6f, 0x12, 0x16, 0x0a,
+	0x06, 0x4e, 0x6f, 0x6d, 0x62, 0x72, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x4e,
+	0x6f, 0x6d, 0x62, 0x72, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x43, 0x68, 0x75, 0x6e, 0x6b, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x0c, 0x52, 0x05, 0x43, 0x68, 0x75, 0x6e, 0x6b, 0x32, 0xb1, 0x01, 0x0a, 0x0f,
+	0x44, 0x61, 0x74, 0x61, 0x4e, 0x6f, 0x64, 0x65, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12,
+	0x4e, 0x0a, 0x10, 0x45, 0x6e, 0x76, 0x69, 0x6f, 0x4d, 0x65, 0x6e, 0x73, 0x61, 0x6a, 0x65, 0x54,
+	0x65, 0x73, 0x74, 0x12, 0x1b, 0x2e, 0x73, 0x65, 0x72, 0x76, 0x65, 0x72, 0x64, 0x61, 0x74, 0x61,
 	0x6e, 0x6f, 0x64, 0x65, 0x2e, 0x4d, 0x65, 0x6e, 0x73, 0x61, 0x6a, 0x65, 0x54, 0x65, 0x73, 0x74,
-	0x22, 0x00, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x1a, 0x1b, 0x2e, 0x73, 0x65, 0x72, 0x76, 0x65, 0x72, 0x64, 0x61, 0x74, 0x61, 0x6e, 0x6f, 0x64,
+	0x65, 0x2e, 0x4d, 0x65, 0x6e, 0x73, 0x61, 0x6a, 0x65, 0x54, 0x65, 0x73, 0x74, 0x22, 0x00, 0x12,
+	0x4e, 0x0a, 0x11, 0x55, 0x70, 0x6c, 0x6f, 0x61, 0x64, 0x65, 0x72, 0x53, 0x75, 0x62, 0x65, 0x4c,
+	0x69, 0x62, 0x72, 0x6f, 0x12, 0x1a, 0x2e, 0x73, 0x65, 0x72, 0x76, 0x65, 0x72, 0x64, 0x61, 0x74,
+	0x61, 0x6e, 0x6f, 0x64, 0x65, 0x2e, 0x43, 0x68, 0x75, 0x6e, 0x6b, 0x4c, 0x69, 0x62, 0x72, 0x6f,
+	0x1a, 0x1b, 0x2e, 0x73, 0x65, 0x72, 0x76, 0x65, 0x72, 0x64, 0x61, 0x74, 0x61, 0x6e, 0x6f, 0x64,
+	0x65, 0x2e, 0x4d, 0x65, 0x6e, 0x73, 0x61, 0x6a, 0x65, 0x54, 0x65, 0x73, 0x74, 0x22, 0x00, 0x62,
+	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -105,15 +169,18 @@ func file_serverdatanode_proto_rawDescGZIP() []byte {
 	return file_serverdatanode_proto_rawDescData
 }
 
-var file_serverdatanode_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_serverdatanode_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_serverdatanode_proto_goTypes = []interface{}{
 	(*MensajeTest)(nil), // 0: serverdatanode.MensajeTest
+	(*ChunkLibro)(nil),  // 1: serverdatanode.ChunkLibro
 }
 var file_serverdatanode_proto_depIdxs = []int32{
 	0, // 0: serverdatanode.DataNodeService.EnvioMensajeTest:input_type -> serverdatanode.MensajeTest
-	0, // 1: serverdatanode.DataNodeService.EnvioMensajeTest:output_type -> serverdatanode.MensajeTest
-	1, // [1:2] is the sub-list for method output_type
-	0, // [0:1] is the sub-list for method input_type
+	1, // 1: serverdatanode.DataNodeService.UploaderSubeLibro:input_type -> serverdatanode.ChunkLibro
+	0, // 2: serverdatanode.DataNodeService.EnvioMensajeTest:output_type -> serverdatanode.MensajeTest
+	0, // 3: serverdatanode.DataNodeService.UploaderSubeLibro:output_type -> serverdatanode.MensajeTest
+	2, // [2:4] is the sub-list for method output_type
+	0, // [0:2] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -137,6 +204,18 @@ func file_serverdatanode_proto_init() {
 				return nil
 			}
 		}
+		file_serverdatanode_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ChunkLibro); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -144,7 +223,7 @@ func file_serverdatanode_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_serverdatanode_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   1,
+			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
@@ -171,6 +250,7 @@ const _ = grpc.SupportPackageIsVersion6
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type DataNodeServiceClient interface {
 	EnvioMensajeTest(ctx context.Context, in *MensajeTest, opts ...grpc.CallOption) (*MensajeTest, error)
+	UploaderSubeLibro(ctx context.Context, in *ChunkLibro, opts ...grpc.CallOption) (*MensajeTest, error)
 }
 
 type dataNodeServiceClient struct {
@@ -190,9 +270,19 @@ func (c *dataNodeServiceClient) EnvioMensajeTest(ctx context.Context, in *Mensaj
 	return out, nil
 }
 
+func (c *dataNodeServiceClient) UploaderSubeLibro(ctx context.Context, in *ChunkLibro, opts ...grpc.CallOption) (*MensajeTest, error) {
+	out := new(MensajeTest)
+	err := c.cc.Invoke(ctx, "/serverdatanode.DataNodeService/UploaderSubeLibro", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DataNodeServiceServer is the server API for DataNodeService service.
 type DataNodeServiceServer interface {
 	EnvioMensajeTest(context.Context, *MensajeTest) (*MensajeTest, error)
+	UploaderSubeLibro(context.Context, *ChunkLibro) (*MensajeTest, error)
 }
 
 // UnimplementedDataNodeServiceServer can be embedded to have forward compatible implementations.
@@ -201,6 +291,9 @@ type UnimplementedDataNodeServiceServer struct {
 
 func (*UnimplementedDataNodeServiceServer) EnvioMensajeTest(context.Context, *MensajeTest) (*MensajeTest, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method EnvioMensajeTest not implemented")
+}
+func (*UnimplementedDataNodeServiceServer) UploaderSubeLibro(context.Context, *ChunkLibro) (*MensajeTest, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UploaderSubeLibro not implemented")
 }
 
 func RegisterDataNodeServiceServer(s *grpc.Server, srv DataNodeServiceServer) {
@@ -225,6 +318,24 @@ func _DataNodeService_EnvioMensajeTest_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DataNodeService_UploaderSubeLibro_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ChunkLibro)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DataNodeServiceServer).UploaderSubeLibro(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/serverdatanode.DataNodeService/UploaderSubeLibro",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DataNodeServiceServer).UploaderSubeLibro(ctx, req.(*ChunkLibro))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _DataNodeService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "serverdatanode.DataNodeService",
 	HandlerType: (*DataNodeServiceServer)(nil),
@@ -232,6 +343,10 @@ var _DataNodeService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "EnvioMensajeTest",
 			Handler:    _DataNodeService_EnvioMensajeTest_Handler,
+		},
+		{
+			MethodName: "UploaderSubeLibro",
+			Handler:    _DataNodeService_UploaderSubeLibro_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
