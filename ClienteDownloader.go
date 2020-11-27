@@ -5,13 +5,14 @@ import (
 	"fmt"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
-	"io/ioutil"
+	"servernamenode"
+	//"io/ioutil"
 	"log"
-	"math"
-	"os"
+	//"math"
+	//"os"
 	"serverdatanode"
-	"strconv"
-	"strings"
+	//"strconv"
+	//"strings"
 )
 
 func main() {
@@ -20,7 +21,7 @@ func main() {
 	// Conexion a un Namenode 
 	var conn_NN *grpc.ClientConn
 	conn_NN, err_NN := grpc.Dial("dist40:9000", grpc.WithInsecure())
-	if err_DN != nil {
+	if err_NN != nil {
 		log.Fatalf("Error al conectar con NameNode: %s", err_NN)
 	}
 	defer conn_NN.Close()
