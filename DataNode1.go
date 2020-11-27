@@ -117,7 +117,7 @@ func main() {
 	go func() {
 		for {
 
-			time.Sleep(2 * time.Second)
+			time.Sleep(10 * time.Second)
 
 			mensajeaNN := "Mensaje de prueba DataNode 1 a NameNode\n"
 			mensajeaD2 := "Mensaje de prueba DataNode 1 a DataNode 2\n"
