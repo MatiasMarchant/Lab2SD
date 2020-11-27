@@ -42,11 +42,21 @@ func listaDeLibros() string{
 	return listado
 }
 
+func ubicacionLibro(nLibro int) string{
+	return "No listo aun\n"
+
+}
+
 func (s *Server) EnvioMensajeTest(ctx context.Context, message *MensajeTest) (*MensajeTest, error) {
 
 	if message.Mensaje == "listadoLibros" {
 		fmt.Printf("> Enviando listado de libros\n")
 		respuestaDataNode := listaDeLibros()
+		return &MensajeTest{Mensaje: respuestaDataNode}, nil
+	} else if strings.Contains(message.Mensaje, "ubicacion") {
+		nLibro := strings.Split(linea, " ")[1]
+		fmt.Printf("> Enviando ubicación de libro "+ nLibro +"\n")
+		respuestaDataNode :=  ubicacionLibro(strconv.Atoi(nLibro))
 		return &MensajeTest{Mensaje: respuestaDataNode}, nil
 	}
 	

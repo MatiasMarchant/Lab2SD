@@ -43,7 +43,8 @@ func main() {
 	
 		
 		if opcion == 1 {
-			
+			//---------------------------------------------------------------------
+			// Pedir listado de libros disponibles
 			mensajeNN := servernamenode.MensajeTest{
 				Mensaje: "listadoLibros",
 			}
@@ -51,12 +52,36 @@ func main() {
 			respuestaNN, err_NN := cNameNodeNN.EnvioMensajeTest(context.Background(), &mensajeNN)
 			if err_NN != nil {
 				fmt.Print("Error al obtener listado: %s", err_NN)
+			} else {
+				fmt.Print("\nListado:\n")
+				fmt.Print(respuestaNN.Mensaje)
 			}
-			fmt.Print("\nListado:\n")
-			fmt.Print(respuestaNN.Mensaje)
-	
+
+			//---------------------------------------------------------------------
 		} else if opcion == 2{
-			fmt.Print("Opción 2\n")
+			//---------------------------------------------------------------------
+			// Descargar Libro
+			fmt.Print("Ingrese el número del libro que desea descargar:\n")
+			var nLibro int
+			_, err := fmt.Scanf("%d", &nLibro)
+			if err != nil {
+				log.Fatalf("Error al ingresar libro: %s", err)
+			}
+			
+			mensajeNN := servernamenode.MensajeTest{
+				Mensaje: "ubicacion "+strconv.Atoi(nLibro),
+			}
+	
+			respuestaNN, err_NN := cNameNodeNN.EnvioMensajeTest(context.Background(), &mensajeNN)
+			if err_NN != nil {
+				fmt.Print("Error al obtener respuesta de NameNode: %s", err_NN)
+			} else {
+				fmt.Print("\nRespuesta NN:\n")
+				fmt.Print(respuestaNN.Mensaje)
+			}
+
+			//---------------------------------------------------------------------
+
 		} else {
 			fmt.Print("Error al ingresar opción")
 		}
