@@ -17,6 +17,8 @@ Dist40 ->
 
 ### Consideraciones extra
 
+Se asume que los libros son todos con peso > 750 kB c/u
+
 
 ### ¿Dónde debo agregar la carpeta "servernamenode"?
 
