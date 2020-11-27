@@ -43,8 +43,8 @@ func listaDeLibros() string{
 }
 
 func (s *Server) EnvioMensajeTest(ctx context.Context, message *MensajeTest) (*MensajeTest, error) {
-	//if message.Mensaje == "listadoLibros" {
-	if strings.Compare(message.Mensaje, "listadoLibros"){
+	fmt.Printf(message.Mensaje)
+	if message.Mensaje == "listadoLibros" {
 		fmt.Printf("> Enviando listado de libros")
 		respuestaDataNode := listaDeLibros()
 		return &MensajeTest{Mensaje: respuestaDataNode}, nil
