@@ -30,7 +30,7 @@ func listaDeLibros() string{
     for scanner.Scan() {
 		linea := scanner.Text()
 		p_linea := strings.Split(linea, " ")[0]
-		if _, err := strconv.Atoi(v); err != nil {
+		if _, err := strconv.Atoi(p_linea); err != nil {
 			nLibro += 1
 			n := strconv.Itoa(nLibro)
 			listado += n+" "+linea+"\n"
@@ -48,7 +48,7 @@ func listaDeLibros() string{
 func (s *Server) EnvioMensajeTest(ctx context.Context, message *MensajeTest) (*MensajeTest, error) {
 	if message.Mensaje == "listadoLibros" {
 		fmt.Printf("> Enviando listado de libros")
-		respuestaDataNode := listaDeLibros
+		respuestaDataNode := listaDeLibros()
 		return &MensajeTest{Mensaje: respuestaDataNode}, nil
 	}
 	
