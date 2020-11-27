@@ -83,7 +83,7 @@ func main() {
 			//---------------------------------------------------------------------
 
 		} else {
-			fmt.Print("Error al ingresar opción")
+			fmt.Print("Error al ingresar opción\n")
 		}
 
 	}
