@@ -46,13 +46,13 @@ func listaDeLibros() string{
 
 
 func (s *Server) EnvioMensajeTest(ctx context.Context, message *MensajeTest) (*MensajeTest, error) {
-	if message.Mensaje == "listadoLibros" {
+	if message.Mensaje == "listadoLibros\n" {
 		fmt.Printf("> Enviando listado de libros")
 		respuestaDataNode := listaDeLibros()
 		return &MensajeTest{Mensaje: respuestaDataNode}, nil
 	}
 	
-	fmt.Printf("|Servidor| Se recibe: %s", message.Mensaje)
+	//fmt.Printf("|Servidor| Se recibe: %s", message.Mensaje)
 	respuestaDataNode := "DataNode recibe: " + message.Mensaje
 	return &MensajeTest{Mensaje: respuestaDataNode}, nil
 }
