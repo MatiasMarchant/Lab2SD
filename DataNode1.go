@@ -180,7 +180,7 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		}
 
 		fmt.Printf("La \"propuesta\" quedo:\n")
-		fmt.Printf("Nombre libro: %s\n", s.NombreLibroSubido)
+		fmt.Printf("Nombre libro: %s\n", NombreLibroSubido)
 		fmt.Println("Propuesta.PartesDN1: %v", Propuesta.PartesDN1)
 		fmt.Println("Propuesta.PartesDN2: %v", Propuesta.PartesDN2)
 		fmt.Println("Propuesta.PartesDN3: %v", Propuesta.PartesDN3)
