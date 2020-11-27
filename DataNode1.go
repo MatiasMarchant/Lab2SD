@@ -103,13 +103,13 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		// Enviar mensajes a datanodes para ver si están vivos
 		err := enviar_a_DataNode2("DataNode1 pregunta estas vivo?\n")
 		flagDN2vivo := true
-		if err != nil {
+		if err == nil {
 			fmt.Printf("DataNode2 no está vivo\n")
 			flagDN2vivo = false
 		}
 		err = enviar_a_DataNode3("DataNode1 pregunta estas vivo?\n")
 		flagDN3vivo := true
-		if err != nil {
+		if err == nil {
 			fmt.Printf("DataNode3 no está vivo\n")
 			flagDN3vivo = false
 		}
