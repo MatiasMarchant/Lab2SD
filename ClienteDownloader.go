@@ -67,9 +67,9 @@ func main() {
 			if err != nil {
 				log.Fatalf("Error al ingresar libro: %s", err)
 			}
-			strNLibro, _ := strconv.Atoi(nLibro)
+
 			mensajeNN := servernamenode.MensajeTest{
-				Mensaje: "ubicacion "+strNLibro,
+				Mensaje: "ubicacion "+strconv.Itoa(nLibro),
 			}
 	
 			respuestaNN, err_NN := cNameNodeNN.EnvioMensajeTest(context.Background(), &mensajeNN)
