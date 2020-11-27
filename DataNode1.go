@@ -103,16 +103,19 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		// Enviar mensajes a datanodes para ver si están vivos
 		err := enviar_a_DataNode2("DataNode1 pregunta estas vivo?\n")
 		flagDN2vivo := true
-		if err == nil {
+		if err != nil {
 			fmt.Printf("DataNode2 no está vivo\n")
 			flagDN2vivo = false
 		}
 		err = enviar_a_DataNode3("DataNode1 pregunta estas vivo?\n")
 		flagDN3vivo := true
-		if err == nil {
+		if err != nil {
 			fmt.Printf("DataNode3 no está vivo\n")
 			flagDN3vivo = false
 		}
+
+		fmt.Println("flagDN2: %v", flagDN2vivo)
+		fmt.Println("flagDN3: %v", flagDN3vivo)
 
 		// Contar cantidad de partes del libro
 		files, err_files := ioutil.ReadDir("./")
@@ -157,7 +160,7 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		Arreglo_copia[len(Arreglo_copia)-1] = ""
 		Arreglo_copia = Arreglo_copia[:len(Arreglo_copia)-1]
 
-		if flagDN3vivo == true {
+		if flagDN2vivo == true {
 			Propuesta.PartesDN2 = append(Propuesta.PartesDN2, Arreglo_copia[len(Arreglo_copia)-1])
 			// Borrar elemento
 			i = len(Arreglo_copia) - 1
@@ -165,7 +168,7 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 			Arreglo_copia[len(Arreglo_copia)-1] = ""
 			Arreglo_copia = Arreglo_copia[:len(Arreglo_copia)-1]
 		}
-		if flagDN2vivo == true {
+		if flagDN3vivo == true {
 			Propuesta.PartesDN3 = append(Propuesta.PartesDN3, Arreglo_copia[len(Arreglo_copia)-1])
 			// Borrar elemento
 			i = len(Arreglo_copia) - 1
