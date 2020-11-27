@@ -128,7 +128,7 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		fmt.Printf("Partes a repartir:\n")
 		for ind, _ := range Arreglo_indices_partes_libro {
 			//indint, _ := strconv.Atoi(ind)
-			fmt.Printf("%s\n", files[ind])
+			fmt.Printf("%s\n", files[ind].Name())
 		}
 
 		//cant_chunks := len(Arreglo_indices_partes_libro) // Cantidad de chunks
