@@ -120,6 +120,8 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 			log.Printf("err_files, no puede leer directorio: %v", err_files)
 		}
 		for indice_parte, f := range files {
+			fmt.Printf("Nombre scan: %s\n", f.Name())
+			fmt.Printf("NombreLibroSubido: %s\n", NombreLibroSubido)
 			if strings.Contains(f.Name(), NombreLibroSubido) {
 				Arreglo_indices_partes_libro = append(Arreglo_indices_partes_libro, strconv.Itoa(indice_parte))
 			}
