@@ -26,7 +26,7 @@ func main() {
 	}
 	defer conn_NN.Close()
 
-	cNameNodeNN := serverdatanode.NewDataNodeServiceClient(conn_NN)
+	cNameNodeNN := servernamenode.NewNameNodeServiceClient(conn_NN)
 
 	for {
 		fmt.Print("---------------------------------------\n")
@@ -49,8 +49,8 @@ func main() {
 			}
 	
 			respuestaNN, err_NN := cNameNodeNN.EnvioMensajeTest(context.Background(), &mensajeNN)
-			fmt.Print("> 2. Descargar libro\n")
-			fmt.Print(respuestaNN)
+			fmt.Print("\nListado:\n")
+			fmt.Print(respuestaNN.Mensaje)
 	
 		} else if opcion == 2{
 			fmt.Print("Opción 2\n")
