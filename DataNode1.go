@@ -42,13 +42,15 @@ func enviar_a_NameNode(mensaje_cliente string) {
 	}
 }
 
-func enviar_a_DataNode2(mensaje_cliente string) error {
+func enviar_a_DataNode2(mensaje_cliente string) bool {
 	//--------------------------------------------------------------------
 	// Conexion a DataNode 2
 	var conn_DN2 *grpc.ClientConn
 	conn_DN2, err_DN2 := grpc.Dial("dist38:9002", grpc.WithInsecure())
+	flag := true
 	if err_DN2 != nil {
 		fmt.Printf("¡Sin conexión DataNode 2!\n")
+		flag = false
 	} else {
 		defer conn_DN2.Close()
 
@@ -61,21 +63,25 @@ func enviar_a_DataNode2(mensaje_cliente string) error {
 
 		if err_DN2 != nil {
 			fmt.Printf("> Sin respuesta DataNode2.\n")
+			flag = false
 		} else {
 			fmt.Printf("|Cliente| DataNode 2 responde: %s", respuesta_DN2.Mensaje)
+			flag = true
 		}
 
 	}
-	return err_DN2
+	return flag
 }
 
-func enviar_a_DataNode3(mensaje_cliente string) error {
+func enviar_a_DataNode3(mensaje_cliente string) bool {
 	//--------------------------------------------------------------------
 	// Conexion a DataNode 3
 	var conn_DN3 *grpc.ClientConn
 	conn_DN3, err_DN3 := grpc.Dial("dist39:9003", grpc.WithInsecure())
+	flag := true
 	if err_DN3 != nil {
 		fmt.Printf("¡Sin conexión DataNode 3!\n")
+		flag = false
 	} else {
 
 		defer conn_DN3.Close()
@@ -89,12 +95,14 @@ func enviar_a_DataNode3(mensaje_cliente string) error {
 
 		if err_DN3 != nil {
 			fmt.Printf("> Sin respuesta DataNode3.\n")
+			flag = false
 		} else {
 			fmt.Printf("|Cliente| DataNode 3 responde: %s", respuesta_3.Mensaje)
+			flag = true
 		}
 
 	}
-	return err_DN3
+	return flag
 }
 
 func HacerPropuesta(metodo string, NombreLibroSubido string) {
@@ -103,13 +111,13 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		// Enviar mensajes a datanodes para ver si están vivos
 		err := enviar_a_DataNode2("DataNode1 pregunta estas vivo?\n")
 		flagDN2vivo := true
-		if err != nil {
+		if err != true {
 			fmt.Printf("DataNode2 no está vivo\n")
 			flagDN2vivo = false
 		}
 		err = enviar_a_DataNode3("DataNode1 pregunta estas vivo?\n")
 		flagDN3vivo := true
-		if err != nil {
+		if err != true {
 			fmt.Printf("DataNode3 no está vivo\n")
 			flagDN3vivo = false
 		}
