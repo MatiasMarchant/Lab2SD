@@ -105,6 +105,7 @@ func enviar_a_DataNode3(mensaje_cliente string) bool {
 	return flag
 }
 
+/*
 func Enviar_Propuesta(propuesta serverdatanode.Propuesta, destinatario string) {
 	switch destinatario {
 	case "DataNode1":
@@ -121,6 +122,7 @@ func Enviar_Propuesta(propuesta serverdatanode.Propuesta, destinatario string) {
 
 	}
 }
+*/
 
 func HacerPropuesta(metodo string, NombreLibroSubido string) {
 	var Arreglo_indices_partes_libro []string // Ya no guarda indices, sino que los nombres de los chunks en el directorio
@@ -213,8 +215,8 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		fmt.Println("Propuesta.PartesDN2: %v", Propuesta.PartesDN2)
 		fmt.Println("Propuesta.PartesDN3: %v", Propuesta.PartesDN3)
 
-		respuesta_propuesta_DN2 := Enviar_Propuesta(&Propuesta, "DataNode2")
-		respuesta_propuesta_DN3 := Enviar_Propuesta(&Propuesta, "DataNode3")
+		//respuesta_propuesta_DN2 := Enviar_Propuesta(&Propuesta, "DataNode2")
+		//respuesta_propuesta_DN3 := Enviar_Propuesta(&Propuesta, "DataNode3")
 
 	}
 	/*
