@@ -28,7 +28,7 @@ func (s *Server) EnvioMensajeTest(ctx context.Context, message *MensajeTest) (*M
 }
 
 func (s *Server) UploaderSubeLibro(ctx context.Context, eddChunkLibro *ChunkLibro) (*MensajeTest, error) {
-	fmt.Printf("Se recibe chunk: %s", eddChunkLibro.Nombre)
+	fmt.Printf("Se recibe chunk: %s\n", eddChunkLibro.Nombre)
 
 	fileName := eddChunkLibro.Nombre
 	_, err := os.Create(fileName)

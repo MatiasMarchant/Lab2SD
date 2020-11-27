@@ -106,7 +106,7 @@ func enviar_a_DataNode3(mensaje_cliente string) bool {
 }
 
 func HacerPropuesta(metodo string, NombreLibroSubido string) {
-	var Arreglo_indices_partes_libro []string
+	var Arreglo_indices_partes_libro []string // Ya no guarda indices, sino que los nombres de los chunks en el directorio
 	if metodo == "distribuido" {
 		// Enviar mensajes a datanodes para ver si están vivos
 		err := enviar_a_DataNode2("DataNode1 pregunta estas vivo?\n")
@@ -122,8 +122,8 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 			flagDN3vivo = false
 		}
 
-		fmt.Println("flagDN2: %v", flagDN2vivo)
-		fmt.Println("flagDN3: %v", flagDN3vivo)
+		//fmt.Println("flagDN2: %v", flagDN2vivo)
+		//fmt.Println("flagDN3: %v", flagDN3vivo)
 
 		// Contar cantidad de partes del libro
 		files, err_files := ioutil.ReadDir("./")
@@ -134,18 +134,18 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 			//fmt.Printf("Nombre scan: %s\n", f.Name())
 			//fmt.Printf("NombreLibroSubido: %s\n", NombreLibroSubido)
 			if strings.Contains(f.Name(), NombreLibroSubido) {
-				Arreglo_indices_partes_libro = append(Arreglo_indices_partes_libro, strconv.Itoa(indice_parte))
+				Arreglo_indices_partes_libro = append(Arreglo_indices_partes_libro, f.Name())
 			}
 		}
 
 		fmt.Printf("Partes a repartir:\n")
 		fmt.Printf("Arreglo_indices_partes_libro = %v\n", Arreglo_indices_partes_libro)
-		for _, ind := range Arreglo_indices_partes_libro {
-			fmt.Printf("ind = %v\n", ind)
-			//fmt.Printf("valor = %v\n", valor)
-			indint, _ := strconv.Atoi(ind)
-			fmt.Printf("%s\n", files[indint].Name())
-		}
+		// for _, ind := range Arreglo_indices_partes_libro {
+		// 	fmt.Printf("ind = %v\n", ind)
+		// 	//fmt.Printf("valor = %v\n", valor)
+		// 	indint, _ := strconv.Atoi(ind)
+		// 	fmt.Printf("%s\n", files[indint].Name())
+		// }
 
 		//cant_chunks := len(Arreglo_indices_partes_libro) // Cantidad de chunks
 
