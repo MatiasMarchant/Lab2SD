@@ -50,7 +50,7 @@ func main() {
 	
 			respuestaNN, err_NN := cNameNodeNN.EnvioMensajeTest(context.Background(), &mensajeNN)
 			if err_NN != nil {
-				log.Fatalf("Error al obtener listado: %s", err_NN)
+				fmt.Print("Error al obtener listado: %s", err_NN)
 			}
 			fmt.Print("\nListado:\n")
 			fmt.Print(respuestaNN.Mensaje)
