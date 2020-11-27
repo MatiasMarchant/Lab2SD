@@ -126,7 +126,7 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		}
 
 		fmt.Printf("Partes a repartir:\n")
-		for _, ind := range Arreglo_indices_partes_libro {
+		for ind, _ := range Arreglo_indices_partes_libro {
 			indint, _ := strconv.Atoi(ind)
 			fmt.Printf("%s\n", files[indint])
 		}
