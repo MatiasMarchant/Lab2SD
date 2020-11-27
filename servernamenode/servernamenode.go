@@ -43,7 +43,7 @@ func listaDeLibros() string{
 }
 
 func (s *Server) EnvioMensajeTest(ctx context.Context, message *MensajeTest) (*MensajeTest, error) {
-	fmt.Printf(message.Mensaje)
+
 	if message.Mensaje == "listadoLibros" {
 		fmt.Printf("> Enviando listado de libros")
 		respuestaDataNode := listaDeLibros()
