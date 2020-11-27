@@ -31,7 +31,7 @@ func listaDeLibros() string{
 		if _, err := strconv.Atoi(p_linea); err != nil {
 			nLibro += 1
 			n := strconv.Itoa(nLibro)
-			listado += n+" "+linea+"\n"
+			listado += n+" "+p_linea+"\n"
 		}		
     }
 
@@ -45,7 +45,7 @@ func listaDeLibros() string{
 func (s *Server) EnvioMensajeTest(ctx context.Context, message *MensajeTest) (*MensajeTest, error) {
 
 	if message.Mensaje == "listadoLibros" {
-		fmt.Printf("> Enviando listado de libros")
+		fmt.Printf("> Enviando listado de libros\n")
 		respuestaDataNode := listaDeLibros()
 		return &MensajeTest{Mensaje: respuestaDataNode}, nil
 	}
