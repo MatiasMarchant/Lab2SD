@@ -179,6 +179,12 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 			Propuesta.PartesDN1 = append(Propuesta.PartesDN1, elemento)
 		}
 
+		fmt.Printf("La \"propuesta\" quedo:\n")
+		fmt.Printf("Nombre libro: %s\n", s.NombreLibroSubido)
+		fmt.Println("Propuesta.PartesDN1: %v", Propuesta.PartesDN1)
+		fmt.Println("Propuesta.PartesDN2: %v", Propuesta.PartesDN2)
+		fmt.Println("Propuesta.PartesDN3: %v", Propuesta.PartesDN3)
+
 		//Enviar_Propuesta(&Propuesta)
 
 	}
