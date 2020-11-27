@@ -54,9 +54,10 @@ func (s *Server) EnvioMensajeTest(ctx context.Context, message *MensajeTest) (*M
 		respuestaDataNode := listaDeLibros()
 		return &MensajeTest{Mensaje: respuestaDataNode}, nil
 	} else if strings.Contains(message.Mensaje, "ubicacion") {
-		nLibro := strings.Split(linea, " ")[1]
+		nLibro := strings.Split(message.Mensaje, " ")[1]
 		fmt.Printf("> Enviando ubicación de libro "+ nLibro +"\n")
-		respuestaDataNode :=  ubicacionLibro(strconv.Atoi(nLibro))
+		intNLibro, _ := strconv.Atoi(nLibro)
+		respuestaDataNode := ubicacionLibro(intNLibro)
 		return &MensajeTest{Mensaje: respuestaDataNode}, nil
 	}
 	
