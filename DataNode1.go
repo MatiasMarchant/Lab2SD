@@ -9,7 +9,7 @@ import (
 	"net"
 	"serverdatanode"
 	"servernamenode"
-	"strconv"
+	//"strconv"
 	"strings"
 
 	"time"
@@ -105,6 +105,23 @@ func enviar_a_DataNode3(mensaje_cliente string) bool {
 	return flag
 }
 
+func Enviar_Propuesta(propuesta serverdatanode.Propuesta, destinatario string) {
+	switch destinatario {
+	case "DataNode1":
+		// Caso DataNode1
+
+	case "DataNode2":
+		// Caso DataNode2
+
+	case "DataNode3":
+		// Caso DataNode3
+
+	case "NameNode":
+		// Caso NameNode (para centralizado)
+
+	}
+}
+
 func HacerPropuesta(metodo string, NombreLibroSubido string) {
 	var Arreglo_indices_partes_libro []string // Ya no guarda indices, sino que los nombres de los chunks en el directorio
 	if metodo == "distribuido" {
@@ -196,7 +213,8 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		fmt.Println("Propuesta.PartesDN2: %v", Propuesta.PartesDN2)
 		fmt.Println("Propuesta.PartesDN3: %v", Propuesta.PartesDN3)
 
-		//Enviar_Propuesta(&Propuesta)
+		respuesta_propuesta_DN2 := Enviar_Propuesta(&Propuesta, "DataNode2")
+		respuesta_propuesta_DN3 := Enviar_Propuesta(&Propuesta, "DataNode3")
 
 	}
 	/*
