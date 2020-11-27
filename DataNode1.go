@@ -135,6 +135,7 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 
 		// Ver cuales hay vivos y repartir con serverdatanode.Propuesta
 		Arreglo_copia := Arreglo_indices_partes_libro
+		fmt.Printf("%v", Arreglo_copia)
 		var PartesDN1 []string
 		var PartesDN2 []string
 		var PartesDN3 []string
