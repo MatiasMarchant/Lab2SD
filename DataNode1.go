@@ -66,7 +66,7 @@ func enviar_a_DataNode2(mensaje_cliente string) error {
 		}
 
 	}
-	return nil
+	return err_DN2
 }
 
 func enviar_a_DataNode3(mensaje_cliente string) error {
@@ -94,7 +94,7 @@ func enviar_a_DataNode3(mensaje_cliente string) error {
 		}
 
 	}
-	return nil
+	return err_DN3
 }
 
 func HacerPropuesta(metodo string, NombreLibroSubido string) {
