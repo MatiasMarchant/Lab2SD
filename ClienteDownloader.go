@@ -11,8 +11,8 @@ import (
 	//"math"
 	//"os"
 	//"serverdatanode"
-	"strconv"
-	//"strings"
+	//"strconv"
+	"strings"
 )
 
 func main() {
@@ -68,21 +68,28 @@ func main() {
 				log.Fatalf("Error al ingresar libro: %s", err)
 			}
 
-			
-
-			tituloLibro := strings.Split(strings.Split(str, "\n")[nLibro-1], "\n")[1]
-
+			// Pedir listado de libros disponibles
 			mensajeNN := servernamenode.MensajeTest{
-				//strconv.Itoa(nLibro)
-				Mensaje: "ubicacion "+tituloLibro,
-			}
-	
+				Mensaje: "listadoLibros",
+			}		
 			respuestaNN, err_NN := cNameNodeNN.EnvioMensajeTest(context.Background(), &mensajeNN)
 			if err_NN != nil {
-				fmt.Print("Error al obtener respuesta de NameNode: %s", err_NN)
+				fmt.Print("Error al obtener listado: %s", err_NN)
 			} else {
-				fmt.Print("\nRespuesta NN:\n")
-				fmt.Print(respuestaNN.Mensaje)
+
+				tituloLibro := strings.Split(strings.Split(respuestaNN.Mensaje, "\n")[nLibro-1], "\n")[1]
+
+				mensajeNN := servernamenode.MensajeTest{
+					Mensaje: "ubicacion "+tituloLibro,
+				}
+		
+				respuestaNN, err_NN := cNameNodeNN.EnvioMensajeTest(context.Background(), &mensajeNN)
+				if err_NN != nil {
+					fmt.Print("Error al obtener respuesta de NameNode: %s", err_NN)
+				} else {
+					fmt.Print("\nRespuesta NN:\n")
+					fmt.Print(respuestaNN.Mensaje)
+				}
 			}
 
 			//---------------------------------------------------------------------
