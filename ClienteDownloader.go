@@ -115,6 +115,8 @@ func descargarLibro(tituloLibro string, chunks string) {
 	var chunks_libro []serverdatanode.ChunkLibro
 
 	for _, i := range str_chunks_arr{
+		fmt.Println("!! ")
+		fmt.Println(i)
 		i_split := strings.Split(i, " ")
 		n_chunk := i_split[0]
 		maquina := i_split[1]
