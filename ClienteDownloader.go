@@ -123,13 +123,13 @@ func descargarLibro(tituloLibro string, chunks string) {
 		
 		if maquina == "dist37"{
 			chunkLibro := pedir_a_DataNode1(chunk)
-			chunks_libro = append(chunks_libro, &chunkLibro)
+			chunks_libro = append(chunks_libro, *chunkLibro)
 		} else if maquina == "dist38"{
 			chunkLibro := pedir_a_DataNode2(chunk)
-			chunks_libro = append(chunks_libro, &chunkLibro)
+			chunks_libro = append(chunks_libro, *chunkLibro)
 		} else if maquina == "dist39" {
 			chunkLibro := pedir_a_DataNode3(chunk)
-			chunks_libro = append(chunks_libro, &chunkLibro)
+			chunks_libro = append(chunks_libro, *chunkLibro)
 		} else {
 			log.Fatalf("Error al contactar maquina: %s", maquina)
 		}		
