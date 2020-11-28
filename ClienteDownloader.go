@@ -119,7 +119,6 @@ func descargarLibro(tituloLibro string, chunks string) {
 	for _, i := range str_chunks_arr{
 		
 		i_split := strings.Split(i, " ")
-		fmt.Println(i_split)
 		n_chunk := i_split[0]
 		maquina := i_split[1]
 
@@ -219,7 +218,6 @@ func main() {
 				if err_NN != nil {
 					fmt.Print("Error al obtener respuesta de NameNode: %s", err_NN)
 				} else {
-					fmt.Print("Chunks recibidos\n")
 					chunks := respuestaNN.Mensaje
 					descargarLibro(tituloLibro, chunks)
 				}
