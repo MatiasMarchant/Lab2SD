@@ -49,3 +49,10 @@ func (s *Server) UploaderTerminoDeSubirLibro(ctx context.Context, NombreLibro *M
 	s.FlagLibroSubido = true
 	return &MensajeTest{Mensaje: "retorno"}, nil
 }
+
+func (s *Server) Propuesta_Distribuido(ctx context.Context, Propuesta *Propuestagrpc) (*Booleano, error) {
+	// Quizas implementar una probabilidad de que la rechace?
+	// Porque cuando se llega aca, ya se sabe si esque los nodos están vivos o muertos (creo)
+
+	return &Booleano{Booleano: false}, nil
+}
