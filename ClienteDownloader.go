@@ -145,6 +145,7 @@ func getChunksLibro(tituloLibro string, chunks string) [] serverdatanode.ChunkLi
 func juntarChunks(chunksLibro [] serverdatanode.ChunkLibro){
 	// verificar si existen chunks vacios!
 	// crear carpeta Descargas
+	fmt.Println(chunksLibro)
 }
 
 
