@@ -218,7 +218,7 @@ func main() {
 					chunks := respuestaNN.Mensaje
 					fmt.Println("Recibiendo Chunks...")
 					chunksLibro := getChunksLibro(tituloLibro, chunks)
-						
+					fmt.Println(chunksLibro)
 				}
 			}
 
