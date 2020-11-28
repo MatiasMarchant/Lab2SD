@@ -110,9 +110,7 @@ func pedir_a_DataNode3(chunk string) *serverdatanode.ChunkLibro{
 	}
 }
 
-func descargarLibro(tituloLibro string, chunks string) [] serverdatanode.ChunkLibro{
-	//chunks_arr = [0 dist37, 1 dist37, 2 dist37, 3 dist37, 4 dist37]
-	// chunk = "Dracula-Stoker_Bram_3" (ejemplo)
+func getChunksLibro(tituloLibro string, chunks string) [] serverdatanode.ChunkLibro{
 
 	str_chunks_arr := strings.Split(chunks, "\n")
 	str_chunks_arr = str_chunks_arr[:len(str_chunks_arr) - 1]
@@ -219,8 +217,8 @@ func main() {
 				} else {
 					chunks := respuestaNN.Mensaje
 					fmt.Println("Recibiendo Chunks...")
-					chunksLibro := descargarLibro(tituloLibro, chunks)
-					fmt.Println(chunksLibro)
+					chunksLibro := getChunksLibro(tituloLibro, chunks)
+						
 				}
 			}
 

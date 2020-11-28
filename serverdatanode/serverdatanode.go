@@ -32,7 +32,8 @@ func (s *Server) UploaderSubeLibro(ctx context.Context, eddChunkLibro *ChunkLibr
 }
 
 func (s *Server) DownloaderDescargaLibro(ctx context.Context, peticion_chunk *MensajeTest) (*ChunkLibro, error) {
-	fmt.Printf("Enviando chunk:  %s", peticion_chunk.Mensaje)
+	// chunk = "Dracula-Stoker_Bram_3" (ejemplo)
+	fmt.Printf("Enviando chunk:  %s", peticion_chunk.Mensaje+"\n")
 
 	// peticion_chunk = "Dracula-Stoker_Bram_3" (ejemplo)
 

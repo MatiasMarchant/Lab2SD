@@ -95,8 +95,6 @@ func (s *Server) EnvioMensajeTest(ctx context.Context, message *MensajeTest) (*M
 		return &MensajeTest{Mensaje: respuestaDataNode}, nil
 	}
 	
-
-	//fmt.Printf("|Servidor| Se recibe: %s", message.Mensaje)
 	respuestaNameNode := "Name node recibe: " + message.Mensaje
 	return &MensajeTest{Mensaje: respuestaNameNode}, nil
 }
