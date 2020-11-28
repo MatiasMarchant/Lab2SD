@@ -172,7 +172,7 @@ func juntarChunks(tituloLibro string, chunksLibro [] serverdatanode.ChunkLibro){
 	// just information on which part of the new file we are appending
 	var writePosition int64 = 0
 
-	for j := uint64(0); j < totalPartsNum; j++ {
+	for _, i := range str_chunks_arr{
 
 			n, err := file.Write(chunkBufferBytes)
 
