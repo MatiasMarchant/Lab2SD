@@ -9,7 +9,7 @@ import (
 	//"io/ioutil"
 	"log"
 	//"math"
-	//"os"
+	"os"
 	"serverdatanode"
 	//"strconv"
 	"strings"
@@ -152,7 +152,7 @@ func juntarChunks(tituloLibro string, chunksLibro [] serverdatanode.ChunkLibro){
 			fmt.Println(err)
 			os.Exit(1)
 	}
-	file, err = os.OpenFile(newFileName, os.O_APPEND|os.O_WRONLY, os.ModeAppend)
+	file, err := os.OpenFile(newFileName, os.O_APPEND|os.O_WRONLY, os.ModeAppend)
 	if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
