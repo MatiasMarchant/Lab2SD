@@ -101,13 +101,14 @@ func descargarLibro(tituloLibro string, chunks string) {
 		} else {
 			log.Fatalf("Error al contactar maquina: %s", maquina)
 		}
-
-		// chunks_libro .append chunkLibro
+		
+		chunks_libro = append(chunks_libro, chunkLibro)
 
 	}
 	//------------------------------------------------------------------------------------------
 	// Juntar chunks y crear el archivo
-
+	fmt.Println("Chunks recibidos")
+	fmt.Println(chunks_libro)
 	//------------------------------------------------------------------------------------------
 }
 
@@ -142,16 +143,16 @@ func main() {
 		if opcion == 1 {
 			//---------------------------------------------------------------------------------------------------------------
 			// Pedir listado de libros disponibles
-			mensajeNN := servernamenode.MensajeTest{
+			peticionNN := servernamenode.MensajeTest{
 				Mensaje: "listadoLibros",
 			}
 	
-			respuestaNN, err_NN := cNameNodeNN.EnvioMensajeTest(context.Background(), &mensajeNN)
+			respuestaNN_listado, err_NN := cNameNodeNN.EnvioMensajeTest(context.Background(), &peticionNN)
 			if err_NN != nil {
 				fmt.Print("Error al obtener listado: %s", err_NN)
 			} else {
 				fmt.Print("\nListado:\n")
-				fmt.Print(respuestaNN.Mensaje)
+				fmt.Print(respuestaNN_listado.Mensaje)
 			}
 
 			//---------------------------------------------------------------------------------------------------------------
@@ -179,7 +180,7 @@ func main() {
 				mensajeNN := servernamenode.MensajeTest{
 					Mensaje: "ubicacion "+tituloLibro,
 				}
-		
+
 				respuestaNN, err_NN := cNameNodeNN.EnvioMensajeTest(context.Background(), &mensajeNN)
 				if err_NN != nil {
 					fmt.Print("Error al obtener respuesta de NameNode: %s", err_NN)
