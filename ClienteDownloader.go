@@ -45,7 +45,7 @@ func pedir_a_DataNode1(chunk string) *serverdatanode.ChunkLibro{
 		if err_DN1 != nil {
 			fmt.Printf("> Sin respuesta DataNode2.\n")
 		}		
-		return &chunk_retorno
+		return chunk_retorno
 	}
 }
 
@@ -74,7 +74,7 @@ func pedir_a_DataNode2(chunk string) *serverdatanode.ChunkLibro{
 		if err_DN2 != nil {
 			fmt.Printf("> Sin respuesta DataNode2.\n")
 		}		
-		return &chunk_retorno
+		return chunk_retorno
 	}
 }
 
@@ -103,7 +103,7 @@ func pedir_a_DataNode3(chunk string) *serverdatanode.ChunkLibro{
 		if err_DN3 != nil {
 			fmt.Printf("> Sin respuesta DataNode2.\n")
 		}		
-		return &chunk_retorno
+		return chunk_retorno
 	}
 }
 
@@ -114,7 +114,7 @@ func descargarLibro(tituloLibro string, chunks string) {
 	str_chunks_arr := strings.Split(chunks, "\n")
 	var chunks_libro []serverdatanode.ChunkLibro
 
-	for _, i := range chunks_arr{
+	for _, i := range str_chunks_arr{
 		i_split := strings.Split(i, " ")
 		n_chunk := i_split[0]
 		maquina := i_split[1]
@@ -123,15 +123,16 @@ func descargarLibro(tituloLibro string, chunks string) {
 		
 		if maquina == "dist37"{
 			chunkLibro := pedir_a_DataNode1(chunk)
+			chunks_libro = append(chunks_libro, chunkLibro)
 		} else if maquina == "dist38"{
 			chunkLibro := pedir_a_DataNode2(chunk)
+			chunks_libro = append(chunks_libro, chunkLibro)
 		} else if maquina == "dist39" {
 			chunkLibro := pedir_a_DataNode3(chunk)
+			chunks_libro = append(chunks_libro, chunkLibro)
 		} else {
 			log.Fatalf("Error al contactar maquina: %s", maquina)
-		}
-		
-		chunks_libro = append(chunks_libro, chunkLibro)
+		}		
 
 	}
 	//------------------------------------------------------------------------------------------
