@@ -1,5 +1,4 @@
-package serverdatanode
-
+package 
 import (
 	"golang.org/x/net/context"
 
@@ -50,7 +49,7 @@ func (s *Server) DownloaderDescargaLibro(ctx context.Context, peticion_chunk *Me
 	//}
 
 
-	ChunkLibro := serverdatanode.ChunkLibro{
+	ChunkLibro := ChunkLibro{
 		Nombre: fileName,
 		Chunk:  partBuffer,
 	}
