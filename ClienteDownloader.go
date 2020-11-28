@@ -112,6 +112,8 @@ func descargarLibro(tituloLibro string, chunks string) {
 	// chunk = "Dracula-Stoker_Bram_3" (ejemplo)
 
 	str_chunks_arr := strings.Split(chunks, "\n")
+	str_chunks_arr = str_chunks_arr[:len(str_chunks_arr) - 1]
+
 	var chunks_libro []serverdatanode.ChunkLibro
 
 	for _, i := range str_chunks_arr{
@@ -217,9 +219,8 @@ func main() {
 				if err_NN != nil {
 					fmt.Print("Error al obtener respuesta de NameNode: %s", err_NN)
 				} else {
-					fmt.Print("Chunks:\n")
+					fmt.Print("Chunks recibidos\n")
 					chunks := respuestaNN.Mensaje
-					fmt.Println(chunks)
 					descargarLibro(tituloLibro, chunks)
 				}
 			}
