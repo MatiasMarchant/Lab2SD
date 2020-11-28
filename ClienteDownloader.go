@@ -10,10 +10,80 @@ import (
 	"log"
 	//"math"
 	//"os"
-	//"serverdatanode"
+	"serverdatanode"
 	//"strconv"
 	"strings"
 )
+
+func pedir_a_DataNode1(chunk string) *ChunkLibro{
+	//--------------------------------------------------------------------
+	// Conexion a DataNode 1
+	var conn_DN1 *grpc.ClientConn
+	conn_DN1, err_DN1 := grpc.Dial("dist37:9001", grpc.WithInsecure())
+	if err_DN1 != nil {
+		fmt.Printf("Sin conexión DataNode 1\n")
+	} else {
+		defer conn_DN1.Close()
+		cDataNode1 := serverdatanode.NewDataNodeServiceClient(conn_DN1)
+		peticion_chunk_DN1 := serverdatanode.MensajeTest{
+			Mensaje: chunk,
+		}
+		chunk, err_DN1 := cDataNode1.DownloaderDescargaLibro(context.Background(), &peticion_chunk_DN1)
+		if err_DN1 != nil {
+			fmt.Printf("> Sin respuesta DataNode2.\n")
+		}		
+		return &chunk
+	}
+}
+
+func pedir_a_DataNode2(chunk string) *ChunkLibro{
+	//--------------------------------------------------------------------
+	// Conexion a DataNode 2
+	var conn_DN2 *grpc.ClientConn
+	conn_DN2, err_DN2 := grpc.Dial("dist38:9002", grpc.WithInsecure())
+	if err_DN2 != nil {
+		fmt.Printf("Sin conexión DataNode 2\n")
+	} else {
+		defer conn_DN2.Close()
+		cDataNode2 := serverdatanode.NewDataNodeServiceClient(conn_DN2)
+		peticion_chunk_DN2 := serverdatanode.MensajeTest{
+			Mensaje: chunk,
+		}
+		chunk, err_DN2 := cDataNode2.DownloaderDescargaLibro(context.Background(), &peticion_chunk_DN2)
+		if err_DN2 != nil {
+			fmt.Printf("> Sin respuesta DataNode2.\n")
+		}		
+		return &chunk
+	}
+}
+
+func pedir_a_DataNode3(chunk string) *ChunkLibro{
+	//--------------------------------------------------------------------
+	// Conexion a DataNode 3
+	var conn_DN3 *grpc.ClientConn
+	conn_DN3, err_DN3 := grpc.Dial("dist39:9003", grpc.WithInsecure())
+	if err_DN3 != nil {
+		fmt.Printf("Sin conexión DataNode 3\n")
+	} else {
+		defer conn_DN3.Close()
+		cDataNode3 := serverdatanode.NewDataNodeServiceClient(conn_DN3)
+		peticion_chunk_DN3 := serverdatanode.MensajeTest{
+			Mensaje: chunk,
+		}
+		chunk, err_DN3 := cDataNode3.DownloaderDescargaLibro(context.Background(), &peticion_chunk_DN3)
+		if err_DN3 != nil {
+			fmt.Printf("> Sin respuesta DataNode2.\n")
+		}		
+		return &chunk
+	}
+}
+
+func descargarLibro(chunks string) {
+	//"0 dist37\n1 dist37\n2 dist37\n3 dist37\n4 dist37"
+	// chunk = "Dracula-Stoker_Bram_3" (ejemplo)
+
+}
+
 
 func main() {
 	fmt.Printf("#### ClienteDownloader ####\n\n")
@@ -43,7 +113,7 @@ func main() {
 	
 		
 		if opcion == 1 {
-			//---------------------------------------------------------------------
+			//---------------------------------------------------------------------------------------------------------------
 			// Pedir listado de libros disponibles
 			mensajeNN := servernamenode.MensajeTest{
 				Mensaje: "listadoLibros",
@@ -57,9 +127,9 @@ func main() {
 				fmt.Print(respuestaNN.Mensaje)
 			}
 
-			//---------------------------------------------------------------------
+			//---------------------------------------------------------------------------------------------------------------
 		} else if opcion == 2{
-			//---------------------------------------------------------------------
+			//---------------------------------------------------------------------------------------------------------------
 			// Descargar Libro
 			fmt.Print("Ingrese el número del libro que desea descargar:\n")
 			var nLibro int
@@ -87,12 +157,14 @@ func main() {
 				if err_NN != nil {
 					fmt.Print("Error al obtener respuesta de NameNode: %s", err_NN)
 				} else {
-					fmt.Print("\nRespuesta NN:\n")
-					fmt.Print(respuestaNN.Mensaje)
+					fmt.Print("Chunks:\n")
+					chunks := respuestaNN.Mensaje
+					fmt.Println(chunks)
+					descargarLibro(chunks)
 				}
 			}
 
-			//---------------------------------------------------------------------
+			//---------------------------------------------------------------------------------------------------------------
 
 		} else {
 			fmt.Print("Error al ingresar opción\n")
