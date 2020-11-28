@@ -44,6 +44,7 @@ func pedir_a_DataNode1(chunk string) *serverdatanode.ChunkLibro{
 		chunk_retorno, err_DN1 := cDataNode1.DownloaderDescargaLibro(context.Background(), &peticion_chunk_DN1)
 		if err_DN1 != nil {
 			fmt.Printf("> Sin respuesta DataNode2.\n")
+			return &chunk_vacio
 		}		
 		return chunk_retorno
 	}
@@ -73,6 +74,7 @@ func pedir_a_DataNode2(chunk string) *serverdatanode.ChunkLibro{
 		chunk_retorno, err_DN2 := cDataNode2.DownloaderDescargaLibro(context.Background(), &peticion_chunk_DN2)
 		if err_DN2 != nil {
 			fmt.Printf("> Sin respuesta DataNode2.\n")
+			return &chunk_vacio
 		}		
 		return chunk_retorno
 	}
@@ -102,6 +104,7 @@ func pedir_a_DataNode3(chunk string) *serverdatanode.ChunkLibro{
 		chunk_retorno, err_DN3 := cDataNode3.DownloaderDescargaLibro(context.Background(), &peticion_chunk_DN3)
 		if err_DN3 != nil {
 			fmt.Printf("> Sin respuesta DataNode2.\n")
+			return &chunk_vacio
 		}		
 		return chunk_retorno
 	}
