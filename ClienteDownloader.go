@@ -52,7 +52,7 @@ func pedir_a_DataNode2(chunk string) *ChunkLibro{
 		chunk, err_DN2 := cDataNode2.DownloaderDescargaLibro(context.Background(), &peticion_chunk_DN2)
 		if err_DN2 != nil {
 			fmt.Printf("> Sin respuesta DataNode2.\n")
-		}		
+		}
 		return &chunk
 	}
 }
@@ -78,10 +78,37 @@ func pedir_a_DataNode3(chunk string) *ChunkLibro{
 	}
 }
 
-func descargarLibro(chunks string) {
-	//"0 dist37\n1 dist37\n2 dist37\n3 dist37\n4 dist37"
+func descargarLibro(tituloLibro string, chunks string) {
+	//chunks_arr = [0 dist37, 1 dist37, 2 dist37, 3 dist37, 4 dist37]
 	// chunk = "Dracula-Stoker_Bram_3" (ejemplo)
 
+	str_chunks_arr := strings.Split(chunks, "\n")
+	var chunks_libro []ChunkLibro
+
+	for _, i := range chunks_arr{
+		i_split := strings.Split(i, " ")
+		n_chunk := i_split[0]
+		maquina := i_split[1]
+
+		chunk := tituloLibro+"_"+n_chunk
+		
+		if maquina == "dist37"{
+			chunkLibro := pedir_a_DataNode1(chunk)
+		} else if maquina == "dist38"{
+			chunkLibro := pedir_a_DataNode2(chunk)
+		} else if maquina == "dist39" {
+			chunkLibro := pedir_a_DataNode3(chunk)
+		} else {
+			log.Fatalf("Error al contactar maquina: %s", maquina)
+		}
+
+		// chunks_libro .append chunkLibro
+
+	}
+	//------------------------------------------------------------------------------------------
+	// Juntar chunks y crear el archivo
+
+	//------------------------------------------------------------------------------------------
 }
 
 
@@ -160,7 +187,7 @@ func main() {
 					fmt.Print("Chunks:\n")
 					chunks := respuestaNN.Mensaje
 					fmt.Println(chunks)
-					descargarLibro(chunks)
+					descargarLibro(tituloLibro, chunks)
 				}
 			}
 
