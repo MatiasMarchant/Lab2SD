@@ -141,7 +141,7 @@ func descargarLibro(tituloLibro string, chunks string) [] *serverdatanode.ChunkL
 		}		
 
 	}
-	return chunks_libro
+	return *chunks_libro
 }
 
 
