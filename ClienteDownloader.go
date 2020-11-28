@@ -147,7 +147,7 @@ func juntarChunks(tituloLibro string, chunksLibro [] serverdatanode.ChunkLibro){
 	// crear carpeta Descargas
 	
 	newFileName := "Descargas/"+tituloLibro
-	_, err = os.Create(newFileName)
+	_, err := os.Create(newFileName)
 	if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
