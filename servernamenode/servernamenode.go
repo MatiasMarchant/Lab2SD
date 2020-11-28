@@ -42,7 +42,7 @@ func listaDeLibros() string{
 	return listado
 }
 
-func ubicacionLibro(nLibro int) string{
+func ubicacionLibro(nLibro string) string{
 	//verificar que exista el libro
 	return "No listo aun\n"
 
@@ -55,10 +55,9 @@ func (s *Server) EnvioMensajeTest(ctx context.Context, message *MensajeTest) (*M
 		respuestaDataNode := listaDeLibros()
 		return &MensajeTest{Mensaje: respuestaDataNode}, nil
 	} else if strings.Contains(message.Mensaje, "ubicacion") {
-		nLibro := strings.Split(message.Mensaje, " ")[1]
-		fmt.Printf("> Enviando ubicación de libro "+ nLibro +"\n")
-		intNLibro, _ := strconv.Atoi(nLibro)
-		respuestaDataNode := ubicacionLibro(intNLibro)
+		tituloLibro := strings.Split(message.Mensaje, " ")[1]
+		fmt.Printf("> Enviando ubicación de libro '"+ tituloLibro +"'\n")
+		respuestaDataNode := ubicacionLibro(tituloLibro)
 		return &MensajeTest{Mensaje: respuestaDataNode}, nil
 	}
 	

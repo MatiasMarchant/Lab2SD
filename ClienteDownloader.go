@@ -68,8 +68,13 @@ func main() {
 				log.Fatalf("Error al ingresar libro: %s", err)
 			}
 
+			
+
+			tituloLibro := strings.Split(strings.Split(str, "\n")[nLibro-1], "\n")[1]
+
 			mensajeNN := servernamenode.MensajeTest{
-				Mensaje: "ubicacion "+strconv.Itoa(nLibro),
+				//strconv.Itoa(nLibro)
+				Mensaje: "ubicacion "+tituloLibro,
 			}
 	
 			respuestaNN, err_NN := cNameNodeNN.EnvioMensajeTest(context.Background(), &mensajeNN)
