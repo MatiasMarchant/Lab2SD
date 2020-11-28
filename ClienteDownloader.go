@@ -142,6 +142,11 @@ func getChunksLibro(tituloLibro string, chunks string) [] serverdatanode.ChunkLi
 	return chunks_libro
 }
 
+func juntarChunks(chunksLibro [] serverdatanode.ChunkLibro){
+	// verificar si existen chunks vacios!
+	// crear carpeta Descargas
+}
+
 
 func main() {
 	fmt.Printf("#### ClienteDownloader ####\n\n")
@@ -218,7 +223,8 @@ func main() {
 					chunks := respuestaNN.Mensaje
 					fmt.Println("Recibiendo Chunks...")
 					chunksLibro := getChunksLibro(tituloLibro, chunks)
-					fmt.Println(chunksLibro)
+					juntarChunks(chunksLibro)
+
 				}
 			}
 

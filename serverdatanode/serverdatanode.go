@@ -32,30 +32,28 @@ func (s *Server) UploaderSubeLibro(ctx context.Context, eddChunkLibro *ChunkLibr
 }
 
 func (s *Server) DownloaderDescargaLibro(ctx context.Context, peticion_chunk *MensajeTest) (*ChunkLibro, error) {
-	// chunk = "Dracula-Stoker_Bram_3" (ejemplo)
-	fmt.Printf("Enviando chunk:  %s", peticion_chunk.Mensaje+"\n")
+	ChunkFileName := peticion_chunk.Mensaje
+	fmt.Printf("Enviando chunk:  %s", ChunkFileName+"\n")
 
-	// peticion_chunk = "Dracula-Stoker_Bram_3" (ejemplo)
+	newFileChunk, err := os.Open(currentChunkFileName)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}	   
+	defer newFileChunk.Close()	   
+	chunkInfo, err := newFileChunk.Stat()	
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	var chunkSize int64 = chunkInfo.Size()
+	chunkBufferBytes := make([]byte, chunkSize)
 
-	
-	//partSize := int(math.Min(fileChunk, float64(fileSize-int64(i*fileChunk))))
-	partSize := 0
-	partBuffer := make([]byte, partSize)
-
-	//file.Read(partBuffer)
-
-	// Write to disk
-	//fileName := strings.TrimRight(files[integerdice_libro_a_subir].Name(), ".pdf") + "_" + strconv.FormatUint(i, 10)
-	//_, err4 := os.Create(fileName)
-
-	//if err4 != nil {
-	//	log.Fatalf("Error al crear archivo (err4): %s", err4)
-	//}
-
+	newFileChunk.Read(chunkBufferBytes)
 
 	ChunkLibro := ChunkLibro{
-		Nombre: "testFileName",
-		Chunk:  partBuffer,
+		Nombre: currentChunkFileName,
+		Chunk:  chunkBufferBytes,
 	}
 
 	return &ChunkLibro, nil
