@@ -33,23 +33,22 @@ func (s *Server) UploaderSubeLibro(ctx context.Context, eddChunkLibro *ChunkLibr
 
 func (s *Server) DownloaderDescargaLibro(ctx context.Context, peticion_chunk *MensajeTest) (*ChunkLibro, error) {
 	// peticion_chunk = "Dracula-Stoker_Bram_3" (ejemplo)
-	// NO!!!!!!!
+
 	
-	partSize := int(math.Min(fileChunk, float64(fileSize-int64(i*fileChunk))))
+	//partSize := int(math.Min(fileChunk, float64(fileSize-int64(i*fileChunk))))
+	partSize = 0
 	partBuffer := make([]byte, partSize)
 
-	file.Read(partBuffer)
+	//file.Read(partBuffer)
 
 	// Write to disk
-	fileName := strings.TrimRight(files[integerdice_libro_a_subir].Name(), ".pdf") + "_" + strconv.FormatUint(i, 10)
-	_, err4 := os.Create(fileName)
+	//fileName := strings.TrimRight(files[integerdice_libro_a_subir].Name(), ".pdf") + "_" + strconv.FormatUint(i, 10)
+	//_, err4 := os.Create(fileName)
 
-	if err4 != nil {
-		log.Fatalf("Error al crear archivo (err4): %s", err4)
-	}
+	//if err4 != nil {
+	//	log.Fatalf("Error al crear archivo (err4): %s", err4)
+	//}
 
-
-	fmt.Printf("Se envía chunk: %s", fileName)
 
 	ChunkLibro := serverdatanode.ChunkLibro{
 		Nombre: fileName,
