@@ -303,7 +303,6 @@ var file_serverdatanode_proto_rawDesc = []byte{
 	0x72, 0x64, 0x61, 0x74, 0x61, 0x6e, 0x6f, 0x64, 0x65, 0x2e, 0x43, 0x68, 0x75, 0x6e, 0x6b, 0x4c,
 	0x69, 0x62, 0x72, 0x6f, 0x22, 0x00, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
-
 }
 
 var (
@@ -444,8 +443,6 @@ type DataNodeServiceClient interface {
 	Propuesta_Distribuido(ctx context.Context, in *Propuestagrpc, opts ...grpc.CallOption) (*Booleano, error)
 
 	DownloaderDescargaLibro(ctx context.Context, in *MensajeTest, opts ...grpc.CallOption) (*ChunkLibro, error)
-
-r
 }
 
 type dataNodeServiceClient struct {
@@ -492,7 +489,6 @@ func (c *dataNodeServiceClient) Propuesta_Distribuido(ctx context.Context, in *P
 	return out, nil
 }
 
-
 func (c *dataNodeServiceClient) DownloaderDescargaLibro(ctx context.Context, in *MensajeTest, opts ...grpc.CallOption) (*ChunkLibro, error) {
 	out := new(ChunkLibro)
 	err := c.cc.Invoke(ctx, "/serverdatanode.DataNodeService/DownloaderDescargaLibro", in, out, opts...)
@@ -502,7 +498,6 @@ func (c *dataNodeServiceClient) DownloaderDescargaLibro(ctx context.Context, in 
 	return out, nil
 }
 
-
 // DataNodeServiceServer is the server API for DataNodeService service.
 type DataNodeServiceServer interface {
 	EnvioMensajeTest(context.Context, *MensajeTest) (*MensajeTest, error)
@@ -510,7 +505,6 @@ type DataNodeServiceServer interface {
 	UploaderTerminoDeSubirLibro(context.Context, *MensajeTest) (*MensajeTest, error)
 	Propuesta_Distribuido(context.Context, *Propuestagrpc) (*Booleano, error)
 	DownloaderDescargaLibro(context.Context, *MensajeTest) (*ChunkLibro, error)
-
 }
 
 // UnimplementedDataNodeServiceServer can be embedded to have forward compatible implementations.
@@ -610,7 +604,6 @@ func _DataNodeService_Propuesta_Distribuido_Handler(srv interface{}, ctx context
 	return interceptor(ctx, in, info, handler)
 }
 
-
 func _DataNodeService_DownloaderDescargaLibro_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(MensajeTest)
 	if err := dec(in); err != nil {
@@ -628,7 +621,6 @@ func _DataNodeService_DownloaderDescargaLibro_Handler(srv interface{}, ctx conte
 	}
 	return interceptor(ctx, in, info, handler)
 }
-
 
 var _DataNodeService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "serverdatanode.DataNodeService",
@@ -655,7 +647,6 @@ var _DataNodeService_serviceDesc = grpc.ServiceDesc{
 			MethodName: "DownloaderDescargaLibro",
 			Handler:    _DataNodeService_DownloaderDescargaLibro_Handler,
 		},
-
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "serverdatanode.proto",

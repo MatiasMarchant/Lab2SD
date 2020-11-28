@@ -20,6 +20,7 @@ type Propuesta struct {
 type Server struct {
 	FlagLibroSubido   bool
 	NombreLibroSubido string
+	FlagOcupandoLog   bool
 }
 
 func (s *Server) EnvioMensajeTest(ctx context.Context, message *MensajeTest) (*MensajeTest, error) {
@@ -179,9 +180,9 @@ func (s *Server) DownloaderDescargaLibro(ctx context.Context, peticion_chunk *Me
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
-	}	   
-	defer newFileChunk.Close()	   
-	chunkInfo, err := newFileChunk.Stat()	
+	}
+	defer newFileChunk.Close()
+	chunkInfo, err := newFileChunk.Stat()
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)

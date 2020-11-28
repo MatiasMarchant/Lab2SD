@@ -10,8 +10,8 @@ import (
 	"serverdatanode"
 	"servernamenode"
 	//"strconv"
+	"os"
 	"strings"
-
 	"time"
 )
 
@@ -196,6 +196,170 @@ func Enviar_Propuesta(propuesta serverdatanode.Propuesta, destinatario string) b
 	return false
 }
 
+func EscribirEnLog(Propuesta serverdatanode.Propuesta, ID int, cant_partes int) {
+	// Llamar funcion escritura sobre log namenode
+	// Usar Ricart-Agrawala(Pedir acceso a lugar critico)
+	// Si todos responden -> Escribir con gRPC
+
+	// Ricart Agrawala a DN2 y DN3
+	// ---------------------------------------------------------------
+	// DN2
+	// UNDER CONSTRUCTION
+	/*
+		var connDN2 *grpc.ClientConn
+		connDN2, errDN2 := grpc.Dial("dist38:9002", grpc.WithInsecure())
+		if errDN2 != nil {
+			// Error al hacer conexion
+		} else {
+			defer connDN2.Close()
+			cDataNode2 := serverdatanode.NewDataNodeServiceClient(connDN2)
+			respuesta, err := cDataNode2.RicartAgrawala(context.Background(), &MensajeID{ID: ID})
+			if err != nil {
+				// Hubo un error al hacer request
+			}
+		}
+	*/
+
+	// Estructura
+	// -------------------------------- log.txt
+	// Nombre_Libro_1 Cantidad_Partes_1
+	// parte_1_1 ip_maquina
+	// parte_1_2 ip_maquina
+	// ..
+	// Nombre_Libro_2 Cantidad_Partes_2
+	// parte_2_1 ip_maquina
+	// ..
+	// ----------------------------------------
+
+	// Conexion NN
+	var connNN *grpc.ClientConn
+	connNN, errNN := grpc.Dial("dist40:9000", grpc.WithInsecure())
+	if errNN != nil {
+		fmt.Println("¡Sin conexión NameNode!\n")
+	} else {
+		defer connNN.Close()
+
+		cNameNodeNN := servernamenode.NewNameNodeServiceClient(connNN)
+		mensaje := servernamenode.EscrituraLog{
+			NombreLibro: Propuesta.NombreLibroSubido,
+			CantPartes:  int32(cant_partes),
+			PartesDN1:   strings.Join(Propuesta.PartesDN1, ","),
+			PartesDN2:   strings.Join(Propuesta.PartesDN2, ","),
+			PartesDN3:   strings.Join(Propuesta.PartesDN3, ","),
+		}
+		cNameNodeNN.EscribirEnLog(context.Background(), &mensaje)
+	}
+}
+
+func EnviarChunks(Propuesta serverdatanode.Propuesta) {
+	for _, indicechunk := range Propuesta.PartesDN1 {
+		ChunkFileName := Propuesta.NombreLibroSubido + "_" + indicechunk
+		fmt.Printf("Enviando chunk a DN1: %s", ChunkFileName+"\n")
+		newFileChunk, err := os.Open(ChunkFileName)
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+		defer newFileChunk.Close()
+		chunkInfo, err := newFileChunk.Stat()
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+		var chunkSize int64 = chunkInfo.Size()
+		chunkBufferBytes := make([]byte, chunkSize)
+		newFileChunk.Read(chunkBufferBytes)
+
+		ChunkLibro := serverdatanode.ChunkLibro{
+			Nombre: ChunkFileName,
+			Chunk:  chunkBufferBytes,
+		}
+
+		// Conexion
+		var connDN1 *grpc.ClientConn
+		connDN1, errDN1 := grpc.Dial("dist37:9001", grpc.WithInsecure())
+		if errDN1 != nil {
+			log.Fatalf("Error al enviar chunk: %v", errDN1)
+		}
+		defer connDN1.Close()
+		cDataNode1 := serverdatanode.NewDataNodeServiceClient(connDN1)
+
+		// gRPC
+		cDataNode1.UploaderSubeLibro(context.Background(), &ChunkLibro)
+
+	}
+	for _, indicechunk := range Propuesta.PartesDN2 {
+		ChunkFileName := Propuesta.NombreLibroSubido + "_" + indicechunk
+		fmt.Printf("Enviando chunk a DN2: %s", ChunkFileName+"\n")
+		newFileChunk, err := os.Open(ChunkFileName)
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+		defer newFileChunk.Close()
+		chunkInfo, err := newFileChunk.Stat()
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+		var chunkSize int64 = chunkInfo.Size()
+		chunkBufferBytes := make([]byte, chunkSize)
+		newFileChunk.Read(chunkBufferBytes)
+
+		ChunkLibro := serverdatanode.ChunkLibro{
+			Nombre: ChunkFileName,
+			Chunk:  chunkBufferBytes,
+		}
+
+		// Conexion
+		var connDN2 *grpc.ClientConn
+		connDN2, errDN2 := grpc.Dial("dist38:9002", grpc.WithInsecure())
+		if errDN2 != nil {
+			log.Fatalf("Error al enviar chunk: %v", errDN2)
+		}
+		defer connDN2.Close()
+		cDataNode2 := serverdatanode.NewDataNodeServiceClient(connDN2)
+
+		// gRPC
+		cDataNode2.UploaderSubeLibro(context.Background(), &ChunkLibro)
+	}
+	for _, indicechunk := range Propuesta.PartesDN3 {
+		ChunkFileName := Propuesta.NombreLibroSubido + "_" + indicechunk
+		fmt.Printf("Enviando chunk a DN3: %s", ChunkFileName+"\n")
+		newFileChunk, err := os.Open(ChunkFileName)
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+		defer newFileChunk.Close()
+		chunkInfo, err := newFileChunk.Stat()
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+		var chunkSize int64 = chunkInfo.Size()
+		chunkBufferBytes := make([]byte, chunkSize)
+		newFileChunk.Read(chunkBufferBytes)
+
+		ChunkLibro := serverdatanode.ChunkLibro{
+			Nombre: ChunkFileName,
+			Chunk:  chunkBufferBytes,
+		}
+
+		// Conexion
+		var connDN3 *grpc.ClientConn
+		connDN3, errDN3 := grpc.Dial("dist39:9003", grpc.WithInsecure())
+		if errDN3 != nil {
+			log.Fatalf("Error al enviar chunk: %v", errDN3)
+		}
+		defer connDN3.Close()
+		cDataNode3 := serverdatanode.NewDataNodeServiceClient(connDN3)
+
+		// gRPC
+		cDataNode3.UploaderSubeLibro(context.Background(), &ChunkLibro)
+	}
+}
+
 func HacerPropuesta(metodo string, NombreLibroSubido string) {
 	var Arreglo_indices_partes_libro []string // Ya no guarda indices, sino que los nombres de los chunks en el directorio
 	if metodo == "distribuido" {
@@ -326,8 +490,24 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 			}
 		}
 
+		Propuesta := serverdatanode.Propuesta{
+			NombreLibroSubido: NombreLibroSubido,
+			PartesDN1:         PartesDN1,
+			PartesDN2:         PartesDN2,
+			PartesDN3:         PartesDN3,
+		}
+
 		// Si llega aca, entonces aprobado == true y se documenta en el registro del NameNode
 		fmt.Println("Valor de aprobado: %v", aprobado)
+
+		// Llamar funcion escritura sobre log namenode
+		// Usar Ricart-Agrawala(Pedir acceso a lugar critico)
+		// Si todos responden -> Escribir con gRPC
+		ID := 1
+		EscribirEnLog(Propuesta, ID, len(Arreglo_indices_partes_libro))
+
+		// Enviar chunks a otros DataNode
+		EnviarChunks(Propuesta)
 
 		//
 	}

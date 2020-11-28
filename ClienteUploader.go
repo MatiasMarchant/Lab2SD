@@ -68,6 +68,7 @@ func main() {
 	fileInfo, _ := file.Stat()
 	var fileSize int64 = fileInfo.Size()
 	const fileChunk = 250 * (1 << 10) // (1 << 10 equivale a 1 Kilobyte), multiplicado 250 veces
+	//const fileChunk = 250000 // 250000 bytes segun propiedades windows, README
 
 	// Calculate total number of parts the file will be chunked into
 

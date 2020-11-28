@@ -5,6 +5,15 @@ message MensajeTest {
     string mensaje = 1;
 }
 
+message EscrituraLog {
+    string NombreLibro = 1;
+    int32 CantPartes = 2;
+    string PartesDN1 = 3;
+    string PartesDN2 = 4;
+    string PartesDN3 = 5;
+}
+
 service NameNodeService {
     rpc EnvioMensajeTest(MensajeTest) returns (MensajeTest) {}
+    rpc EscribirEnLog(EscrituraLog) returns (MensajeTest) {}
 }
