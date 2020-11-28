@@ -35,7 +35,7 @@ func (s *Server) DownloaderDescargaLibro(ctx context.Context, peticion_chunk *Me
 	ChunkFileName := peticion_chunk.Mensaje
 	fmt.Printf("Enviando chunk:  %s", ChunkFileName+"\n")
 
-	newFileChunk, err := os.Open(currentChunkFileName)
+	newFileChunk, err := os.Open(ChunkFileName)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
@@ -52,7 +52,7 @@ func (s *Server) DownloaderDescargaLibro(ctx context.Context, peticion_chunk *Me
 	newFileChunk.Read(chunkBufferBytes)
 
 	ChunkLibro := ChunkLibro{
-		Nombre: currentChunkFileName,
+		Nombre: ChunkFileName,
 		Chunk:  chunkBufferBytes,
 	}
 
