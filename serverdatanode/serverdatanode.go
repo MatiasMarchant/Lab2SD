@@ -50,7 +50,7 @@ func (s *Server) DownloaderDescargaLibro(ctx context.Context, peticion_chunk *Me
 	//}
 
 
-	ChunkLibro := serverdatanode.ChunkLibro{
+	ChunkLibro := ChunkLibro{
 		Nombre: fileName,
 		Chunk:  partBuffer,
 	}
