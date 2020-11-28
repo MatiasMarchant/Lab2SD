@@ -42,9 +42,44 @@ func listaDeLibros() string{
 	return listado
 }
 
-func ubicacionLibro(nLibro string) string{
-	return "No listo aun\n"
+func ubicacionLibro(tituloLibro string) string{
+	file, err := os.Open("log.txt")
+    if err != nil {
+        log.Fatal(err)
+    }
+    defer file.Close()
 
+	scanner := bufio.NewScanner(file)
+	
+	libroEncontrado := false
+	n_chunk := 0
+	max_chunks := 0
+	chunks_totales := ""
+
+    for scanner.Scan() {
+		linea := scanner.Text()
+		splt_linea := strings.Split(linea, " ")
+		i_linea := splt_linea[0]
+		ii_linea := splt_linea[1]
+
+		if !libroEncontrado && i_linea == tituloLibro{	
+			libroEncontrado = true
+			max_chunks, _ = strconv.Atoi(ii_linea)
+		} else if libroEncontrado {
+			if n_chunk < max_chunks{
+				chunks_totales += linea+"\n"
+				n_chunk += 1
+			} else{
+				break;
+			}
+		}
+    }
+
+    if err := scanner.Err(); err != nil {
+        log.Fatal(err)
+	}
+
+	return chunks_totales
 }
 
 func (s *Server) EnvioMensajeTest(ctx context.Context, message *MensajeTest) (*MensajeTest, error) {
