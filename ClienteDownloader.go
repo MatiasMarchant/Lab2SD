@@ -219,7 +219,8 @@ func main() {
 				} else {
 					chunks := respuestaNN.Mensaje
 					fmt.Println("Recibiendo Chunks...")
-					descargarLibro(tituloLibro, chunks)
+					chunksLibro := descargarLibro(tituloLibro, chunks)
+					fmt.Println(chunksLibro)
 				}
 			}
 
