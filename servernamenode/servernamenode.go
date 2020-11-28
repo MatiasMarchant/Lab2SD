@@ -43,7 +43,6 @@ func listaDeLibros() string{
 }
 
 func ubicacionLibro(nLibro string) string{
-	//verificar que exista el libro
 	return "No listo aun\n"
 
 }
