@@ -76,8 +76,8 @@ func main() {
 			if err_NN != nil {
 				fmt.Print("Error al obtener listado: %s", err_NN)
 			} else {
-				fmt.Println(strings.Split(respuestaNN.Mensaje, "\n")[nLibro-1]) 
-				tituloLibro := strings.Split(strings.Split(respuestaNN.Mensaje, "\n")[nLibro-1], "\n")[1]
+
+				tituloLibro := strings.Split(strings.Split(respuestaNN.Mensaje, "\n")[nLibro-1], " ")[1]
 				
 				mensajeNN := servernamenode.MensajeTest{
 					Mensaje: "ubicacion "+tituloLibro,
