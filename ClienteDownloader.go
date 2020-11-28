@@ -15,66 +15,95 @@ import (
 	"strings"
 )
 
-func pedir_a_DataNode1(chunk string) *ChunkLibro{
+//message ChunkLibro {
+//    string Nombre = 1;
+//    bytes Chunk = 2;
+//}
+
+func pedir_a_DataNode1(chunk string) *serverdatanode.ChunkLibro{
 	//--------------------------------------------------------------------
 	// Conexion a DataNode 1
+	partBuffer := make([]byte, 0)
+	chunk_vacio := serverdatanode.ChunkLibro{
+		Nombre: "vacio",
+		Chunk:  partBuffer,
+	}
+
 	var conn_DN1 *grpc.ClientConn
 	conn_DN1, err_DN1 := grpc.Dial("dist37:9001", grpc.WithInsecure())
 	if err_DN1 != nil {
 		fmt.Printf("Sin conexión DataNode 1\n")
+		return &chunk_vacio
+
 	} else {
 		defer conn_DN1.Close()
 		cDataNode1 := serverdatanode.NewDataNodeServiceClient(conn_DN1)
 		peticion_chunk_DN1 := serverdatanode.MensajeTest{
 			Mensaje: chunk,
 		}
-		chunk, err_DN1 := cDataNode1.DownloaderDescargaLibro(context.Background(), &peticion_chunk_DN1)
+		chunk_retorno, err_DN1 := cDataNode1.DownloaderDescargaLibro(context.Background(), &peticion_chunk_DN1)
 		if err_DN1 != nil {
 			fmt.Printf("> Sin respuesta DataNode2.\n")
 		}		
-		return &chunk
+		return &chunk_retorno
 	}
 }
 
-func pedir_a_DataNode2(chunk string) *ChunkLibro{
+func pedir_a_DataNode2(chunk string) *serverdatanode.ChunkLibro{
 	//--------------------------------------------------------------------
 	// Conexion a DataNode 2
+	partBuffer := make([]byte, 0)
+	chunk_vacio := serverdatanode.ChunkLibro{
+		Nombre: "vacio",
+		Chunk:  partBuffer,
+	}
+
 	var conn_DN2 *grpc.ClientConn
 	conn_DN2, err_DN2 := grpc.Dial("dist38:9002", grpc.WithInsecure())
 	if err_DN2 != nil {
 		fmt.Printf("Sin conexión DataNode 2\n")
+		return &chunk_vacio
+
 	} else {
 		defer conn_DN2.Close()
 		cDataNode2 := serverdatanode.NewDataNodeServiceClient(conn_DN2)
 		peticion_chunk_DN2 := serverdatanode.MensajeTest{
 			Mensaje: chunk,
 		}
-		chunk, err_DN2 := cDataNode2.DownloaderDescargaLibro(context.Background(), &peticion_chunk_DN2)
+		chunk_retorno, err_DN2 := cDataNode2.DownloaderDescargaLibro(context.Background(), &peticion_chunk_DN2)
 		if err_DN2 != nil {
 			fmt.Printf("> Sin respuesta DataNode2.\n")
-		}
-		return &chunk
+		}		
+		return &chunk_retorno
 	}
 }
 
-func pedir_a_DataNode3(chunk string) *ChunkLibro{
+func pedir_a_DataNode3(chunk string) *serverdatanode.ChunkLibro{
 	//--------------------------------------------------------------------
 	// Conexion a DataNode 3
+	partBuffer := make([]byte, 0)
+	chunk_vacio := serverdatanode.ChunkLibro{
+		Nombre: "vacio",
+		Chunk:  partBuffer,
+	}
+
 	var conn_DN3 *grpc.ClientConn
 	conn_DN3, err_DN3 := grpc.Dial("dist39:9003", grpc.WithInsecure())
 	if err_DN3 != nil {
 		fmt.Printf("Sin conexión DataNode 3\n")
+		return &chunk_vacio
+
 	} else {
 		defer conn_DN3.Close()
 		cDataNode3 := serverdatanode.NewDataNodeServiceClient(conn_DN3)
 		peticion_chunk_DN3 := serverdatanode.MensajeTest{
 			Mensaje: chunk,
 		}
-		chunk, err_DN3 := cDataNode3.DownloaderDescargaLibro(context.Background(), &peticion_chunk_DN3)
+		chunk_retorno, err_DN3 := cDataNode3.DownloaderDescargaLibro(context.Background(), &peticion_chunk_DN3)
 		if err_DN3 != nil {
 			fmt.Printf("> Sin respuesta DataNode2.\n")
 		}		
-		return &chunk
+		return &chunk_retorno
 	}
 }
 
@@ -83,7 +112,7 @@ func descargarLibro(tituloLibro string, chunks string) {
 	// chunk = "Dracula-Stoker_Bram_3" (ejemplo)
 
 	str_chunks_arr := strings.Split(chunks, "\n")
-	var chunks_libro []ChunkLibro
+	var chunks_libro []serverdatanode.ChunkLibro
 
 	for _, i := range chunks_arr{
 		i_split := strings.Split(i, " ")
