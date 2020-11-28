@@ -158,7 +158,7 @@ func juntarChunks(tituloLibro string, chunksLibro [] serverdatanode.ChunkLibro){
 			os.Exit(1)
 	}
 
-	for _, chunkBufferBytes := range str_chunks_arr{
+	for _, chunkBufferBytes := range chunksLibro{
 
 			n, err := file.Write(chunkBufferBytes)
 
