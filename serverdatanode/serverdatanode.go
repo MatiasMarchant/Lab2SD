@@ -51,7 +51,7 @@ func (s *Server) DownloaderDescargaLibro(ctx context.Context, peticion_chunk *Me
 
 
 	ChunkLibro := ChunkLibro{
-		Nombre: fileName,
+		Nombre: "testFileName",
 		Chunk:  partBuffer,
 	}
 
