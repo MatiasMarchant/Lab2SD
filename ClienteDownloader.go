@@ -110,7 +110,7 @@ func pedir_a_DataNode3(chunk string) *serverdatanode.ChunkLibro{
 	}
 }
 
-func descargarLibro(tituloLibro string, chunks string) [] *serverdatanode.ChunkLibro{
+func descargarLibro(tituloLibro string, chunks string) [] serverdatanode.ChunkLibro{
 	//chunks_arr = [0 dist37, 1 dist37, 2 dist37, 3 dist37, 4 dist37]
 	// chunk = "Dracula-Stoker_Bram_3" (ejemplo)
 
@@ -141,7 +141,7 @@ func descargarLibro(tituloLibro string, chunks string) [] *serverdatanode.ChunkL
 		}		
 
 	}
-	return *chunks_libro
+	return chunks_libro
 }
 
 
