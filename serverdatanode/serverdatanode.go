@@ -36,7 +36,7 @@ func (s *Server) DownloaderDescargaLibro(ctx context.Context, peticion_chunk *Me
 
 	
 	//partSize := int(math.Min(fileChunk, float64(fileSize-int64(i*fileChunk))))
-	partSize = 0
+	partSize := 0
 	partBuffer := make([]byte, partSize)
 
 	//file.Read(partBuffer)
