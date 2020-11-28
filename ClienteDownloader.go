@@ -146,7 +146,7 @@ func juntarChunks(tituloLibro string, chunksLibro [] serverdatanode.ChunkLibro){
 	// verificar si existen chunks vacios!
 	// crear carpeta Descargas
 	
-	newFileName := "Descargas/"+tituloLibro
+	newFileName := "Descargas/"+tituloLibro+".pdf"
 	_, err := os.Create(newFileName)
 	if err != nil {
 			fmt.Println(err)
