@@ -444,8 +444,6 @@ type DataNodeServiceClient interface {
 	Propuesta_Distribuido(ctx context.Context, in *Propuestagrpc, opts ...grpc.CallOption) (*Booleano, error)
 
 	DownloaderDescargaLibro(ctx context.Context, in *MensajeTest, opts ...grpc.CallOption) (*ChunkLibro, error)
-
-r
 }
 
 type dataNodeServiceClient struct {
