@@ -146,9 +146,9 @@ func juntarChunks(chunksLibro [] serverdatanode.ChunkLibro){
 	// verificar si existen chunks vacios!
 	// crear carpeta Descargas
 	
-	for _, i := range chunksLibro{
-		fmt.Println(i.Nombre)
-	}
+	
+	fmt.Println(chunksLibro[0].Chunk)
+	
 }
 
 
