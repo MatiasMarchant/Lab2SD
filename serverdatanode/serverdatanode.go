@@ -2,6 +2,7 @@ package serverdatanode
 
 import (
 	"golang.org/x/net/context"
+	"google.golang.org/grpc"
 
 	"fmt"
 	"io/ioutil"
@@ -51,8 +52,121 @@ func (s *Server) UploaderTerminoDeSubirLibro(ctx context.Context, NombreLibro *M
 }
 
 func (s *Server) Propuesta_Distribuido(ctx context.Context, Propuesta *Propuestagrpc) (*Booleano, error) {
-	// Quizas implementar una probabilidad de que la rechace?
-	// Porque cuando se llega aca, ya se sabe si esque los nodos están vivos o muertos (creo)
+	// Revisar conflictos
+	// Que quienes tengan chunks estén vivos
+	// Que quienes no tengan chunks no estén vivos
 
-	return &Booleano{Booleano: false}, nil
+	// ----------------------------------------------------------------------------
+	FlagRespuestaDN1 := false
+	FlagRespuestaDN2 := false
+	FlagRespuestaDN3 := false
+	if Propuesta.PartesDN1 != "" { // Si tiene chunks asignados, verificar if vivo
+		var connDN1 *grpc.ClientConn
+		connDN1, errDN1 := grpc.Dial("dist37:9001", grpc.WithInsecure())
+		if errDN1 != nil {
+			FlagRespuestaDN1 = false
+		} else {
+			defer connDN1.Close()
+			cDataNode1 := NewDataNodeServiceClient(connDN1)
+			_, errDN1 := cDataNode1.EnvioMensajeTest(context.Background(), &MensajeTest{Mensaje: "Hola"})
+
+			if errDN1 != nil {
+				FlagRespuestaDN1 = false // Esta muerto
+			} else {
+				FlagRespuestaDN1 = true // Responde que esta vivo
+			}
+		}
+
+	} else { // Si no tiene chunks asignados, verificar if not vivo
+		var connDN1 *grpc.ClientConn
+		connDN1, errDN1 := grpc.Dial("dist37:9001", grpc.WithInsecure())
+		if errDN1 != nil {
+			FlagRespuestaDN1 = true
+		} else {
+			defer connDN1.Close()
+			cDataNode1 := NewDataNodeServiceClient(connDN1)
+			_, errDN1 := cDataNode1.EnvioMensajeTest(context.Background(), &MensajeTest{Mensaje: "Hola"})
+
+			if errDN1 != nil {
+				FlagRespuestaDN1 = true // Esta muerto, tonces esta bien que no tenga chunks
+			} else {
+				FlagRespuestaDN1 = false
+			}
+		}
+	}
+
+	// ----------------------------------------------------------------------------
+
+	if Propuesta.PartesDN2 != "" {
+		var connDN2 *grpc.ClientConn
+		connDN2, errDN2 := grpc.Dial("dist38:9002", grpc.WithInsecure())
+		if errDN2 != nil {
+			FlagRespuestaDN2 = false
+		} else {
+			defer connDN2.Close()
+			cDataNode2 := NewDataNodeServiceClient(connDN2)
+			_, errDN2 := cDataNode2.EnvioMensajeTest(context.Background(), &MensajeTest{Mensaje: "Hola"})
+			if errDN2 != nil {
+				FlagRespuestaDN2 = false
+			} else {
+				FlagRespuestaDN2 = true
+			}
+		}
+	} else {
+		var connDN2 *grpc.ClientConn
+		connDN2, errDN2 := grpc.Dial("dist38:9002", grpc.WithInsecure())
+		if errDN2 != nil {
+			FlagRespuestaDN2 = true
+		} else {
+			defer connDN2.Close()
+			cDataNode2 := NewDataNodeServiceClient(connDN2)
+			_, errDN2 := cDataNode2.EnvioMensajeTest(context.Background(), &MensajeTest{Mensaje: "Hola"})
+			if errDN2 != nil {
+				FlagRespuestaDN2 = true
+			} else {
+				FlagRespuestaDN2 = false
+			}
+		}
+	}
+
+	// ----------------------------------------------------------------------------
+
+	if Propuesta.PartesDN3 != "" {
+		var connDN3 *grpc.ClientConn
+		connDN3, errDN3 := grpc.Dial("dist39:9003", grpc.WithInsecure())
+		if errDN3 != nil {
+			FlagRespuestaDN3 = false
+		} else {
+			defer connDN3.Close()
+			cDataNode3 := NewDataNodeServiceClient(connDN3)
+			_, errDN3 := cDataNode3.EnvioMensajeTest(context.Background(), &MensajeTest{Mensaje: "Hola"})
+			if errDN3 != nil {
+				FlagRespuestaDN3 = false
+			} else {
+				FlagRespuestaDN3 = true
+			}
+		}
+
+	} else {
+		var connDN3 *grpc.ClientConn
+		connDN3, errDN3 := grpc.Dial("dist39:9003", grpc.WithInsecure())
+		if errDN3 != nil {
+			FlagRespuestaDN3 = true
+		} else {
+			defer connDN3.Close()
+			cDataNode3 := NewDataNodeServiceClient(connDN3)
+			_, errDN3 := cDataNode3.EnvioMensajeTest(context.Background(), &MensajeTest{Mensaje: "Hola"})
+			if errDN3 != nil {
+				FlagRespuestaDN3 = true
+			} else {
+				FlagRespuestaDN3 = false
+			}
+
+		}
+	}
+	// ----------------------------------------------------------------------------
+
+	RespuestaBooleano := Booleano{Booleano: FlagRespuestaDN1 && FlagRespuestaDN2 && FlagRespuestaDN3}
+
+	return &RespuestaBooleano, nil
 }

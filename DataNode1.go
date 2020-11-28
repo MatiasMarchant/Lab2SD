@@ -245,7 +245,7 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		var PartesDN1 []string
 		var PartesDN2 []string
 		var PartesDN3 []string
-		for aprobado {
+		for true {
 			respuesta_propuesta_DN2 := false
 			respuesta_propuesta_DN3 := false
 			Arreglo_copia := Arreglo_indices_partes_libro
@@ -317,11 +317,19 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 				respuesta_propuesta_DN3 = true
 			}
 
+			fmt.Println("respuesta_propuesta_DN2: ", respuesta_propuesta_DN2, " respuesta_propuesta_DN3: ", respuesta_propuesta_DN3)
+
 			aprobado = respuesta_propuesta_DN2 && respuesta_propuesta_DN3
+			fmt.Println("Valor de aprobado dentro de : %v", aprobado)
+			if aprobado == true {
+				break
+			}
 		}
 
 		// Si llega aca, entonces aprobado == true y se documenta en el registro del NameNode
 		fmt.Println("Valor de aprobado: %v", aprobado)
+
+		//
 	}
 	/*
 		else { // Centralizado

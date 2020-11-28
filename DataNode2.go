@@ -57,7 +57,7 @@ func enviar_a_DataNode1(mensaje_cliente string) {
 
 		respuesta_DN1, err_DN2 := cDataNode1.EnvioMensajeTest(context.Background(), &mensajetest_DN1)
 
-		if err_DN1 != nil {
+		if err_DN2 != nil {
 			fmt.Printf("> Sin respuesta DataNode1.\n")
 		} else {
 			fmt.Printf("|Cliente| DataNode 1 responde: %s", respuesta_DN1.Mensaje)
