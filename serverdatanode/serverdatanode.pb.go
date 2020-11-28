@@ -273,7 +273,6 @@ var file_serverdatanode_proto_rawDesc = []byte{
 	0x65, 0x73, 0x44, 0x4e, 0x33, 0x22, 0x26, 0x0a, 0x08, 0x42, 0x6f, 0x6f, 0x6c, 0x65, 0x61, 0x6e,
 	0x6f, 0x12, 0x1a, 0x0a, 0x08, 0x42, 0x6f, 0x6f, 0x6c, 0x65, 0x61, 0x6e, 0x6f, 0x18, 0x01, 0x20,
 	0x01, 0x28, 0x08, 0x52, 0x08, 0x42, 0x6f, 0x6f, 0x6c, 0x65, 0x61, 0x6e, 0x6f, 0x32, 0xb6, 0x03,
-	0x01, 0x28, 0x08, 0x52, 0x08, 0x42, 0x6f, 0x6f, 0x6c, 0x65, 0x61, 0x6e, 0x6f, 0x32, 0xe0, 0x02,
 	0x0a, 0x0f, 0x44, 0x61, 0x74, 0x61, 0x4e, 0x6f, 0x64, 0x65, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63,
 	0x65, 0x12, 0x4e, 0x0a, 0x10, 0x45, 0x6e, 0x76, 0x69, 0x6f, 0x4d, 0x65, 0x6e, 0x73, 0x61, 0x6a,
 	0x65, 0x54, 0x65, 0x73, 0x74, 0x12, 0x1b, 0x2e, 0x73, 0x65, 0x72, 0x76, 0x65, 0x72, 0x64, 0x61,
@@ -302,8 +301,6 @@ var file_serverdatanode_proto_rawDesc = []byte{
 	0x73, 0x61, 0x6a, 0x65, 0x54, 0x65, 0x73, 0x74, 0x1a, 0x1a, 0x2e, 0x73, 0x65, 0x72, 0x76, 0x65,
 	0x72, 0x64, 0x61, 0x74, 0x61, 0x6e, 0x6f, 0x64, 0x65, 0x2e, 0x43, 0x68, 0x75, 0x6e, 0x6b, 0x4c,
 	0x69, 0x62, 0x72, 0x6f, 0x22, 0x00, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
-	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
-
 }
 
 var (
@@ -330,7 +327,6 @@ var file_serverdatanode_proto_depIdxs = []int32{
 	1, // 1: serverdatanode.DataNodeService.UploaderSubeLibro:input_type -> serverdatanode.ChunkLibro
 	0, // 2: serverdatanode.DataNodeService.UploaderTerminoDeSubirLibro:input_type -> serverdatanode.MensajeTest
 	2, // 3: serverdatanode.DataNodeService.Propuesta_Distribuido:input_type -> serverdatanode.Propuestagrpc
-
 	0, // 4: serverdatanode.DataNodeService.DownloaderDescargaLibro:input_type -> serverdatanode.MensajeTest
 	0, // 5: serverdatanode.DataNodeService.EnvioMensajeTest:output_type -> serverdatanode.MensajeTest
 	0, // 6: serverdatanode.DataNodeService.UploaderSubeLibro:output_type -> serverdatanode.MensajeTest
@@ -339,13 +335,6 @@ var file_serverdatanode_proto_depIdxs = []int32{
 	1, // 9: serverdatanode.DataNodeService.DownloaderDescargaLibro:output_type -> serverdatanode.ChunkLibro
 	5, // [5:10] is the sub-list for method output_type
 	0, // [0:5] is the sub-list for method input_type
-
-	0, // 4: serverdatanode.DataNodeService.EnvioMensajeTest:output_type -> serverdatanode.MensajeTest
-	0, // 5: serverdatanode.DataNodeService.UploaderSubeLibro:output_type -> serverdatanode.MensajeTest
-	0, // 6: serverdatanode.DataNodeService.UploaderTerminoDeSubirLibro:output_type -> serverdatanode.MensajeTest
-	3, // 7: serverdatanode.DataNodeService.Propuesta_Distribuido:output_type -> serverdatanode.Booleano
-	4, // [4:8] is the sub-list for method output_type
-	0, // [0:4] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -442,7 +431,6 @@ type DataNodeServiceClient interface {
 	UploaderSubeLibro(ctx context.Context, in *ChunkLibro, opts ...grpc.CallOption) (*MensajeTest, error)
 	UploaderTerminoDeSubirLibro(ctx context.Context, in *MensajeTest, opts ...grpc.CallOption) (*MensajeTest, error)
 	Propuesta_Distribuido(ctx context.Context, in *Propuestagrpc, opts ...grpc.CallOption) (*Booleano, error)
-
 	DownloaderDescargaLibro(ctx context.Context, in *MensajeTest, opts ...grpc.CallOption) (*ChunkLibro, error)
 }
 
@@ -490,7 +478,6 @@ func (c *dataNodeServiceClient) Propuesta_Distribuido(ctx context.Context, in *P
 	return out, nil
 }
 
-
 func (c *dataNodeServiceClient) DownloaderDescargaLibro(ctx context.Context, in *MensajeTest, opts ...grpc.CallOption) (*ChunkLibro, error) {
 	out := new(ChunkLibro)
 	err := c.cc.Invoke(ctx, "/serverdatanode.DataNodeService/DownloaderDescargaLibro", in, out, opts...)
@@ -500,7 +487,6 @@ func (c *dataNodeServiceClient) DownloaderDescargaLibro(ctx context.Context, in 
 	return out, nil
 }
 
-
 // DataNodeServiceServer is the server API for DataNodeService service.
 type DataNodeServiceServer interface {
 	EnvioMensajeTest(context.Context, *MensajeTest) (*MensajeTest, error)
@@ -508,7 +494,6 @@ type DataNodeServiceServer interface {
 	UploaderTerminoDeSubirLibro(context.Context, *MensajeTest) (*MensajeTest, error)
 	Propuesta_Distribuido(context.Context, *Propuestagrpc) (*Booleano, error)
 	DownloaderDescargaLibro(context.Context, *MensajeTest) (*ChunkLibro, error)
-
 }
 
 // UnimplementedDataNodeServiceServer can be embedded to have forward compatible implementations.
@@ -527,7 +512,6 @@ func (*UnimplementedDataNodeServiceServer) UploaderTerminoDeSubirLibro(context.C
 func (*UnimplementedDataNodeServiceServer) Propuesta_Distribuido(context.Context, *Propuestagrpc) (*Booleano, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Propuesta_Distribuido not implemented")
 }
-
 func (*UnimplementedDataNodeServiceServer) DownloaderDescargaLibro(context.Context, *MensajeTest) (*ChunkLibro, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DownloaderDescargaLibro not implemented")
 }
@@ -608,7 +592,6 @@ func _DataNodeService_Propuesta_Distribuido_Handler(srv interface{}, ctx context
 	return interceptor(ctx, in, info, handler)
 }
 
-
 func _DataNodeService_DownloaderDescargaLibro_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(MensajeTest)
 	if err := dec(in); err != nil {
@@ -626,7 +609,6 @@ func _DataNodeService_DownloaderDescargaLibro_Handler(srv interface{}, ctx conte
 	}
 	return interceptor(ctx, in, info, handler)
 }
-
 
 var _DataNodeService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "serverdatanode.DataNodeService",
@@ -648,12 +630,10 @@ var _DataNodeService_serviceDesc = grpc.ServiceDesc{
 			MethodName: "Propuesta_Distribuido",
 			Handler:    _DataNodeService_Propuesta_Distribuido_Handler,
 		},
-
 		{
 			MethodName: "DownloaderDescargaLibro",
 			Handler:    _DataNodeService_DownloaderDescargaLibro_Handler,
 		},
-
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "serverdatanode.proto",
