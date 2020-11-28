@@ -10,8 +10,21 @@ message ChunkLibro {
     bytes Chunk = 2;
 }
 
+message Propuestagrpc {
+    string NombreLibroSubido = 1;
+    string PartesDN1 = 2;
+    string PartesDN2 = 3;
+    string PartesDN3 = 4;
+}
+
+message Booleano {
+    bool Booleano = 1;
+}
+
 service DataNodeService {
     rpc EnvioMensajeTest(MensajeTest) returns (MensajeTest) {}
     rpc UploaderSubeLibro(ChunkLibro) returns (MensajeTest) {}
+    rpc UploaderTerminoDeSubirLibro(MensajeTest) returns (MensajeTest) {}
+    rpc Propuesta_Distribuido(Propuestagrpc) returns (Booleano) {}
     rpc DownloaderDescargaLibro(MensajeTest) returns (ChunkLibro) {}
 }
