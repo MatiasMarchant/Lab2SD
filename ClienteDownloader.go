@@ -43,7 +43,7 @@ func pedir_a_DataNode1(chunk string) *serverdatanode.ChunkLibro{
 		}
 		chunk_retorno, err_DN1 := cDataNode1.DownloaderDescargaLibro(context.Background(), &peticion_chunk_DN1)
 		if err_DN1 != nil {
-			fmt.Printf("> Sin respuesta DataNode2.\n")
+			fmt.Printf("> Sin respuesta DataNode 1.\n")
 			return &chunk_vacio
 		}		
 		return chunk_retorno
@@ -73,7 +73,7 @@ func pedir_a_DataNode2(chunk string) *serverdatanode.ChunkLibro{
 		}
 		chunk_retorno, err_DN2 := cDataNode2.DownloaderDescargaLibro(context.Background(), &peticion_chunk_DN2)
 		if err_DN2 != nil {
-			fmt.Printf("> Sin respuesta DataNode2.\n")
+			fmt.Printf("> Sin respuesta DataNode 2.\n")
 			return &chunk_vacio
 		}		
 		return chunk_retorno
@@ -103,14 +103,14 @@ func pedir_a_DataNode3(chunk string) *serverdatanode.ChunkLibro{
 		}
 		chunk_retorno, err_DN3 := cDataNode3.DownloaderDescargaLibro(context.Background(), &peticion_chunk_DN3)
 		if err_DN3 != nil {
-			fmt.Printf("> Sin respuesta DataNode2.\n")
+			fmt.Printf("> Sin respuesta DataNode 3.\n")
 			return &chunk_vacio
 		}		
 		return chunk_retorno
 	}
 }
 
-func descargarLibro(tituloLibro string, chunks string) {
+func descargarLibro(tituloLibro string, chunks string) [] *serverdatanode.ChunkLibro{
 	//chunks_arr = [0 dist37, 1 dist37, 2 dist37, 3 dist37, 4 dist37]
 	// chunk = "Dracula-Stoker_Bram_3" (ejemplo)
 
@@ -141,11 +141,7 @@ func descargarLibro(tituloLibro string, chunks string) {
 		}		
 
 	}
-	//------------------------------------------------------------------------------------------
-	// Juntar chunks y crear el archivo
-	fmt.Println("Chunks recibidos")
-	fmt.Println(chunks_libro)
-	//------------------------------------------------------------------------------------------
+	return chunks_libro
 }
 
 
@@ -222,6 +218,7 @@ func main() {
 					fmt.Print("Error al obtener respuesta de NameNode: %s", err_NN)
 				} else {
 					chunks := respuestaNN.Mensaje
+					fmt.Println("Recibiendo Chunks...")
 					descargarLibro(tituloLibro, chunks)
 				}
 			}
