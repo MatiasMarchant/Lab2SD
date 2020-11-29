@@ -212,7 +212,7 @@ func Enviar_Propuesta_NameNode(propuesta servernamenode.Propuestagrpc) servernam
 		if err_NN != nil {
 			log.Fatalf("> Error al enviar propuesta a NameNode.\n")			
 		}
-		return &respuesta_NN
+		return *respuesta_NN
 	}
 }
 
