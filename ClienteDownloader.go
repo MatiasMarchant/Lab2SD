@@ -195,6 +195,7 @@ func main() {
 		fmt.Print("Ingrese una opción\n")
 		fmt.Print("> 1. Solicitar listado de libros\n")
 		fmt.Print("> 2. Descargar libro\n")
+		fmt.Print("---------------------------------------\n")
 	
 	
 		var opcion int
@@ -215,14 +216,16 @@ func main() {
 			if err_NN != nil {
 				fmt.Print("Error al obtener listado: %s", err_NN)
 			} else {
-				fmt.Print("\nListado:\n")
+				fmt.Print("\n##### Listado #####\n")
 				fmt.Print(respuestaNN_listado.Mensaje)
+				fmt.Print("####################\n")
 			}
 
 			//---------------------------------------------------------------------------------------------------------------
 		} else if opcion == 2{
 			//---------------------------------------------------------------------------------------------------------------
 			// Descargar Libro
+			fmt.Print("-----------------------------------------------\n")
 			fmt.Print("Ingrese el número del libro que desea descargar:\n")
 			var nLibro int
 			_, err := fmt.Scanf("%d", &nLibro)
@@ -250,10 +253,10 @@ func main() {
 					fmt.Print("Error al obtener respuesta de NameNode: %s", err_NN)
 				} else {
 					chunks := respuestaNN.Mensaje
-					fmt.Println("Recibiendo Chunks...")
+					fmt.Println("> Recibiendo Chunks...")
 					chunksLibro := getChunksLibro(tituloLibro, chunks)
 					juntarChunks(tituloLibro, chunksLibro)
-					fmt.Println("Libro descargado.")
+					fmt.Println("> Libro descargado.\n")
 				}
 			}
 
