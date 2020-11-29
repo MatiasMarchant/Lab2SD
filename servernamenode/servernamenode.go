@@ -129,24 +129,21 @@ func (s *Server) EscribirEnLog(ctx context.Context, message *EscrituraLog) (*Men
 	// Sacarle el nombre a las partes, para solo escribir el indice
 	// Y sortear de menor a mayor
 
-	fmt.Println("message.NombreLibro: ", message.NombreLibro)
-	for _, palabra := range PartesDN1 {
+	for indice, palabra := range PartesDN1 {
 		palabra = strings.TrimPrefix(palabra, message.NombreLibro+"_")
-		fmt.Println("\n\n\npalabra:", palabra)
+		PartesDN1[indice] = palabra
 	}
 	sort.Strings(PartesDN1)
-	for _, palabra := range PartesDN2 {
+	for indice, palabra := range PartesDN2 {
 		palabra = strings.TrimPrefix(palabra, message.NombreLibro+"_")
+		PartesDN2[indice] = palabra
 	}
 	sort.Strings(PartesDN2)
-	for _, palabra := range PartesDN3 {
+	for indice, palabra := range PartesDN3 {
 		palabra = strings.TrimPrefix(palabra, message.NombreLibro+"_")
+		PartesDN3[indice] = palabra
 	}
 	sort.Strings(PartesDN3)
-
-	fmt.Println("\nPartesDN1: ", PartesDN1)
-	fmt.Println("PartesDN2: ", PartesDN2)
-	fmt.Println("PartesDN3: ", PartesDN3)
 
 	// Ahora si se puede escribir
 	intmessageCantPartes := int(message.CantPartes)
