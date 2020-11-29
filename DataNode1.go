@@ -403,11 +403,11 @@ func EnviarChunks(Propuesta serverdatanode.Propuesta) {
 
 func EnviarChunks_Centralizado(Propuesta servernamenode.Propuestagrpc) {
 	
-	Propuesta.PartesDN1 = strings.Split(Propuesta.PartesDN1, ",")
-	Propuesta.PartesDN2 = strings.Split(Propuesta.PartesDN2, ",")
-	Propuesta.PartesDN3 = strings.Split(Propuesta.PartesDN3, ",")
+	PropuestasPartesDN1 := strings.Split(Propuesta.PartesDN1, ",")
+	PropuestasPartesDN2 := strings.Split(Propuesta.PartesDN2, ",")
+	PropuestasPartesDN3 := strings.Split(Propuesta.PartesDN3, ",")
 
-	for _, indicechunk := range Propuesta.PartesDN1 {
+	for _, indicechunk := range PropuestasPartesDN1 {
 		ChunkFileName := indicechunk
 		fmt.Printf("Enviando chunk a DN1: %s", ChunkFileName+"\n")
 		newFileChunk, err := os.Open(ChunkFileName)
@@ -443,7 +443,7 @@ func EnviarChunks_Centralizado(Propuesta servernamenode.Propuestagrpc) {
 		cDataNode1.UploaderSubeLibro(context.Background(), &ChunkLibro)
 
 	}
-	for _, indicechunk := range Propuesta.PartesDN2 {
+	for _, indicechunk := range PropuestasPartesDN2 {
 		ChunkFileName := indicechunk
 		fmt.Printf("Enviando chunk a DN2: %s", ChunkFileName+"\n")
 		newFileChunk, err := os.Open(ChunkFileName)
@@ -478,7 +478,7 @@ func EnviarChunks_Centralizado(Propuesta servernamenode.Propuestagrpc) {
 		// gRPC
 		cDataNode2.UploaderSubeLibro(context.Background(), &ChunkLibro)
 	}
-	for _, indicechunk := range Propuesta.PartesDN3 {
+	for _, indicechunk := range PropuestasPartesDN3 {
 		ChunkFileName := indicechunk
 		fmt.Printf("Enviando chunk a DN3: %s", ChunkFileName+"\n")
 		newFileChunk, err := os.Open(ChunkFileName)
