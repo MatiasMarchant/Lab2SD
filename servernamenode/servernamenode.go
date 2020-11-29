@@ -132,6 +132,7 @@ func (s *Server) EscribirEnLog(ctx context.Context, message *EscrituraLog) (*Men
 	fmt.Println("message.NombreLibro: ", message.NombreLibro)
 	for _, palabra := range PartesDN1 {
 		palabra = strings.TrimPrefix(palabra, message.NombreLibro+"_")
+		fmt.Println("\n\n\npalabra:", palabra)
 	}
 	sort.Strings(PartesDN1)
 	for _, palabra := range PartesDN2 {
