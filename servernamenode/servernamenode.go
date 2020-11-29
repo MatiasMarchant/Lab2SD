@@ -12,6 +12,13 @@ import (
 	"strings"
 )
 
+type Propuesta struct {
+	NombreLibroSubido string
+	PartesDN1         []string
+	PartesDN2         []string
+	PartesDN3         []string // Strings para hacer la concatenacion mas facil
+}
+
 type Server struct {
 }
 

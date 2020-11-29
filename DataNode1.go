@@ -202,18 +202,17 @@ func Enviar_Propuesta_NameNode(propuesta servernamenode.Propuestagrpc) servernam
 	conn_NN, err_NN := grpc.Dial("dist40:9000", grpc.WithInsecure())
 	if err_NN != nil {
 		log.Fatalf("¡Sin conexión con NameNode!\n")	
-	} else {
-		defer conn_NN.Close()
+	} 
+	defer conn_NN.Close()
 
-		cNameNode := servernamenode.NewNameNodeServiceClient(conn_NN)
-		// Enviar propuesta por gRPC
-		respuesta_NN, err_NN := cNameNode.Propuesta_Centralizado(context.Background(), &propuesta)
+	cNameNode := servernamenode.NewNameNodeServiceClient(conn_NN)
+	// Enviar propuesta por gRPC
+	respuesta_NN, err_NN := cNameNode.Propuesta_Centralizado(context.Background(), &propuesta)
 
-		if err_NN != nil {
-			log.Fatalf("> Error al enviar propuesta a NameNode.\n")			
-		}
-		return *respuesta_NN
+	if err_NN != nil {
+		log.Fatalf("> Error al enviar propuesta a NameNode.\n")			
 	}
+	return *respuesta_NN
 }
 
 func EscribirEnLog(Propuesta serverdatanode.Propuesta, ID int, cant_partes int) {
@@ -560,7 +559,7 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		var PartesDN2 []string
 		var PartesDN3 []string
 
-		Propuesta := servernamenode.Propuestagrpc{
+		Propuesta := servernamenode.Propuesta{
 			NombreLibroSubido: NombreLibroSubido,
 			PartesDN1:         PartesDN1,
 			PartesDN2:         PartesDN2,
@@ -594,6 +593,13 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 					log.Fatalf("Error en random")
 				}
 			}
+		}
+
+		Propuesta_grpc := servernamenode.Propuestagrpc{
+			NombreLibroSubido: propuesta.NombreLibroSubido,
+			PartesDN1: strings.Join(Propuesta.PartesDN1, ","),
+			PartesDN2: strings.Join(Propuesta.PartesDN2, ","),
+			PartesDN3: strings.Join(Propuesta.PartesDN3, ","),
 		}
 
 		// respuesta_propuesta_NN es una propuesta
