@@ -208,7 +208,7 @@ func Enviar_Propuesta_NameNode(propuesta serverdatanode.Propuesta) serverdatanod
 
 		cNameNode := servernamenode.NewNameNodeServiceClient(conn_NN)
 		// Enviar propuesta por gRPC
-		respuesta_NN, err_NN := cNameNode.Propuesta_Centralizado(context.Background(), &Propuesta_grpc)
+		respuesta_NN, err_NN := cNameNode.Propuesta_Centralizado(context.Background(), &propuesta)
 
 		if err_NN != nil {
 			fmt.Printf("> Error al enviar propuesta.\n")
