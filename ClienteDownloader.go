@@ -191,11 +191,11 @@ func main() {
 	cNameNodeNN := servernamenode.NewNameNodeServiceClient(conn_NN)
 
 	for {
-		fmt.Print("---------------------------------------\n")
+		fmt.Print("---------------------------------\n")
 		fmt.Print("Ingrese una opción\n")
 		fmt.Print("> 1. Solicitar listado de libros\n")
 		fmt.Print("> 2. Descargar libro\n")
-		fmt.Print("---------------------------------------\n")
+		fmt.Print("---------------------------------\n")
 	
 	
 		var opcion int
@@ -216,9 +216,9 @@ func main() {
 			if err_NN != nil {
 				fmt.Print("Error al obtener listado: %s", err_NN)
 			} else {
-				fmt.Print("\n##### Listado #####\n")
+				fmt.Print("\n----- Listado -----\n")
 				fmt.Print(respuestaNN_listado.Mensaje)
-				fmt.Print("####################\n")
+				fmt.Print("--------------------\n")
 			}
 
 			//---------------------------------------------------------------------------------------------------------------
