@@ -104,6 +104,8 @@ func main() {
 	fmt.Println("DataNode 2 escuchando en puerto 9002.\n")
 	s := serverdatanode.Server{}
 
+	//s.FlagLibroSubido = false
+
 	// Servidor gRPC
 	grpcServer := grpc.NewServer()
 
@@ -111,15 +113,12 @@ func main() {
 
 	go func() {
 		for {
-
-			//time.Sleep(10 * time.Second)
-
-			//mensajeaNN := "Mensaje de prueba DataNode 2 a NameNode\n"
-			//mensajeaD1 := "Mensaje de prueba DataNode 2 a DataNode 1\n"
-			//mensajeaD3 := "Mensaje de prueba DataNode 2 a DataNode 3\n"
-			//enviar_a_NameNode(mensajeaNN)
-			//enviar_a_DataNode1(mensajeaD1)
-			//enviar_a_DataNode3(mensajeaD3)
+			/*if s.FlagLibroSubido == true {
+				// Llamar funcion
+				NombreLibroSubido := s.NombreLibroSubido // Va sin ".pdf"
+				s.FlagLibroSubido = false
+				HacerPropuesta("distribuido", NombreLibroSubido)
+			}*/
 		}
 	}()
 

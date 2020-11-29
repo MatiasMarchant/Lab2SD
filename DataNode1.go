@@ -191,7 +191,27 @@ func Enviar_Propuesta(propuesta serverdatanode.Propuesta, destinatario string) b
 		}
 	case "NameNode":
 		// Caso NameNode (para centralizado)
+		// Conexion a NameNode
+		var conn_NN *grpc.ClientConn
+		conn_NN, err_NN := grpc.Dial("dist40:9000", grpc.WithInsecure())
+		if err_NN != nil {
+			fmt.Printf("¡Sin conexión DataNode 2!\n")
+			return false
+		} else {
+			defer conn_NN.Close()
 
+			cNameNode := serverdatanode.NewDataNodeServiceClient(conn_NN)
+			// Enviar propuesta por gRPC
+			respuesta_NN, err_NN := cNameNode.Propuesta_Centralizado(context.Background(), &Propuesta_grpc)
+
+			if err_NN != nil {
+				fmt.Printf("> Error al enviar propuesta.\n")
+				return false
+
+			}
+
+			return respuesta_NN.Booleano
+		}
 	}
 	return false
 }
@@ -362,6 +382,7 @@ func EnviarChunks(Propuesta serverdatanode.Propuesta) {
 
 func HacerPropuesta(metodo string, NombreLibroSubido string) {
 	var Arreglo_indices_partes_libro []string // Ya no guarda indices, sino que los nombres de los chunks en el directorio
+	//-------------------------------------------------------------------------------------------------------------------------
 	if metodo == "distribuido" {
 		// Enviar mensajes a datanodes para ver si están vivos
 		err := enviar_a_DataNode2("DataNode1 pregunta estas vivo?\n")
@@ -517,17 +538,67 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 
 		//
 	}
-	/*
-		else { // Centralizado
+	//-------------------------------------------------------------------------------------------------------------------------
+	else if metodo == "centralizado" { // Centralizado
 
+		// Contar cantidad de partes del libro
+		files, err_files := ioutil.ReadDir("./")
+		if err_files != nil {
+			log.Printf("err_files, no puede leer directorio: %v", err_files)
 		}
-	*/
+		for _, f := range files {
+			//fmt.Printf("Nombre scan: %s\n", f.Name())
+			//fmt.Printf("NombreLibroSubido: %s\n", NombreLibroSubido)
+			if strings.Contains(f.Name(), NombreLibroSubido) {
+				Arreglo_indices_partes_libro = append(Arreglo_indices_partes_libro, f.Name())
+			}
+		}
+
+		fmt.Printf("Partes a repartir:\n")
+		fmt.Printf("Arreglo_indices_partes_libro = %v\n", Arreglo_indices_partes_libro)
+
+		var PartesDN1 []string
+		var PartesDN2 []string
+		var PartesDN3 []string
+		Propuesta := serverdatanode.Propuesta{
+			NombreLibroSubido: NombreLibroSubido,
+			PartesDN1:         PartesDN1,
+			PartesDN2:         PartesDN2,
+			PartesDN3:         PartesDN3,
+		}
+
+		respuesta_propuesta_NN = Enviar_Propuesta(Propuesta, "Namenode")
+
+	} else {
+		log.Fatalf("Error en metodo")
+	}
+	
 
 }
 
 func main() {
 	fmt.Printf("#### DataNode 1 ####\n\n")
 
+	fmt.Print("---------------------------------\n")
+	fmt.Print("Ingrese el algoritmo Exclusión Mutua que desea ejecutar:\n")
+	fmt.Print("> 1. Distribuido\n")
+	fmt.Print("> 2. Centralizado\n")
+	fmt.Print("---------------------------------\n")
+	var algoritmo int
+	eleccion_algoritmo := ""
+	_, err := fmt.Scanf("%d", &algoritmo)
+	if err != nil {
+		log.Fatalf("Error al ingresar opción: %s", err)
+	}
+	if algoritmo == 1{
+		eleccion_algoritmo = "distribuido"
+	} else if algoritmo == 2{
+		eleccion_algoritmo = "centralizado"
+	} else {
+		log.Fatalf("Error al ingresar opción: %s", algoritmo)
+	}
+
+	//##########################################################################
 	// Escucha en el puerto 9001
 	lis, err_s := net.Listen("tcp", ":9001")
 	if err_s != nil {
@@ -541,24 +612,7 @@ func main() {
 	// Servidor gRPC
 	grpcServer := grpc.NewServer()
 
-	serverdatanode.RegisterDataNodeServiceServer(grpcServer, &s)
-	/*
-		go func() {
-			for {
-
-	go func() {
-		for {
-
-			//time.Sleep(10 * time.Second)
-
-			//mensajeaNN := "Mensaje de prueba DataNode 1 a NameNode\n"
-			//mensajeaD2 := "Mensaje de prueba DataNode 1 a DataNode 2\n"
-			//mensajeaD3 := "Mensaje de prueba DataNode 1 a DataNode 3\n"
-			//enviar_a_NameNode(mensajeaNN)
-			//enviar_a_DataNode2(mensajeaD2)
-			//enviar_a_DataNode3(mensajeaD3)
-		}
-	}()
+	serverdatanode.RegisterDataNodeServiceServer(grpcServer, &s)	
 
 	go func() {
 		for {
@@ -566,7 +620,7 @@ func main() {
 				// Llamar funcion
 				NombreLibroSubido := s.NombreLibroSubido // Va sin ".pdf"
 				s.FlagLibroSubido = false
-				HacerPropuesta("distribuido", NombreLibroSubido) // POR AHORA DISTRIBUIDO PQ AUN NO SE IMPLMEENTA CENTRALIZADOOOOOOOOOOO
+				HacerPropuesta(eleccion_algoritmo, NombreLibroSubido) 
 			}
 		}
 	}()
