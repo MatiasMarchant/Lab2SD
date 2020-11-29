@@ -144,7 +144,7 @@ func getChunksLibro(tituloLibro string, chunks string) [] serverdatanode.ChunkLi
 
 func juntarChunks(tituloLibro string, chunksLibro [] serverdatanode.ChunkLibro){
 	// verificar si existen chunks vacios!
-	// crear carpeta Descargas
+	
 	
 	newFileName := "Descargas/"+tituloLibro+".pdf"
 	_, err := os.Create(newFileName)
@@ -157,23 +157,16 @@ func juntarChunks(tituloLibro string, chunksLibro [] serverdatanode.ChunkLibro){
 			fmt.Println(err)
 			os.Exit(1)
 	}
-
 	for _, chunkBufferBytes := range chunksLibro{
-
 			n, err := file.Write(chunkBufferBytes.Chunk)
-
 			if err != nil {
 					fmt.Println(err)
 					os.Exit(1)
 			}
-
-			file.Sync() //flush to disk
-			fmt.Println("Written ", n, " bytes")
+			file.Sync()
+			fmt.Println("|Escribiendo ", n, " bytes|")
 	}
-
 	file.Close()
-	
-	
 }
 
 
@@ -225,7 +218,7 @@ func main() {
 		} else if opcion == 2{
 			//---------------------------------------------------------------------------------------------------------------
 			// Descargar Libro
-			fmt.Print("-----------------------------------------------\n")
+			fmt.Print("------------------------------\n")
 			fmt.Print("Ingrese el número del libro que desea descargar:\n")
 			var nLibro int
 			_, err := fmt.Scanf("%d", &nLibro)
