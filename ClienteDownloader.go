@@ -6,7 +6,7 @@ import (
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"servernamenode"
-	//"io/ioutil"
+	"io/ioutil"
 	"log"
 	//"math"
 	"os"
@@ -142,14 +142,22 @@ func getChunksLibro(tituloLibro string, chunks string) [] serverdatanode.ChunkLi
 	return chunks_libro
 }
 
+func guardarChunk(chunk serverdatanode.ChunkLibro){
+	fileName := "Chunks/" + chunk.Nombre
+	_, err := os.Create(fileName)
+	if err != nil {
+		log.Fatalf("Error al crear archivo: %s", err)
+	}
+	ioutil.WriteFile(fileName, chunk.Chunk, os.ModeAppend)
+}
+
 func juntarChunks(tituloLibro string, chunksLibro [] serverdatanode.ChunkLibro){
 	// verificar si existen chunks vacios
 	for _, chunk := range chunksLibro{
 		if chunk.Nombre == "vacio"{
 			fmt.Println("> Error al recuperar el archivo.\n")
 			return
-		}
-		
+		}		
 	}
 	
 	newFileName := "Descargas/"+tituloLibro+".pdf"
