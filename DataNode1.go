@@ -194,15 +194,14 @@ func Enviar_Propuesta(propuesta serverdatanode.Propuesta, destinatario string) b
 	return false
 }
 
-func Enviar_Propuesta_NameNode(propuesta serverdatanode.Propuesta) serverdatanode.Propuesta{
+func Enviar_Propuesta_NameNode(propuesta serverdatanode.Propuesta) servernamenode.Propuestagrpc{
 
 	// Caso NameNode (para centralizado)
 	// Conexion a NameNode
 	var conn_NN *grpc.ClientConn
 	conn_NN, err_NN := grpc.Dial("dist40:9000", grpc.WithInsecure())
 	if err_NN != nil {
-		fmt.Printf("¡Sin conexión DataNode 2!\n")
-		return false
+		fmt.Fatalf("¡Sin conexión con NameNode!\n")	
 	} else {
 		defer conn_NN.Close()
 
@@ -211,8 +210,7 @@ func Enviar_Propuesta_NameNode(propuesta serverdatanode.Propuesta) serverdatanod
 		respuesta_NN, err_NN := cNameNode.Propuesta_Centralizado(context.Background(), &propuesta)
 
 		if err_NN != nil {
-			fmt.Printf("> Error al enviar propuesta.\n")
-			return false
+			fmt.Fatalf("> Error al enviar propuesta a NameNode.\n")			
 		}
 		return respuesta_NN
 	}
@@ -562,7 +560,7 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		var PartesDN2 []string
 		var PartesDN3 []string
 
-		Propuesta := serverdatanode.Propuesta{
+		Propuesta := servernamenode.Propuestagrpc{
 			NombreLibroSubido: NombreLibroSubido,
 			PartesDN1:         PartesDN1,
 			PartesDN2:         PartesDN2,
@@ -601,7 +599,7 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		// respuesta_propuesta_NN es una propuesta
 		// si la propuesta enviada se aprueba, entonces respuesta_propuesta_NN = Propuesta
 		// si no se aprueba la propuesta enviada, respuesta_propuesta_NN es la propuesta de NameNode
-		respuesta_propuesta_NN = Enviar_Propuesta_NameNode(Propuesta)
+		respuesta_propuesta_NN := Enviar_Propuesta_NameNode(Propuesta)
 
 		fmt.Printf("La \"propuesta\" quedo:\n")
 		fmt.Printf("Nombre libro: %s\n", NombreLibroSubido)
@@ -609,7 +607,7 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		fmt.Println("PartesDN2: %v", respuesta_propuesta_NN.PartesDN2)
 		fmt.Println("PartesDN3: %v", respuesta_propuesta_NN.PartesDN3)
 
-
+		ID := 1
 		EscribirEnLog(respuesta_propuesta_NN, ID, len(Arreglo_indices_partes_libro))
 
 		// Enviar chunks a otros DataNode
