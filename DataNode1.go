@@ -194,7 +194,7 @@ func Enviar_Propuesta(propuesta serverdatanode.Propuesta, destinatario string) b
 	return false
 }
 
-func Enviar_Propuesta_NameNode(propuesta serverdatanode.Propuesta) serverdatanode.Propuesta{
+func Enviar_Propuesta_NameNode(propuesta serverdatanode.Propuesta) (serverdatanode.Propuesta){
 
 	// Caso NameNode (para centralizado)
 	// Conexion a NameNode
