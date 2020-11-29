@@ -194,14 +194,14 @@ func Enviar_Propuesta(propuesta serverdatanode.Propuesta, destinatario string) b
 	return false
 }
 
-func Enviar_Propuesta_NameNode(propuesta serverdatanode.Propuesta) servernamenode.Propuestagrpc{
+func Enviar_Propuesta_NameNode(propuesta servernamenode.Propuestagrpc) servernamenode.Propuestagrpc{
 
 	// Caso NameNode (para centralizado)
 	// Conexion a NameNode
 	var conn_NN *grpc.ClientConn
 	conn_NN, err_NN := grpc.Dial("dist40:9000", grpc.WithInsecure())
 	if err_NN != nil {
-		fmt.Fatalf("¡Sin conexión con NameNode!\n")	
+		log.Fatalf("¡Sin conexión con NameNode!\n")	
 	} else {
 		defer conn_NN.Close()
 
@@ -210,9 +210,9 @@ func Enviar_Propuesta_NameNode(propuesta serverdatanode.Propuesta) servernamenod
 		respuesta_NN, err_NN := cNameNode.Propuesta_Centralizado(context.Background(), &propuesta)
 
 		if err_NN != nil {
-			fmt.Fatalf("> Error al enviar propuesta a NameNode.\n")			
+			log.Fatalf("> Error al enviar propuesta a NameNode.\n")			
 		}
-		return respuesta_NN
+		return &respuesta_NN
 	}
 }
 
