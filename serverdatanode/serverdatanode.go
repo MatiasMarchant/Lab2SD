@@ -26,7 +26,7 @@ type Server struct {
 func (s *Server) EnvioMensajeTest(ctx context.Context, message *MensajeTest) (*MensajeTest, error) {
 	//fmt.Printf("|Servidor| Se recibe: %s", message.Mensaje)
 	//respuestaDataNode := "DataNode recibe: " + message.Mensaje
-	return &MensajeTest{Mensaje: respuestaDataNode}, nil
+	return &MensajeTest{Mensaje: "respuestaDataNode"}, nil
 }
 
 func (s *Server) UploaderSubeLibro(ctx context.Context, eddChunkLibro *ChunkLibro) (*MensajeTest, error) {
