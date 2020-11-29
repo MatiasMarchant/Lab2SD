@@ -409,21 +409,32 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		var PartesDN1 []string
 		var PartesDN2 []string
 		var PartesDN3 []string
+		Propuesta := serverdatanode.Propuesta{
+			NombreLibroSubido: NombreLibroSubido,
+			PartesDN1:         PartesDN1,
+			PartesDN2:         PartesDN2,
+			PartesDN3:         PartesDN3,
+		}
 		for true {
+			Propuesta.PartesDN1 = []string{}
+			Propuesta.PartesDN2 = []string{}
+			Propuesta.PartesDN3 = []string{}
 			respuesta_propuesta_DN2 := false
 			respuesta_propuesta_DN3 := false
 			Arreglo_copia := Arreglo_indices_partes_libro
 			fmt.Printf("%v\n", Arreglo_copia)
+			/*
+				PartesDN1 := []string{}
+				PartesDN2 := []string{}
+				PartesDN3 := []string{}
 
-			PartesDN1 = []string{}
-			PartesDN2 = []string{}
-			PartesDN3 = []string{}
-			Propuesta := serverdatanode.Propuesta{
-				NombreLibroSubido: NombreLibroSubido,
-				PartesDN1:         PartesDN1,
-				PartesDN2:         PartesDN2,
-				PartesDN3:         PartesDN3,
-			}
+				Propuesta := serverdatanode.Propuesta{
+					NombreLibroSubido: NombreLibroSubido,
+					PartesDN1:         PartesDN1,
+					PartesDN2:         PartesDN2,
+					PartesDN3:         PartesDN3,
+				}
+			*/
 			Propuesta.PartesDN1 = append(Propuesta.PartesDN1, Arreglo_copia[len(Arreglo_copia)-1])
 			i := len(Arreglo_copia) - 1
 			// Borrar elemento
@@ -489,14 +500,6 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 				break
 			}
 		}
-		/*
-			Propuesta := serverdatanode.Propuesta{
-				NombreLibroSubido: NombreLibroSubido,
-				PartesDN1:         PartesDN1,
-				PartesDN2:         PartesDN2,
-				PartesDN3:         PartesDN3,
-			}
-		*/
 
 		// Si llega aca, entonces aprobado == true y se documenta en el registro del NameNode
 		fmt.Println("Valor de aprobado: %v", aprobado)
