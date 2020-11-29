@@ -253,7 +253,7 @@ func EscribirEnLog(Propuesta serverdatanode.Propuesta, ID int, cant_partes int) 
 
 func EnviarChunks(Propuesta serverdatanode.Propuesta) {
 	for _, indicechunk := range Propuesta.PartesDN1 {
-		ChunkFileName := Propuesta.NombreLibroSubido + "_" + indicechunk
+		ChunkFileName := indicechunk
 		fmt.Printf("Enviando chunk a DN1: %s", ChunkFileName+"\n")
 		newFileChunk, err := os.Open(ChunkFileName)
 		if err != nil {
@@ -289,7 +289,7 @@ func EnviarChunks(Propuesta serverdatanode.Propuesta) {
 
 	}
 	for _, indicechunk := range Propuesta.PartesDN2 {
-		ChunkFileName := Propuesta.NombreLibroSubido + "_" + indicechunk
+		ChunkFileName := indicechunk
 		fmt.Printf("Enviando chunk a DN2: %s", ChunkFileName+"\n")
 		newFileChunk, err := os.Open(ChunkFileName)
 		if err != nil {
@@ -324,7 +324,7 @@ func EnviarChunks(Propuesta serverdatanode.Propuesta) {
 		cDataNode2.UploaderSubeLibro(context.Background(), &ChunkLibro)
 	}
 	for _, indicechunk := range Propuesta.PartesDN3 {
-		ChunkFileName := Propuesta.NombreLibroSubido + "_" + indicechunk
+		ChunkFileName := indicechunk
 		fmt.Printf("Enviando chunk a DN3: %s", ChunkFileName+"\n")
 		newFileChunk, err := os.Open(ChunkFileName)
 		if err != nil {
