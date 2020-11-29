@@ -537,10 +537,8 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		EnviarChunks(Propuesta)
 
 		//
-	}
-	//-------------------------------------------------------------------------------------------------------------------------
-	else if metodo == "centralizado" { // Centralizado
-
+	} else if metodo == "centralizado" { // Centralizado
+		//-------------------------------------------------------------------------------------------------------------------------
 		// Contar cantidad de partes del libro
 		files, err_files := ioutil.ReadDir("./")
 		if err_files != nil {
