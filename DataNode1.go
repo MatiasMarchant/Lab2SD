@@ -547,8 +547,6 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 			log.Printf("err_files, no puede leer directorio: %v", err_files)
 		}
 		for _, f := range files {
-			//fmt.Printf("Nombre scan: %s\n", f.Name())
-			//fmt.Printf("NombreLibroSubido: %s\n", NombreLibroSubido)
 			if strings.Contains(f.Name(), NombreLibroSubido) {
 				Arreglo_indices_partes_libro = append(Arreglo_indices_partes_libro, f.Name())
 			}
@@ -557,7 +555,7 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		fmt.Printf("Partes a repartir:\n")
 		fmt.Printf("Arreglo_indices_partes_libro = %v\n", Arreglo_indices_partes_libro)
 
-		var PartesDN1 []string
+		/*var PartesDN1 []string
 		var PartesDN2 []string
 		var PartesDN3 []string
 		Propuesta := serverdatanode.Propuesta{
@@ -567,7 +565,7 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 			PartesDN3:         PartesDN3,
 		}
 
-		respuesta_propuesta_NN = Enviar_Propuesta(Propuesta, "Namenode")
+		respuesta_propuesta_NN = Enviar_Propuesta(Propuesta, "Namenode")*/
 
 	} else {
 		log.Fatalf("Error en metodo")
