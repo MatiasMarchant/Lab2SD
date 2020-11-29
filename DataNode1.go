@@ -31,12 +31,12 @@ func enviar_a_NameNode(mensaje_cliente string) {
 			Mensaje: mensaje_cliente,
 		}
 
-		respuestaNN, err_NN := cNameNodeNN.EnvioMensajeTest(context.Background(), &mensajetestNN)
+		_, err_NN := cNameNodeNN.EnvioMensajeTest(context.Background(), &mensajetestNN)
 
 		if err_NN != nil {
 			fmt.Printf("> Sin respuesta NameNode.\n")
 		} else {
-			fmt.Printf("|Cliente| NameNode responde : %s", respuestaNN.Mensaje)
+			//fmt.Printf("|Cliente| NameNode responde : %s", respuestaNN.Mensaje)
 		}
 
 	}
@@ -59,13 +59,13 @@ func enviar_a_DataNode2(mensaje_cliente string) bool {
 			Mensaje: mensaje_cliente,
 		}
 
-		respuesta_DN2, err_DN2 := cDataNode2.EnvioMensajeTest(context.Background(), &mensajetest_DN2)
+		_, err_DN2 := cDataNode2.EnvioMensajeTest(context.Background(), &mensajetest_DN2)
 
 		if err_DN2 != nil {
 			fmt.Printf("> Sin respuesta DataNode2.\n")
 			flag = false
 		} else {
-			fmt.Printf("|Cliente| DataNode 2 responde: %s", respuesta_DN2.Mensaje)
+			//fmt.Printf("|Cliente| DataNode 2 responde: %s", respuesta_DN2.Mensaje)
 			flag = true
 		}
 
@@ -91,13 +91,13 @@ func enviar_a_DataNode3(mensaje_cliente string) bool {
 			Mensaje: mensaje_cliente,
 		}
 
-		respuesta_3, err_DN3 := cDataNode3.EnvioMensajeTest(context.Background(), &mensajetest_3)
+		_, err_DN3 := cDataNode3.EnvioMensajeTest(context.Background(), &mensajetest_3)
 
 		if err_DN3 != nil {
 			fmt.Printf("> Sin respuesta DataNode3.\n")
 			flag = false
 		} else {
-			fmt.Printf("|Cliente| DataNode 3 responde: %s", respuesta_3.Mensaje)
+			//fmt.Printf("|Cliente| DataNode 3 responde: %s", respuesta_3.Mensaje)
 			flag = true
 		}
 

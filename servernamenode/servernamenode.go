@@ -150,13 +150,13 @@ func (s *Server) EscribirEnLog(ctx context.Context, message *EscrituraLog) (*Men
 	for i := 0; i < intmessageCantPartes; i++ {
 		iastring := strconv.Itoa(i)
 		if stringInSlice(iastring, PartesDN1) {
-			f.WriteString(iastring + " dist37")
+			f.WriteString(iastring + " dist37\n")
 		}
 		if stringInSlice(iastring, PartesDN2) {
-			f.WriteString(iastring + " dist38")
+			f.WriteString(iastring + " dist38\n")
 		}
 		if stringInSlice(iastring, PartesDN3) {
-			f.WriteString(iastring + " dist39")
+			f.WriteString(iastring + " dist39\n")
 		}
 	}
 

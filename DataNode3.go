@@ -4,15 +4,14 @@ import (
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 
-	"log"
 	"fmt"
+	"log"
 	"net"
 	"serverdatanode"
 	"servernamenode"
-	
+
 	"time"
 )
-
 
 func enviar_a_NameNode(mensaje_cliente string) {
 	//--------------------------------------------------------------------
@@ -31,14 +30,14 @@ func enviar_a_NameNode(mensaje_cliente string) {
 			Mensaje: mensaje_cliente,
 		}
 
-		respuestaNN, err_NN := cNameNodeNN.EnvioMensajeTest(context.Background(), &mensajetestNN)
+		_, err_NN := cNameNodeNN.EnvioMensajeTest(context.Background(), &mensajetestNN)
 
 		if err_NN != nil {
 			fmt.Printf("> Sin respuesta NameNode.\n")
 		} else {
-			fmt.Printf("|Cliente| NameNode responde : %s", respuestaNN.Mensaje)
+			//fmt.Printf("|Cliente| NameNode responde : %s", respuestaNN.Mensaje)
 		}
-		
+
 	}
 }
 
@@ -57,14 +56,14 @@ func enviar_a_DataNode1(mensaje_cliente string) {
 			Mensaje: mensaje_cliente,
 		}
 
-		respuesta_DN1, err_DN1 := cDataNode1.EnvioMensajeTest(context.Background(), &mensajetest_DN1)
+		_, err_DN1 := cDataNode1.EnvioMensajeTest(context.Background(), &mensajetest_DN1)
 
 		if err_DN1 != nil {
 			fmt.Printf("> Sin respuesta DataNode1.\n")
 		} else {
-			fmt.Printf("|Cliente| DataNode 1 responde: %s", respuesta_DN1.Mensaje)
+			//fmt.Printf("|Cliente| DataNode 1 responde: %s", respuesta_DN1.Mensaje)
 		}
-		
+
 	}
 }
 
@@ -75,7 +74,7 @@ func enviar_a_DataNode2(mensaje_cliente string) {
 	conn_DN2, err_DN2 := grpc.Dial("dist38:9002", grpc.WithInsecure())
 	if err_DN2 != nil {
 		fmt.Printf("¡Sin conexión DataNode 2!\n")
-	} else { 
+	} else {
 		defer conn_DN2.Close()
 
 		cDataNode2 := serverdatanode.NewDataNodeServiceClient(conn_DN2)
@@ -83,25 +82,21 @@ func enviar_a_DataNode2(mensaje_cliente string) {
 			Mensaje: mensaje_cliente,
 		}
 
-		respuesta_DN2, err_DN2 := cDataNode2.EnvioMensajeTest(context.Background(), &mensajetest_DN2)
+		_, err_DN2 := cDataNode2.EnvioMensajeTest(context.Background(), &mensajetest_DN2)
 
 		if err_DN2 != nil {
 			fmt.Printf("> Sin respuesta DataNode2.\n")
 		} else {
-			fmt.Printf("|Cliente| DataNode 2 responde: %s", respuesta_DN2.Mensaje)
+			//fmt.Printf("|Cliente| DataNode 2 responde: %s", respuesta_DN2.Mensaje)
 		}
-		
-		
+
 	}
 }
-
-
 
 func main() {
 	fmt.Printf("#### DataNode 3 ####\n\n")
 
-
-	//##########################################################################		
+	//##########################################################################
 	// Escucha en el puerto 9003
 	lis, err_s := net.Listen("tcp", ":9003")
 	if err_s != nil {
@@ -114,7 +109,7 @@ func main() {
 	grpcServer := grpc.NewServer()
 
 	serverdatanode.RegisterDataNodeServiceServer(grpcServer, &s)
-		
+
 	go func() {
 		for {
 
@@ -125,16 +120,12 @@ func main() {
 			mensajeaD2 := "Mensaje de prueba DataNode 3 a DataNode 2\n"
 			enviar_a_NameNode(mensajeaNN)
 			enviar_a_DataNode1(mensajeaD1)
-			enviar_a_DataNode2(mensajeaD2)			
+			enviar_a_DataNode2(mensajeaD2)
 		}
 	}()
-
 
 	if err_s := grpcServer.Serve(lis); err_s != nil {
 		log.Fatalf("Error DataNode 3 en servidor gRPC en el puerto 9003: %v", err_s)
 	}
-
-
-
 
 }
