@@ -143,8 +143,14 @@ func getChunksLibro(tituloLibro string, chunks string) [] serverdatanode.ChunkLi
 }
 
 func juntarChunks(tituloLibro string, chunksLibro [] serverdatanode.ChunkLibro){
-	// verificar si existen chunks vacios!
-	
+	// verificar si existen chunks vacios
+	for _, chunk := range chunksLibro{
+		if chunk.Nombre == "vacio"{
+			fmt.Println("> Error al recuperar el archivo.\n")
+			return
+		}
+		
+	}
 	
 	newFileName := "Descargas/"+tituloLibro+".pdf"
 	_, err := os.Create(newFileName)
@@ -167,6 +173,7 @@ func juntarChunks(tituloLibro string, chunksLibro [] serverdatanode.ChunkLibro){
 			fmt.Println("|Escribiendo ", n, " bytes|")
 	}
 	file.Close()
+	fmt.Println("> Libro descargado.\n")
 }
 
 
@@ -249,7 +256,6 @@ func main() {
 					fmt.Println("> Recibiendo Chunks...")
 					chunksLibro := getChunksLibro(tituloLibro, chunks)
 					juntarChunks(tituloLibro, chunksLibro)
-					fmt.Println("> Libro descargado.\n")
 				}
 			}
 
