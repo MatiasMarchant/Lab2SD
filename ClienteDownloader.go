@@ -146,33 +146,19 @@ func juntarChunks(tituloLibro string, chunksLibro [] serverdatanode.ChunkLibro){
 	// verificar si existen chunks vacios!
 	// crear carpeta Descargas
 	
-	// just for fun, let's recombine back the chunked files in a new file
-
 	newFileName := "Descargas/"+tituloLibro
 	_, err = os.Create(newFileName)
-
 	if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
 	}
-
-	//set the newFileName file to APPEND MODE!!
-	// open files r and w
-
 	file, err = os.OpenFile(newFileName, os.O_APPEND|os.O_WRONLY, os.ModeAppend)
-
 	if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
 	}
 
-	// IMPORTANT! do not defer a file.Close when opening a file for APPEND mode!
-	// defer file.Close()
-
-	// just information on which part of the new file we are appending
-	var writePosition int64 = 0
-
-	for _, i := range str_chunks_arr{
+	for _, chunkBufferBytes := range str_chunks_arr{
 
 			n, err := file.Write(chunkBufferBytes)
 
@@ -182,11 +168,9 @@ func juntarChunks(tituloLibro string, chunksLibro [] serverdatanode.ChunkLibro){
 			}
 
 			file.Sync() //flush to disk
-
 			fmt.Println("Written ", n, " bytes")
 	}
 
-	// now, we close the newFileName
 	file.Close()
 	
 	
