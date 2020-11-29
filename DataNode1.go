@@ -192,7 +192,7 @@ func Enviar_Propuesta(propuesta serverdatanode.Propuesta, destinatario string) b
 	case "NameNode":
 		// Caso NameNode (para centralizado)
 		// Conexion a NameNode
-		var conn_NN *grpc.ClientConn
+		/*var conn_NN *grpc.ClientConn
 		conn_NN, err_NN := grpc.Dial("dist40:9000", grpc.WithInsecure())
 		if err_NN != nil {
 			fmt.Printf("¡Sin conexión DataNode 2!\n")
@@ -211,7 +211,7 @@ func Enviar_Propuesta(propuesta serverdatanode.Propuesta, destinatario string) b
 			}
 
 			return respuesta_NN.Booleano
-		}
+		}*/
 	}
 	return false
 }
