@@ -596,7 +596,7 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		}
 
 		Propuesta_grpc := servernamenode.Propuestagrpc{
-			NombreLibroSubido: propuesta.NombreLibroSubido,
+			NombreLibroSubido: Propuesta.NombreLibroSubido,
 			PartesDN1: strings.Join(Propuesta.PartesDN1, ","),
 			PartesDN2: strings.Join(Propuesta.PartesDN2, ","),
 			PartesDN3: strings.Join(Propuesta.PartesDN3, ","),
@@ -605,7 +605,7 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		// respuesta_propuesta_NN es una propuesta
 		// si la propuesta enviada se aprueba, entonces respuesta_propuesta_NN = Propuesta
 		// si no se aprueba la propuesta enviada, respuesta_propuesta_NN es la propuesta de NameNode
-		respuesta_propuesta_NN := Enviar_Propuesta_NameNode(Propuesta)
+		respuesta_propuesta_NN := Enviar_Propuesta_NameNode(Propuesta_grpc)
 
 		fmt.Printf("La \"propuesta\" quedo:\n")
 		fmt.Printf("Nombre libro: %s\n", NombreLibroSubido)
