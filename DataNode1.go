@@ -12,7 +12,7 @@ import (
 	//"strconv"
 	"os"
 	"strings"
-	"time"
+	//"time"
 )
 
 func enviar_a_NameNode(mensaje_cliente string) {
