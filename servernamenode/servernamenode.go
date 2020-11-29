@@ -128,6 +128,8 @@ func (s *Server) EscribirEnLog(ctx context.Context, message *EscrituraLog) (*Men
 	PartesDN3 := strings.Split(message.PartesDN3, ",")
 	// Sacarle el nombre a las partes, para solo escribir el indice
 	// Y sortear de menor a mayor
+
+	fmt.Println("message.NombreLibro: ", message.NombreLibro)
 	for _, palabra := range PartesDN1 {
 		palabra = strings.TrimPrefix(palabra, message.NombreLibro+"_")
 	}
