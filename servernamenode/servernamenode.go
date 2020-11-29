@@ -162,3 +162,7 @@ func (s *Server) EscribirEnLog(ctx context.Context, message *EscrituraLog) (*Men
 
 	return &MensajeTest{Mensaje: "bien"}, nil
 }
+
+func (s *Server) Propuesta_Centralizado(ctx context.Context, Propuesta *Propuestagrpc) (*Propuestagrpc, error) {
+	return Propuesta, nil
+}

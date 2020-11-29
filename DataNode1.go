@@ -12,7 +12,8 @@ import (
 	//"strconv"
 	"os"
 	"strings"
-	//"time"
+	"math/rand"
+    "time"
 )
 
 func enviar_a_NameNode(mensaje_cliente string) {
@@ -189,31 +190,32 @@ func Enviar_Propuesta(propuesta serverdatanode.Propuesta, destinatario string) b
 			return respuesta_DN3.Booleano
 
 		}
-	case "NameNode":
-		// Caso NameNode (para centralizado)
-		// Conexion a NameNode
-		/*var conn_NN *grpc.ClientConn
-		conn_NN, err_NN := grpc.Dial("dist40:9000", grpc.WithInsecure())
-		if err_NN != nil {
-			fmt.Printf("¡Sin conexión DataNode 2!\n")
-			return false
-		} else {
-			defer conn_NN.Close()
 
-			cNameNode := serverdatanode.NewDataNodeServiceClient(conn_NN)
-			// Enviar propuesta por gRPC
-			respuesta_NN, err_NN := cNameNode.Propuesta_Centralizado(context.Background(), &Propuesta_grpc)
-
-			if err_NN != nil {
-				fmt.Printf("> Error al enviar propuesta.\n")
-				return false
-
-			}
-
-			return respuesta_NN.Booleano
-		}*/
-	}
 	return false
+}
+
+func Enviar_Propuesta_NameNode(propuesta serverdatanode.Propuesta) serverdatanode.Propuesta{
+
+	// Caso NameNode (para centralizado)
+	// Conexion a NameNode
+	var conn_NN *grpc.ClientConn
+	conn_NN, err_NN := grpc.Dial("dist40:9000", grpc.WithInsecure())
+	if err_NN != nil {
+		fmt.Printf("¡Sin conexión DataNode 2!\n")
+		return false
+	} else {
+		defer conn_NN.Close()
+
+		cNameNode := servernamenode.NewNameNodeServiceClient(conn_NN)
+		// Enviar propuesta por gRPC
+		respuesta_NN, err_NN := cNameNode.Propuesta_Centralizado(context.Background(), &Propuesta_grpc)
+
+		if err_NN != nil {
+			fmt.Printf("> Error al enviar propuesta.\n")
+			return false
+		}
+		return respuesta_NN
+	}
 }
 
 func EscribirEnLog(Propuesta serverdatanode.Propuesta, ID int, cant_partes int) {
@@ -553,9 +555,13 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		fmt.Printf("Partes a repartir:\n")
 		fmt.Printf("Arreglo_indices_partes_libro = %v\n", Arreglo_indices_partes_libro)
 
-		/*var PartesDN1 []string
+
+		//Arreglo_indices_partes_libro = [Frankenstein-Mary_Shelley_0 Frankenstein-Mary_Shelley_1 Frankenstein-Mary_Shelley_2 Frankenstein-Mary_Shelley_3]
+
+		var PartesDN1 []string
 		var PartesDN2 []string
 		var PartesDN3 []string
+
 		Propuesta := serverdatanode.Propuesta{
 			NombreLibroSubido: NombreLibroSubido,
 			PartesDN1:         PartesDN1,
@@ -563,7 +569,51 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 			PartesDN3:         PartesDN3,
 		}
 
-		respuesta_propuesta_NN = Enviar_Propuesta(Propuesta, "Namenode")*/
+		Propuesta.PartesDN1 = []string{}
+		Propuesta.PartesDN2 = []string{}
+		Propuesta.PartesDN3 = []string{}
+
+		// Diferente para cada DataNodo
+		for i, nombre_chunk := range Arreglo_indices_partes_libro{
+			if i == 0 {
+				Propuesta.PartesDN1 = append(Propuesta.PartesDN1, nombre_chunk)
+			} else if i == 1{
+				Propuesta.PartesDN2 = append(Propuesta.PartesDN2, nombre_chunk)
+			} else if i == 2 {
+				Propuesta.PartesDN3 = append(Propuesta.PartesDN3, nombre_chunk)
+			} else {
+				// asignación al azar
+				s := rand.NewSource(time.Now().UnixNano())
+				random := rand.New(s)
+				valor_random := random.Intn(3)
+				if valor_random == 0 {
+					Propuesta.PartesDN1 = append(Propuesta.PartesDN1, nombre_chunk)
+				} else if valor_random == 1{
+					Propuesta.PartesDN2 = append(Propuesta.PartesDN2, nombre_chunk)
+				} else if valor_random == 2 {
+					Propuesta.PartesDN3 = append(Propuesta.PartesDN3, nombre_chunk)
+				} else {
+					log.Fatalf("Error en random")
+				}
+			}
+		}
+
+		// respuesta_propuesta_NN es una propuesta
+		// si la propuesta enviada se aprueba, entonces respuesta_propuesta_NN = Propuesta
+		// si no se aprueba la propuesta enviada, respuesta_propuesta_NN es la propuesta de NameNode
+		respuesta_propuesta_NN = Enviar_Propuesta_NameNode(Propuesta)
+
+		fmt.Printf("La \"propuesta\" quedo:\n")
+		fmt.Printf("Nombre libro: %s\n", NombreLibroSubido)
+		fmt.Println("PartesDN1: %v", respuesta_propuesta_NN.PartesDN1)
+		fmt.Println("PartesDN2: %v", respuesta_propuesta_NN.PartesDN2)
+		fmt.Println("PartesDN3: %v", respuesta_propuesta_NN.PartesDN3)
+
+
+		EscribirEnLog(respuesta_propuesta_NN, ID, len(Arreglo_indices_partes_libro))
+
+		// Enviar chunks a otros DataNode
+		EnviarChunks(respuesta_propuesta_NN)
 
 	} else {
 		log.Fatalf("Error en metodo")
@@ -576,7 +626,7 @@ func main() {
 	fmt.Printf("#### DataNode 1 ####\n\n")
 
 	fmt.Print("---------------------------------\n")
-	fmt.Print("Ingrese el algoritmo Exclusión Mutua que desea ejecutar:\n")
+	fmt.Print("Ingrese el algoritmo de Exclusión Mutua que desea ejecutar:\n")
 	fmt.Print("> 1. Distribuido\n")
 	fmt.Print("> 2. Centralizado\n")
 	fmt.Print("---------------------------------\n")

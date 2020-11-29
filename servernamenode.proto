@@ -13,7 +13,15 @@ message EscrituraLog {
     string PartesDN3 = 5;
 }
 
+message Propuestagrpc {
+    string NombreLibroSubido = 1;
+    string PartesDN1 = 2;
+    string PartesDN2 = 3;
+    string PartesDN3 = 4;
+}
+
 service NameNodeService {
     rpc EnvioMensajeTest(MensajeTest) returns (MensajeTest) {}
     rpc EscribirEnLog(EscrituraLog) returns (MensajeTest) {}
+    rpc Propuesta_Centralizado(Propuestagrpc) returns (Propuestagrpc) {}
 }
