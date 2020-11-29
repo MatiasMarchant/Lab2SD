@@ -141,6 +141,10 @@ func (s *Server) EscribirEnLog(ctx context.Context, message *EscrituraLog) (*Men
 	}
 	sort.Strings(PartesDN3)
 
+	fmt.Println("\nPartesDN1: ", PartesDN1)
+	fmt.Println("PartesDN2: ", PartesDN2)
+	fmt.Println("PartesDN3: ", PartesDN3)
+
 	// Ahora si se puede escribir
 	intmessageCantPartes := int(message.CantPartes)
 	for i := 0; i < intmessageCantPartes; i++ {
