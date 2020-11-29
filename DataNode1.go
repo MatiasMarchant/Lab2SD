@@ -750,7 +750,7 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		fmt.Println("PartesDN3: %v", respuesta_propuesta_NN.PartesDN3)
 
 		ID := 1
-		EscribirEnLog(respuesta_propuesta_NN, ID, len(Arreglo_indices_partes_libro))
+		EscribirEnLog_Centralizado(respuesta_propuesta_NN, ID, len(Arreglo_indices_partes_libro))
 
 		// Enviar chunks a otros DataNode
 		EnviarChunks_Centralizado(respuesta_propuesta_NN)
