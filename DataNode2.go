@@ -10,7 +10,7 @@ import (
 	"serverdatanode"
 	"servernamenode"
 
-	"time"
+	//"time"
 )
 
 func enviar_a_NameNode(mensaje_cliente string) {
@@ -112,14 +112,14 @@ func main() {
 	go func() {
 		for {
 
-			time.Sleep(10 * time.Second)
+			//time.Sleep(10 * time.Second)
 
-			mensajeaNN := "Mensaje de prueba DataNode 2 a NameNode\n"
-			mensajeaD1 := "Mensaje de prueba DataNode 2 a DataNode 1\n"
-			mensajeaD3 := "Mensaje de prueba DataNode 2 a DataNode 3\n"
-			enviar_a_NameNode(mensajeaNN)
-			enviar_a_DataNode1(mensajeaD1)
-			enviar_a_DataNode3(mensajeaD3)
+			//mensajeaNN := "Mensaje de prueba DataNode 2 a NameNode\n"
+			//mensajeaD1 := "Mensaje de prueba DataNode 2 a DataNode 1\n"
+			//mensajeaD3 := "Mensaje de prueba DataNode 2 a DataNode 3\n"
+			//enviar_a_NameNode(mensajeaNN)
+			//enviar_a_DataNode1(mensajeaD1)
+			//enviar_a_DataNode3(mensajeaD3)
 		}
 	}()
 

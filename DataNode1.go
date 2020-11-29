@@ -546,17 +546,19 @@ func main() {
 		go func() {
 			for {
 
-				time.Sleep(10 * time.Second)
+	go func() {
+		for {
 
-				mensajeaNN := "Mensaje de prueba DataNode 1 a NameNode\n"
-				mensajeaD2 := "Mensaje de prueba DataNode 1 a DataNode 2\n"
-				mensajeaD3 := "Mensaje de prueba DataNode 1 a DataNode 3\n"
-				enviar_a_NameNode(mensajeaNN)
-				enviar_a_DataNode2(mensajeaD2)
-				enviar_a_DataNode3(mensajeaD3)
-			}
-		}()
-	*/
+			//time.Sleep(10 * time.Second)
+
+			//mensajeaNN := "Mensaje de prueba DataNode 1 a NameNode\n"
+			//mensajeaD2 := "Mensaje de prueba DataNode 1 a DataNode 2\n"
+			//mensajeaD3 := "Mensaje de prueba DataNode 1 a DataNode 3\n"
+			//enviar_a_NameNode(mensajeaNN)
+			//enviar_a_DataNode2(mensajeaD2)
+			//enviar_a_DataNode3(mensajeaD3)
+		}
+	}()
 
 	go func() {
 		for {
