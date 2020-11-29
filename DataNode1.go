@@ -489,13 +489,14 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 				break
 			}
 		}
-
-		Propuesta := serverdatanode.Propuesta{
-			NombreLibroSubido: NombreLibroSubido,
-			PartesDN1:         PartesDN1,
-			PartesDN2:         PartesDN2,
-			PartesDN3:         PartesDN3,
-		}
+		/*
+			Propuesta := serverdatanode.Propuesta{
+				NombreLibroSubido: NombreLibroSubido,
+				PartesDN1:         PartesDN1,
+				PartesDN2:         PartesDN2,
+				PartesDN3:         PartesDN3,
+			}
+		*/
 
 		// Si llega aca, entonces aprobado == true y se documenta en el registro del NameNode
 		fmt.Println("Valor de aprobado: %v", aprobado)
