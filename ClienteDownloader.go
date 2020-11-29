@@ -172,13 +172,16 @@ func juntarChunks(tituloLibro string, chunksLibro [] serverdatanode.ChunkLibro){
 			os.Exit(1)
 	}
 	for _, chunkBufferBytes := range chunksLibro{
-			n, err := file.Write(chunkBufferBytes.Chunk)
-			if err != nil {
-					fmt.Println(err)
-					os.Exit(1)
-			}
-			file.Sync()
-			fmt.Println("|Escribiendo ", n, " bytes|")
+		// se guarda chunk en la máquina
+		guardarChunk(chunkBufferBytes)
+
+		n, err := file.Write(chunkBufferBytes.Chunk)
+		if err != nil {
+				fmt.Println(err)
+				os.Exit(1)
+		}
+		file.Sync()
+		fmt.Println("|Escribiendo ", n, " bytes|")
 	}
 	file.Close()
 	fmt.Println("> Libro descargado.\n")
