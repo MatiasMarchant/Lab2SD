@@ -170,6 +170,7 @@ func juntarChunks(tituloLibro string, chunksLibro [] serverdatanode.ChunkLibro){
 		pos := pos_split[len(pos_split)-1]
 		pos_int, _ := strconv.Atoi(pos)
 		orden[pos_int] = i
+	}
 		
 	newFileName := "Descargas/"+tituloLibro+".pdf"
 	_, err := os.Create(newFileName)
