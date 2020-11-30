@@ -522,16 +522,16 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 	if metodo == "distribuido" {
 		fmt.Print("# Algoritmo Distribuido #\n")
 		// Enviar mensajes a datanodes para ver si están vivos
-		err := enviar_a_DataNode2("DataNode1 pregunta estas vivo?\n")
+		err := enviar_a_DataNode1("DataNode3 pregunta estas vivo?\n")
 		flagDN2vivo := true
 		if err != true {
-			fmt.Printf("DataNode2 no está vivo\n")
+			fmt.Printf("DataNode1 no está vivo\n")
 			flagDN2vivo = false
 		}
-		err = enviar_a_DataNode3("DataNode1 pregunta estas vivo?\n")
+		err = enviar_a_DataNode2("DataNode3 pregunta estas vivo?\n")
 		flagDN3vivo := true
 		if err != true {
-			fmt.Printf("DataNode3 no está vivo\n")
+			fmt.Printf("DataNode2 no está vivo\n")
 			flagDN3vivo = false
 		}
 
@@ -577,8 +577,8 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 			Propuesta.PartesDN1 = []string{}
 			Propuesta.PartesDN2 = []string{}
 			Propuesta.PartesDN3 = []string{}
+			respuesta_propuesta_DN1 := false
 			respuesta_propuesta_DN2 := false
-			respuesta_propuesta_DN3 := false
 			Arreglo_copia := Arreglo_indices_partes_libro
 			fmt.Printf("%v\n", Arreglo_copia)
 			/*
@@ -593,13 +593,21 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 					PartesDN3:         PartesDN3,
 				}
 			*/
-			Propuesta.PartesDN1 = append(Propuesta.PartesDN1, Arreglo_copia[len(Arreglo_copia)-1])
+			Propuesta.PartesDN3 = append(Propuesta.PartesDN3, Arreglo_copia[len(Arreglo_copia)-1])
 			i := len(Arreglo_copia) - 1
 			// Borrar elemento
 			Arreglo_copia[i] = Arreglo_copia[len(Arreglo_copia)-1]
 			Arreglo_copia[len(Arreglo_copia)-1] = ""
 			Arreglo_copia = Arreglo_copia[:len(Arreglo_copia)-1]
 
+			if flagDN1vivo == true {
+				Propuesta.PartesDN1 = append(Propuesta.PartesDN1, Arreglo_copia[len(Arreglo_copia)-1])
+				// Borrar elemento
+				i = len(Arreglo_copia) - 1
+				Arreglo_copia[i] = Arreglo_copia[len(Arreglo_copia)-1]
+				Arreglo_copia[len(Arreglo_copia)-1] = ""
+				Arreglo_copia = Arreglo_copia[:len(Arreglo_copia)-1]
+			}
 			if flagDN2vivo == true {
 				Propuesta.PartesDN2 = append(Propuesta.PartesDN2, Arreglo_copia[len(Arreglo_copia)-1])
 				// Borrar elemento
@@ -608,15 +616,7 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 				Arreglo_copia[len(Arreglo_copia)-1] = ""
 				Arreglo_copia = Arreglo_copia[:len(Arreglo_copia)-1]
 			}
-			if flagDN3vivo == true {
-				Propuesta.PartesDN3 = append(Propuesta.PartesDN3, Arreglo_copia[len(Arreglo_copia)-1])
-				// Borrar elemento
-				i = len(Arreglo_copia) - 1
-				Arreglo_copia[i] = Arreglo_copia[len(Arreglo_copia)-1]
-				Arreglo_copia[len(Arreglo_copia)-1] = ""
-				Arreglo_copia = Arreglo_copia[:len(Arreglo_copia)-1]
-			}
-
+	
 			// El resto de chunks se quedan en este datanode
 			for _, elemento := range Arreglo_copia {
 				Propuesta.PartesDN1 = append(Propuesta.PartesDN1, elemento)
@@ -629,30 +629,30 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 			fmt.Println("Propuesta.PartesDN3: %v", Propuesta.PartesDN3)
 
 			// Envio de propuesta por casos
-			// Caso 1: DN1 y DN2 vivos
-			if (flagDN2vivo == true) && (flagDN3vivo == false) {
-				respuesta_propuesta_DN2 = Enviar_Propuesta(Propuesta, "DataNode2")
-				respuesta_propuesta_DN3 = true
+			// Caso 1: DN3 y DN1 vivos
+			if (flagDN1vivo == true) && (flagDN2vivo == false) {
+				respuesta_propuesta_DN1 = Enviar_Propuesta(Propuesta, "DataNode1")
+				respuesta_propuesta_DN2 = true
 			}
 			// Caso 2: DN1, DN2 y DN3 vivos
-			if (flagDN2vivo == true) && (flagDN3vivo == true) {
+			if (flagDN1vivo == true) && (flagDN2vivo == true) {
+				respuesta_propuesta_DN1 = Enviar_Propuesta(Propuesta, "DataNode1")
 				respuesta_propuesta_DN2 = Enviar_Propuesta(Propuesta, "DataNode2")
-				respuesta_propuesta_DN3 = Enviar_Propuesta(Propuesta, "DataNode3")
 			}
-			// Caso 3: DN1 y DN3 vivos
-			if (flagDN2vivo == false) && (flagDN3vivo == true) {
-				respuesta_propuesta_DN2 = true
-				respuesta_propuesta_DN3 = Enviar_Propuesta(Propuesta, "DataNode3")
+			// Caso 3: DN3 y DN2 vivos
+			if (flagDN1vivo == false) && (flagDN2vivo == true) {
+				respuesta_propuesta_DN1 = true
+				respuesta_propuesta_DN2 = Enviar_Propuesta(Propuesta, "DataNode2")
 			}
-			// Caso 4: Solo DN1 vivo
-			if (flagDN2vivo == false) && (flagDN3vivo == false) {
+			// Caso 4: Solo DN3 vivo
+			if (flagDN1vivo == false) && (flagDN2vivo == false) {
+				respuesta_propuesta_DN1 = true
 				respuesta_propuesta_DN2 = true
-				respuesta_propuesta_DN3 = true
 			}
 
-			fmt.Println("respuesta_propuesta_DN2: ", respuesta_propuesta_DN2, " respuesta_propuesta_DN3: ", respuesta_propuesta_DN3)
+			fmt.Println("respuesta_propuesta_DN1: ", respuesta_propuesta_DN1, " respuesta_propuesta_DN2: ", respuesta_propuesta_DN2)
 
-			aprobado = respuesta_propuesta_DN2 && respuesta_propuesta_DN3
+			aprobado = respuesta_propuesta_DN1 && respuesta_propuesta_DN2
 			fmt.Println("Valor de aprobado dentro de : %v", aprobado)
 			if aprobado == true {
 				break
