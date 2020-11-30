@@ -69,6 +69,37 @@ func enviar_a_DataNode1(mensaje_cliente string) {
 	}
 }
 
+func enviar_a_DataNode2(mensaje_cliente string) bool {
+	//--------------------------------------------------------------------
+	// Conexion a DataNode 2
+	var conn_DN2 *grpc.ClientConn
+	conn_DN2, err_DN2 := grpc.Dial("dist38:9002", grpc.WithInsecure())
+	flag := true
+	if err_DN2 != nil {
+		fmt.Printf("¡Sin conexión DataNode 2!\n")
+		flag = false
+	} else {
+		defer conn_DN2.Close()
+
+		cDataNode2 := serverdatanode.NewDataNodeServiceClient(conn_DN2)
+		mensajetest_DN2 := serverdatanode.MensajeTest{
+			Mensaje: mensaje_cliente,
+		}
+
+		_, err_DN2 := cDataNode2.EnvioMensajeTest(context.Background(), &mensajetest_DN2)
+
+		if err_DN2 != nil {
+			fmt.Printf("> Sin respuesta DataNode2.\n")
+			flag = false
+		} else {
+			//fmt.Printf("|Cliente| DataNode 2 responde: %s", respuesta_DN2.Mensaje)
+			flag = true
+		}
+
+	}
+	return flag
+}
+
 func enviar_a_DataNode3(mensaje_cliente string) {
 	//--------------------------------------------------------------------
 	// Conexion a DataNode 3

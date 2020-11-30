@@ -96,6 +96,37 @@ func enviar_a_DataNode2(mensaje_cliente string) {
 	}
 }
 
+func enviar_a_DataNode3(mensaje_cliente string) bool {
+	//--------------------------------------------------------------------
+	// Conexion a DataNode 3
+	var conn_DN3 *grpc.ClientConn
+	conn_DN3, err_DN3 := grpc.Dial("dist39:9003", grpc.WithInsecure())
+	flag := true
+	if err_DN3 != nil {
+		fmt.Printf("¡Sin conexión DataNode 3!\n")
+		flag = false
+	} else {
+
+		defer conn_DN3.Close()
+
+		cDataNode3 := serverdatanode.NewDataNodeServiceClient(conn_DN3)
+		mensajetest_3 := serverdatanode.MensajeTest{
+			Mensaje: mensaje_cliente,
+		}
+
+		_, err_DN3 := cDataNode3.EnvioMensajeTest(context.Background(), &mensajetest_3)
+
+		if err_DN3 != nil {
+			fmt.Printf("> Sin respuesta DataNode3.\n")
+			flag = false
+		} else {
+			//fmt.Printf("|Cliente| DataNode 3 responde: %s", respuesta_3.Mensaje)
+			flag = true
+		}
+
+	}
+	return flag
+}
 
 func Enviar_Propuesta(propuesta serverdatanode.Propuesta, destinatario string) bool {
 	// Transformacion propuesta para que sea enviable por grpc
