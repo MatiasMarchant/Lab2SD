@@ -162,7 +162,7 @@ func juntarChunks(tituloLibro string, chunksLibro [] serverdatanode.ChunkLibro){
 
 	// asegurarse el orden de los chunks
 	largo := len(chunksLibro)
-	var orden [largo]int
+	orden := make([]int, largo)
 
 	for i, chunk := range chunksLibro{
 		nombre := chunk.Nombre
