@@ -102,9 +102,6 @@ func main() {
 				log.Fatalf("Error al crear archivo: %s", err4)
 			}
 
-			// Write/save buffer to disk
-			ioutil.WriteFile(fileName, partBuffer, os.ModeAppend)
-
 			fmt.Println("> Dividiendo en: ", fileName)
 
 			ChunkLibro := serverdatanode.ChunkLibro{

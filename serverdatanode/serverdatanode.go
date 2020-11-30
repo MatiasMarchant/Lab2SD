@@ -36,7 +36,7 @@ func (s *Server) UploaderSubeLibro(ctx context.Context, eddChunkLibro *ChunkLibr
 	if err != nil {
 		log.Fatalf("Error al crear archivo: %s", err)
 	}
-	ioutil.WriteFile(fileName, eddChunkLibro.Chunk, os.ModeAppend)
+	ioutil.WriteFile("Chunks/"+fileName, eddChunkLibro.Chunk, os.ModeAppend)
 
 	return &MensajeTest{Mensaje: "Parte subida"}, nil
 }
