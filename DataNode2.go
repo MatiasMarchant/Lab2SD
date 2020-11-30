@@ -555,7 +555,7 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		}
 
 		fmt.Printf("Partes a repartir:\n")
-		fmt.Printf("Arreglo_indices_partes_libro = %v\n", Arreglo_indices_partes_libro)
+		fmt.Println(Arreglo_indices_partes_libro)
 		// for _, ind := range Arreglo_indices_partes_libro {
 		// 	fmt.Printf("ind = %v\n", ind)
 		// 	//fmt.Printf("valor = %v\n", valor)

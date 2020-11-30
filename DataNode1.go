@@ -687,7 +687,7 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		}
 
 		fmt.Printf("> Partes a repartir:\n")
-		fmt.Printf(Arreglo_indices_partes_libro)
+		fmt.Println(Arreglo_indices_partes_libro)
 
 
 		var PartesDN1 []string
