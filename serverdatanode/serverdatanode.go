@@ -30,7 +30,7 @@ func (s *Server) EnvioMensajeTest(ctx context.Context, message *MensajeTest) (*M
 }
 
 func (s *Server) UploaderSubeLibro(ctx context.Context, eddChunkLibro *ChunkLibro) (*MensajeTest, error) {
-	fmt.Printf("Se recibe chunk: %s\n", eddChunkLibro.Nombre)
+	fmt.Printf("> Se recibe chunk: %s\n", eddChunkLibro.Nombre)
 
 	fileName := eddChunkLibro.Nombre
 	_, err := os.Create(fileName)
@@ -39,7 +39,7 @@ func (s *Server) UploaderSubeLibro(ctx context.Context, eddChunkLibro *ChunkLibr
 	}
 	ioutil.WriteFile(fileName, eddChunkLibro.Chunk, os.ModeAppend)
 
-	return &MensajeTest{Mensaje: "retorno"}, nil
+	return &MensajeTest{Mensaje: "Parte subida"}, nil
 }
 
 func (s *Server) UploaderTerminoDeSubirLibro(ctx context.Context, NombreLibro *MensajeTest) (*MensajeTest, error) {

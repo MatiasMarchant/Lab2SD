@@ -74,7 +74,7 @@ func main() {
 
 	totalPartsNum := uint64(math.Ceil(float64(fileSize) / float64(fileChunk)))
 
-	fmt.Printf("Splitting to %d pieces.\n", totalPartsNum)
+	fmt.Printf("Dividiento en %d partes.\n", totalPartsNum)
 
 	for i := uint64(0); i < totalPartsNum; i++ {
 		partSize := int(math.Min(fileChunk, float64(fileSize-int64(i*fileChunk))))
@@ -93,14 +93,14 @@ func main() {
 		// Write/save buffer to disk
 		ioutil.WriteFile(fileName, partBuffer, os.ModeAppend)
 
-		fmt.Println("Split to : ", fileName)
+		fmt.Println("> Dividiendo en: ", fileName)
 
 		ChunkLibro := serverdatanode.ChunkLibro{
 			Nombre: fileName,
 			Chunk:  partBuffer,
 		}
 		respuesta, _ := cDataNode.UploaderSubeLibro(context.Background(), &ChunkLibro)
-		fmt.Println("Respuesta: ", respuesta)
+		fmt.Println(respuesta.Mensaje)
 
 	}
 

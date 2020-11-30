@@ -520,7 +520,7 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 	var Arreglo_indices_partes_libro []string // Ya no guarda indices, sino que los nombres de los chunks en el directorio
 	//-------------------------------------------------------------------------------------------------------------------------
 	if metodo == "distribuido" {
-		fmt.Print("# Algoritmo Distribuido #\n")
+		fmt.Print("\n# Algoritmo Distribuido #\n\n")
 		// Enviar mensajes a datanodes para ver si están vivos
 		err := enviar_a_DataNode1("DataNode3 pregunta estas vivo?\n")
 		flagDN1vivo := true
@@ -624,9 +624,9 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 
 			fmt.Printf("La \"propuesta\" quedo:\n")
 			fmt.Printf("Nombre libro: %s\n", NombreLibroSubido)
-			fmt.Println("Propuesta.PartesDN1: %v", Propuesta.PartesDN1)
-			fmt.Println("Propuesta.PartesDN2: %v", Propuesta.PartesDN2)
-			fmt.Println("Propuesta.PartesDN3: %v", Propuesta.PartesDN3)
+			fmt.Println("- Propuesta a DN1: %v", Propuesta.PartesDN1)
+			fmt.Println("- Propuesta a DN2: %v", Propuesta.PartesDN2)
+			fmt.Println("- Propuesta a DN3: %v", Propuesta.PartesDN3)
 
 			// Envio de propuesta por casos
 			// Caso 1: DN3 y DN1 vivos
@@ -650,10 +650,10 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 				respuesta_propuesta_DN2 = true
 			}
 
-			fmt.Println("respuesta_propuesta_DN1: ", respuesta_propuesta_DN1, " respuesta_propuesta_DN2: ", respuesta_propuesta_DN2)
+			//fmt.Println("respuesta_propuesta_DN1: ", respuesta_propuesta_DN1, " respuesta_propuesta_DN2: ", respuesta_propuesta_DN2)
 
 			aprobado = respuesta_propuesta_DN1 && respuesta_propuesta_DN2
-			fmt.Println("Valor de aprobado dentro de : %v", aprobado)
+			//fmt.Println("Valor de aprobado dentro de : %v", aprobado)
 			if aprobado == true {
 				break
 			}
@@ -676,7 +676,7 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		//
 	} else if metodo == "centralizado" { // Centralizado
 		//-------------------------------------------------------------------------------------------------------------------------
-		fmt.Print("# Algoritmo Centralizado #\n")
+		fmt.Print("\n# Algoritmo Centralizado #\n\n")
 		// Contar cantidad de partes del libro
 		files, err_files := ioutil.ReadDir("./")
 		if err_files != nil {
@@ -688,8 +688,8 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 			}
 		}
 
-		fmt.Printf("Partes a repartir:\n")
-		fmt.Printf("Arreglo_indices_partes_libro = %v\n", Arreglo_indices_partes_libro)
+		fmt.Printf("> Partes a repartir:\n")
+		fmt.Printf(Arreglo_indices_partes_libro)
 
 
 		var PartesDN1 []string
