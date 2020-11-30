@@ -43,56 +43,31 @@ func enviar_a_NameNode(mensaje_cliente string) {
 	}
 }
 
-func enviar_a_DataNode1(mensaje_cliente string) {
+func enviar_a_DataNode1(mensaje_cliente string) bool {
 	//--------------------------------------------------------------------
 	// Conexion a DataNode 1
 	var conn_DN1 *grpc.ClientConn
-	conn_DN1, err_DN1 := grpc.Dial("dist37:9001", grpc.WithInsecure())
+	conn_DN1, err_DN1 := grpc.Dial("dist38:9001", grpc.WithInsecure())
+	flag := true
 	if err_DN1 != nil {
 		fmt.Printf("¡Sin conexión DataNode 1!\n")
+		flag = false
 	} else {
+
 		defer conn_DN1.Close()
 
 		cDataNode1 := serverdatanode.NewDataNodeServiceClient(conn_DN1)
-		mensajetest_DN1 := serverdatanode.MensajeTest{
+		mensajetest_1 := serverdatanode.MensajeTest{
 			Mensaje: mensaje_cliente,
 		}
 
-		_, err_DN2 := cDataNode1.EnvioMensajeTest(context.Background(), &mensajetest_DN1)
+		_, err_DN1 := cDataNode1.EnvioMensajeTest(context.Background(), &mensajetest_1)
 
-		if err_DN2 != nil {
+		if err_DN1 != nil {
 			fmt.Printf("> Sin respuesta DataNode1.\n")
-		} else {
-			//fmt.Printf("|Cliente| DataNode 1 responde: %s", respuesta_DN1.Mensaje)
-		}
-
-	}
-}
-
-func enviar_a_DataNode2(mensaje_cliente string) bool {
-	//--------------------------------------------------------------------
-	// Conexion a DataNode 2
-	var conn_DN2 *grpc.ClientConn
-	conn_DN2, err_DN2 := grpc.Dial("dist38:9002", grpc.WithInsecure())
-	flag := true
-	if err_DN2 != nil {
-		fmt.Printf("¡Sin conexión DataNode 2!\n")
-		flag = false
-	} else {
-		defer conn_DN2.Close()
-
-		cDataNode2 := serverdatanode.NewDataNodeServiceClient(conn_DN2)
-		mensajetest_DN2 := serverdatanode.MensajeTest{
-			Mensaje: mensaje_cliente,
-		}
-
-		_, err_DN2 := cDataNode2.EnvioMensajeTest(context.Background(), &mensajetest_DN2)
-
-		if err_DN2 != nil {
-			fmt.Printf("> Sin respuesta DataNode2.\n")
 			flag = false
 		} else {
-			//fmt.Printf("|Cliente| DataNode 2 responde: %s", respuesta_DN2.Mensaje)
+			//fmt.Printf("|Cliente| DataNode 1 responde: %s", respuesta_3.Mensaje)
 			flag = true
 		}
 
@@ -100,31 +75,40 @@ func enviar_a_DataNode2(mensaje_cliente string) bool {
 	return flag
 }
 
-func enviar_a_DataNode3(mensaje_cliente string) {
+
+
+func enviar_a_DataNode3(mensaje_cliente string) bool {
 	//--------------------------------------------------------------------
 	// Conexion a DataNode 3
 	var conn_DN3 *grpc.ClientConn
 	conn_DN3, err_DN3 := grpc.Dial("dist39:9003", grpc.WithInsecure())
+	flag := true
 	if err_DN3 != nil {
 		fmt.Printf("¡Sin conexión DataNode 3!\n")
+		flag = false
 	} else {
+
 		defer conn_DN3.Close()
 
 		cDataNode3 := serverdatanode.NewDataNodeServiceClient(conn_DN3)
-		mensajetest_DN3 := serverdatanode.MensajeTest{
+		mensajetest_3 := serverdatanode.MensajeTest{
 			Mensaje: mensaje_cliente,
 		}
 
-		_, err_DN3 := cDataNode3.EnvioMensajeTest(context.Background(), &mensajetest_DN3)
+		_, err_DN3 := cDataNode3.EnvioMensajeTest(context.Background(), &mensajetest_3)
 
 		if err_DN3 != nil {
 			fmt.Printf("> Sin respuesta DataNode3.\n")
+			flag = false
 		} else {
-			//fmt.Printf("|Cliente| DataNode 3 responde: %s", respuesta_DN3.Mensaje)
+			//fmt.Printf("|Cliente| DataNode 3 responde: %s", respuesta_3.Mensaje)
+			flag = true
 		}
 
 	}
+	return flag
 }
+
 
 
 func Enviar_Propuesta(propuesta serverdatanode.Propuesta, destinatario string) bool {
@@ -730,11 +714,11 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		// Diferente para cada DataNodo
 		for i, nombre_chunk := range Arreglo_indices_partes_libro{
 			if i == 0 {
-				Propuesta.PartesDN1 = append(Propuesta.PartesDN1, nombre_chunk)
-			} else if i == 1{
 				Propuesta.PartesDN2 = append(Propuesta.PartesDN2, nombre_chunk)
-			} else if i == 2 {
+			} else if i == 1{
 				Propuesta.PartesDN3 = append(Propuesta.PartesDN3, nombre_chunk)
+			} else if i == 2 {
+				Propuesta.PartesDN1 = append(Propuesta.PartesDN1, nombre_chunk)
 			} else {
 				// asignación al azar
 				s := rand.NewSource(time.Now().UnixNano())
