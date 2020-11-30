@@ -519,6 +519,7 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 	var Arreglo_indices_partes_libro []string // Ya no guarda indices, sino que los nombres de los chunks en el directorio
 	//-------------------------------------------------------------------------------------------------------------------------
 	if metodo == "distribuido" {
+		fmt.Print("# Algoritmo Distribuido #\n")
 		// Enviar mensajes a datanodes para ver si están vivos
 		err := enviar_a_DataNode2("DataNode1 pregunta estas vivo?\n")
 		flagDN2vivo := true
@@ -674,6 +675,7 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		//
 	} else if metodo == "centralizado" { // Centralizado
 		//-------------------------------------------------------------------------------------------------------------------------
+		fmt.Print("# Algoritmo Centralizado #\n")
 		// Contar cantidad de partes del libro
 		files, err_files := ioutil.ReadDir("./")
 		if err_files != nil {
