@@ -639,7 +639,7 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 				respuesta_propuesta_DN3 = true
 			}
 			// Caso 2: DN2, DN1 y DN3 vivos
-			if (flagDN2vivo == true) && (flagDN3vivo == true) {
+			if (flagDN1vivo == true) && (flagDN3vivo == true) {
 				respuesta_propuesta_DN1 = Enviar_Propuesta(Propuesta, "DataNode1")
 				respuesta_propuesta_DN3 = Enviar_Propuesta(Propuesta, "DataNode3")
 			}

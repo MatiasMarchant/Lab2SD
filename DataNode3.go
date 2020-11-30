@@ -523,16 +523,16 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		fmt.Print("# Algoritmo Distribuido #\n")
 		// Enviar mensajes a datanodes para ver si están vivos
 		err := enviar_a_DataNode1("DataNode3 pregunta estas vivo?\n")
-		flagDN2vivo := true
+		flagDN1vivo := true
 		if err != true {
 			fmt.Printf("DataNode1 no está vivo\n")
-			flagDN2vivo = false
+			flagDN1vivo = false
 		}
 		err = enviar_a_DataNode2("DataNode3 pregunta estas vivo?\n")
-		flagDN3vivo := true
+		flagDN2vivo := true
 		if err != true {
 			fmt.Printf("DataNode2 no está vivo\n")
-			flagDN3vivo = false
+			flagDN2vivo = false
 		}
 
 		//fmt.Println("flagDN2: %v", flagDN2vivo)
