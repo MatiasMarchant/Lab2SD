@@ -11,7 +11,7 @@ import (
 	//"math"
 	"os"
 	"serverdatanode"
-	//"strconv"
+	"strconv"
 	"strings"
 )
 
@@ -159,7 +159,18 @@ func juntarChunks(tituloLibro string, chunksLibro [] serverdatanode.ChunkLibro){
 			return
 		}		
 	}
-	
+
+	// asegurarse el orden de los chunks
+	largo := len(chunksLibro)
+	var orden [largo]int
+
+	for i, chunk := range chunksLibro{
+		nombre := chunk.Nombre
+		pos_split := strings.Split(nombre, "_")
+		pos := pos_split[len(pos_split)-1]
+		pos_int, _ := strconv.Atoi(pos)
+		orden[pos_int] = i
+		
 	newFileName := "Descargas/"+tituloLibro+".pdf"
 	_, err := os.Create(newFileName)
 	if err != nil {
@@ -171,8 +182,11 @@ func juntarChunks(tituloLibro string, chunksLibro [] serverdatanode.ChunkLibro){
 			fmt.Println(err)
 			os.Exit(1)
 	}
-	for _, chunkBufferBytes := range chunksLibro{
+	// se itera el arreglo oden, que tiene el orden correcto de los chunks 
+	for _, posicion := range orden{
 		// se guarda chunk en la máquina
+		chunkBufferBytes := chunksLibro[posicion]
+
 		guardarChunk(chunkBufferBytes)
 
 		n, err := file.Write(chunkBufferBytes.Chunk)

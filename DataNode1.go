@@ -689,8 +689,6 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		fmt.Printf("Arreglo_indices_partes_libro = %v\n", Arreglo_indices_partes_libro)
 
 
-		//Arreglo_indices_partes_libro = [Frankenstein-Mary_Shelley_0 Frankenstein-Mary_Shelley_1 Frankenstein-Mary_Shelley_2 Frankenstein-Mary_Shelley_3]
-
 		var PartesDN1 []string
 		var PartesDN2 []string
 		var PartesDN3 []string
