@@ -15,10 +15,6 @@ import (
 	"strings"
 )
 
-//message ChunkLibro {
-//    string Nombre = 1;
-//    bytes Chunk = 2;
-//}
 
 func pedir_a_DataNode1(chunk string) *serverdatanode.ChunkLibro{
 	//--------------------------------------------------------------------

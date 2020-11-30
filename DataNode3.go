@@ -37,9 +37,7 @@ func enviar_a_NameNode(mensaje_cliente string) {
 
 		if err_NN != nil {
 			fmt.Printf("> Sin respuesta NameNode.\n")
-		} else {
-			//fmt.Printf("|Cliente| NameNode responde : %s", respuestaNN.Mensaje)
-		}
+		} 
 
 	}
 }
@@ -68,7 +66,6 @@ func enviar_a_DataNode1(mensaje_cliente string) bool {
 			fmt.Printf("> Sin respuesta DataNode1.\n")
 			flag = false
 		} else {
-			//fmt.Printf("|Cliente| DataNode 1 responde: %s", respuesta_3.Mensaje)
 			flag = true
 		}
 
@@ -99,7 +96,6 @@ func enviar_a_DataNode2(mensaje_cliente string) bool {
 			fmt.Printf("> Sin respuesta DataNode2.\n")
 			flag = false
 		} else {
-			//fmt.Printf("|Cliente| DataNode 2 responde: %s", respuesta_DN2.Mensaje)
 			flag = true
 		}
 
@@ -109,9 +105,6 @@ func enviar_a_DataNode2(mensaje_cliente string) bool {
 
 func Enviar_Propuesta(propuesta serverdatanode.Propuesta, destinatario string) bool {
 	// Transformacion propuesta para que sea enviable por grpc
-	// propuesta.PartesDN1 = strings.Join(propuesta.PartesDN1, ",")
-	// propuesta.PartesDN2 = strings.Join(propuesta.PartesDN2, ",")
-	// propuesta.PartesDN3 = strings.Join(propuesta.PartesDN3, ",")
 
 	Propuesta_grpc := serverdatanode.Propuestagrpc{
 		NombreLibroSubido: propuesta.NombreLibroSubido,
@@ -220,25 +213,6 @@ func EscribirEnLog(Propuesta serverdatanode.Propuesta, ID int, cant_partes int) 
 	// Llamar funcion escritura sobre log namenode
 	// Usar Ricart-Agrawala(Pedir acceso a lugar critico)
 	// Si todos responden -> Escribir con gRPC
-
-	// Ricart Agrawala a DN2 y DN3
-	// ---------------------------------------------------------------
-	// DN2
-	// UNDER CONSTRUCTION
-	/*
-		var connDN2 *grpc.ClientConn
-		connDN2, errDN2 := grpc.Dial("dist38:9002", grpc.WithInsecure())
-		if errDN2 != nil {
-			// Error al hacer conexion
-		} else {
-			defer connDN2.Close()
-			cDataNode2 := serverdatanode.NewDataNodeServiceClient(connDN2)
-			respuesta, err := cDataNode2.RicartAgrawala(context.Background(), &MensajeID{ID: ID})
-			if err != nil {
-				// Hubo un error al hacer request
-			}
-		}
-	*/
 
 	// Estructura
 	// -------------------------------- log.txt
@@ -517,7 +491,7 @@ func EnviarChunks_Centralizado(Propuesta servernamenode.Propuestagrpc) {
 }
 
 func HacerPropuesta(metodo string, NombreLibroSubido string) {
-	var Arreglo_indices_partes_libro []string // Ya no guarda indices, sino que los nombres de los chunks en el directorio
+	var Arreglo_indices_partes_libro []string // Guarda los nombres de los chunks en el directorio
 	//-------------------------------------------------------------------------------------------------------------------------
 	if metodo == "distribuido" {
 		fmt.Print("\n# Algoritmo Distribuido #\n\n")
@@ -553,14 +527,6 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 
 		fmt.Printf("> Partes a repartir:\n")
 		fmt.Println(Arreglo_indices_partes_libro)
-		// for _, ind := range Arreglo_indices_partes_libro {
-		// 	fmt.Printf("ind = %v\n", ind)
-		// 	//fmt.Printf("valor = %v\n", valor)
-		// 	indint, _ := strconv.Atoi(ind)
-		// 	fmt.Printf("%s\n", files[indint].Name())
-		// }
-
-		//cant_chunks := len(Arreglo_indices_partes_libro) // Cantidad de chunks
 
 		// Ver cuales hay vivos y repartir con serverdatanode.Propuesta
 		aprobado := false
@@ -650,10 +616,7 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 				respuesta_propuesta_DN2 = true
 			}
 
-			//fmt.Println("respuesta_propuesta_DN1: ", respuesta_propuesta_DN1, " respuesta_propuesta_DN2: ", respuesta_propuesta_DN2)
-
 			aprobado = respuesta_propuesta_DN1 && respuesta_propuesta_DN2
-			//fmt.Println("Valor de aprobado dentro de : %v", aprobado)
 			if aprobado == true {
 				break
 			}
@@ -665,7 +628,6 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		fmt.Println("\nNombre libro en propuesta: %s", Propuesta.NombreLibroSubido)
 
 		// Llamar funcion escritura sobre log namenode
-		// Usar Ricart-Agrawala(Pedir acceso a lugar critico)
 		// Si todos responden -> Escribir con gRPC
 		ID := 1
 		EscribirEnLog(Propuesta, ID, len(Arreglo_indices_partes_libro))

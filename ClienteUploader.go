@@ -39,7 +39,7 @@ func main() {
 
 	for {
 
-		fmt.Print("Ingresar nombre de carpeta donde están libros\n")
+		fmt.Print("\nIngresar nombre de carpeta donde están libros\n")
 		fmt.Print("> ")
 		var carpeta_libros string
 		_, err := fmt.Scanln(&carpeta_libros)
