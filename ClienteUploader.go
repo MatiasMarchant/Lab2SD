@@ -17,11 +17,20 @@ import (
 func main() {
 	fmt.Printf("#### ClienteUploader ####\n\n")
 
-	// Conexion a un datanote (ahora lo hago especifico pero deberia ser a uno aleatorio)
+	// Conexion a un datanote random
+	var dist [3]string
+	dist[0] = "dist37:9001"
+	dist[1] = "dist38:9002"
+	dist[2] = "dist39:9003"
+
+	s := rand.NewSource(time.Now().UnixNano())
+	random := rand.New(s)
+	valor_random := random.Intn(3)
+
 	var conn_DN *grpc.ClientConn
-	conn_DN, err_DN := grpc.Dial("dist37:9001", grpc.WithInsecure())
+	conn_DN, err_DN := grpc.Dial(dist[valor_random], grpc.WithInsecure())
 	if err_DN != nil {
-		log.Fatalf("Error al conectar cliente uploader a (en este caso) DN1: %s", err_DN)
+		log.Fatalf("Error al conectar cliente uploader al DataNode: %s", err_DN)
 	}
 	defer conn_DN.Close()
 
