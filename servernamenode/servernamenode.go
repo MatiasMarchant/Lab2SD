@@ -2,7 +2,7 @@ package servernamenode
 
 import (
 	"golang.org/x/net/context"
-
+	"google.golang.org/grpc"
 	"bufio"
 	"fmt"
 	"log"
@@ -10,6 +10,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"serverdatanode"
 )
 
 type Propuesta struct {
