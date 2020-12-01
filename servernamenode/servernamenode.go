@@ -291,8 +291,7 @@ func generar_nueva_propuesta(Propuesta *Propuestagrpc, flagDN1vivo bool, flagDN2
 		Propuesta.PartesDN2 = " "
 		propuesta_DN3 = append(propuesta_DN3, propuesta_DN1...)
 		propuesta_DN3 = append(propuesta_DN3, propuesta_DN2...)
-		Propuesta.PartesDN3 = strings.Join(propuesta_DN3, ",")
-		
+		Propuesta.PartesDN3 = strings.Join(propuesta_DN3, ",")		
 	}
 	// DN2 vivo. DN1 y DN3 muertos
 	if !flagDN1vivo && !flagDN3vivo && flagDN2vivo{
@@ -300,8 +299,7 @@ func generar_nueva_propuesta(Propuesta *Propuestagrpc, flagDN1vivo bool, flagDN2
 		Propuesta.PartesDN3 = " "
 		propuesta_DN2 = append(propuesta_DN2, propuesta_DN1...)
 		propuesta_DN2 = append(propuesta_DN2, propuesta_DN3...)
-		Propuesta.PartesDN2 = strings.Join(propuesta_DN2, ",")
-		
+		Propuesta.PartesDN2 = strings.Join(propuesta_DN2, ",")		
 	}
 	// DN1 vivo. DN2 y DN3 muertos
 	if !flagDN2vivo && !flagDN3vivo && flagDN1vivo{
@@ -309,12 +307,10 @@ func generar_nueva_propuesta(Propuesta *Propuestagrpc, flagDN1vivo bool, flagDN2
 		Propuesta.PartesDN3 = " "
 		propuesta_DN1 = append(propuesta_DN1, propuesta_DN2...)
 		propuesta_DN1 = append(propuesta_DN1, propuesta_DN3...)
-		Propuesta.PartesDN1 = strings.Join(propuesta_DN1, ",")
-		
+		Propuesta.PartesDN1 = strings.Join(propuesta_DN1, ",")		
 	}
 
-	return Propuesta
-	
+	return Propuesta, nil	
 }
 
 func (s *Server) Propuesta_Centralizado(ctx context.Context, Propuesta *Propuestagrpc) (*Propuestagrpc, error) {
@@ -345,7 +341,7 @@ func (s *Server) Propuesta_Centralizado(ctx context.Context, Propuesta *Propuest
 		fmt.Printf("%t,%t,%t", flagDN1vivo,flagDN2vivo,flagDN3vivo)
 		fmt.Printf("> Propuesta rechazada\n")
 
-		nuevaPropuesta = generar_nueva_propuesta(Propuesta, flagDN1vivo, flagDN2vivo, flagDN3vivo)
+		nuevaPropuesta, _ := generar_nueva_propuesta(Propuesta, flagDN1vivo, flagDN2vivo, flagDN3vivo)
 
 		fmt.Printf("> Nueva propuesta generada\n")
 		return nuevaPropuesta, nil
