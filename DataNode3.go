@@ -624,10 +624,10 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		// Llamar funcion escritura sobre log namenode
 		// Si todos responden -> Escribir con gRPC
 		ID := 1
-		start := time.Now()
+		//start := time.Now()
 		EscribirEnLog(Propuesta, ID, len(Arreglo_indices_partes_libro))
-		demora := time.Since(start).Seconds()
-		fmt.Printf("Demora: %v segundos\n", demora)
+		//demora := time.Since(start).Seconds()
+		//fmt.Printf("Demora: %v segundos\n", demora)
 
 		// Enviar chunks a otros DataNode
 		EnviarChunks(Propuesta)
@@ -710,10 +710,10 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		fmt.Printf("\n")
 
 		ID := 1
-		start := time.Now()
+		//start := time.Now()
 		EscribirEnLog_Centralizado(respuesta_propuesta_NN, ID, len(Arreglo_indices_partes_libro))
-		demora := time.Since(start).Seconds()
-		fmt.Printf("Demora: %v segundos\n", demora)
+		//demora := time.Since(start).Seconds()
+		//fmt.Printf("Demora: %v segundos\n", demora)
 		// Enviar chunks a otros DataNode
 		EnviarChunks_Centralizado(respuesta_propuesta_NN)
 
