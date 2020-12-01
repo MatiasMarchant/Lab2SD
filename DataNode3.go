@@ -510,17 +510,12 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 			flagDN2vivo = false
 		}
 
-		//fmt.Println("flagDN2: %v", flagDN2vivo)
-		//fmt.Println("flagDN3: %v", flagDN3vivo)
-
 		// Contar cantidad de partes del libro
-		files, err_files := ioutil.ReadDir("./")
+		files, err_files := ioutil.ReadDir("./Chunks")
 		if err_files != nil {
 			log.Printf("err_files, no puede leer directorio: %v", err_files)
 		}
 		for _, f := range files {
-			//fmt.Printf("Nombre scan: %s\n", f.Name())
-			//fmt.Printf("NombreLibroSubido: %s\n", NombreLibroSubido)
 			if strings.Contains(f.Name(), NombreLibroSubido) {
 				Arreglo_indices_partes_libro = append(Arreglo_indices_partes_libro, f.Name())
 			}
@@ -626,7 +621,7 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		//-------------------------------------------------------------------------------------------------------------------------
 		fmt.Print("\n# Algoritmo Centralizado #\n\n")
 		// Contar cantidad de partes del libro
-		files, err_files := ioutil.ReadDir("./")
+		files, err_files := ioutil.ReadDir("./Chunks")
 		if err_files != nil {
 			log.Printf("err_files, no puede leer directorio: %v", err_files)
 		}

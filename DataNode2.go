@@ -514,7 +514,7 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		}
 
 		// Contar cantidad de partes del libro
-		files, err_files := ioutil.ReadDir("./")
+		files, err_files := ioutil.ReadDir("./Chunks")
 		if err_files != nil {
 			log.Printf("err_files, no puede leer directorio: %v", err_files)
 		}
@@ -626,7 +626,7 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		//-------------------------------------------------------------------------------------------------------------------------
 		fmt.Print("\n# Algoritmo Centralizado #\n\n")
 		// Contar cantidad de partes del libro
-		files, err_files := ioutil.ReadDir("./")
+		files, err_files := ioutil.ReadDir("./Chunks")
 		if err_files != nil {
 			log.Printf("err_files, no puede leer directorio: %v", err_files)
 		}
