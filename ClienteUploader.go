@@ -167,11 +167,12 @@ func main() {
 			flagDN3vivo = false
 		}
 
-
+		valor_random := -1
+		
 		for{
 			s := rand.NewSource(time.Now().UnixNano())
 			random := rand.New(s)
-			valor_random := random.Intn(3)
+			valor_random = random.Intn(3)
 			if valor_random == 0 && flagDN1vivo{
 				break
 			} 
