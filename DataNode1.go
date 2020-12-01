@@ -605,8 +605,6 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 
 		// Si llega aca, entonces aprobado == true y se documenta en el registro del NameNode
 
-		fmt.Println("\nNombre libro en propuesta: %s", Propuesta.NombreLibroSubido)
-
 		// Llamar funcion escritura sobre log namenode
 		// Si todos responden -> Escribir con gRPC
 		ID := 1

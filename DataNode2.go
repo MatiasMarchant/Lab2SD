@@ -44,7 +44,7 @@ func enviar_a_DataNode1(mensaje_cliente string) bool {
 	//--------------------------------------------------------------------
 	// Conexion a DataNode 1
 	var conn_DN1 *grpc.ClientConn
-	conn_DN1, err_DN1 := grpc.Dial("dist38:9001", grpc.WithInsecure())
+	conn_DN1, err_DN1 := grpc.Dial("dist37:9001", grpc.WithInsecure())
 	flag := true
 	if err_DN1 != nil {
 		fmt.Printf("¡Sin conexión DataNode 1!\n")
