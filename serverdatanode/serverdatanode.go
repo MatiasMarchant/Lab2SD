@@ -24,7 +24,6 @@ type Server struct {
 }
 
 func (s *Server) EnvioMensajeTest(ctx context.Context, message *MensajeTest) (*MensajeTest, error) {
-	//respuestaDataNode := "DataNode recibe: " + message.Mensaje
 	return &MensajeTest{Mensaje: "respuestaDataNode"}, nil
 }
 
@@ -69,7 +68,7 @@ func (s *Server) Propuesta_Distribuido(ctx context.Context, Propuesta *Propuesta
 			defer connDN1.Close()
 			cDataNode1 := NewDataNodeServiceClient(connDN1)
 			_, errDN1 := cDataNode1.EnvioMensajeTest(context.Background(), &MensajeTest{Mensaje: "Hola"})
-
+			fmt.Printf(">>> Mensaje enviado")
 			if errDN1 != nil {
 				FlagRespuestaDN1 = false // Esta muerto
 			} else {
@@ -86,7 +85,7 @@ func (s *Server) Propuesta_Distribuido(ctx context.Context, Propuesta *Propuesta
 			defer connDN1.Close()
 			cDataNode1 := NewDataNodeServiceClient(connDN1)
 			_, errDN1 := cDataNode1.EnvioMensajeTest(context.Background(), &MensajeTest{Mensaje: "Hola"})
-
+			fmt.Printf(">>> Mensaje enviado")
 			if errDN1 != nil {
 				FlagRespuestaDN1 = true // Esta muerto, tonces esta bien que no tenga chunks
 			} else {
@@ -106,6 +105,7 @@ func (s *Server) Propuesta_Distribuido(ctx context.Context, Propuesta *Propuesta
 			defer connDN2.Close()
 			cDataNode2 := NewDataNodeServiceClient(connDN2)
 			_, errDN2 := cDataNode2.EnvioMensajeTest(context.Background(), &MensajeTest{Mensaje: "Hola"})
+			fmt.Printf(">>> Mensaje enviado")
 			if errDN2 != nil {
 				FlagRespuestaDN2 = false
 			} else {
@@ -121,6 +121,7 @@ func (s *Server) Propuesta_Distribuido(ctx context.Context, Propuesta *Propuesta
 			defer connDN2.Close()
 			cDataNode2 := NewDataNodeServiceClient(connDN2)
 			_, errDN2 := cDataNode2.EnvioMensajeTest(context.Background(), &MensajeTest{Mensaje: "Hola"})
+			fmt.Printf(">>> Mensaje enviado")
 			if errDN2 != nil {
 				FlagRespuestaDN2 = true
 			} else {
@@ -140,6 +141,7 @@ func (s *Server) Propuesta_Distribuido(ctx context.Context, Propuesta *Propuesta
 			defer connDN3.Close()
 			cDataNode3 := NewDataNodeServiceClient(connDN3)
 			_, errDN3 := cDataNode3.EnvioMensajeTest(context.Background(), &MensajeTest{Mensaje: "Hola"})
+			fmt.Printf(">>> Mensaje enviado")
 			if errDN3 != nil {
 				FlagRespuestaDN3 = false
 			} else {
@@ -156,6 +158,7 @@ func (s *Server) Propuesta_Distribuido(ctx context.Context, Propuesta *Propuesta
 			defer connDN3.Close()
 			cDataNode3 := NewDataNodeServiceClient(connDN3)
 			_, errDN3 := cDataNode3.EnvioMensajeTest(context.Background(), &MensajeTest{Mensaje: "Hola"})
+			fmt.Printf(">>> Mensaje enviado")
 			if errDN3 != nil {
 				FlagRespuestaDN3 = true
 			} else {
