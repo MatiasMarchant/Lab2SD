@@ -625,7 +625,7 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		start := time.Now()
 		EscribirEnLog(Propuesta, ID, len(Arreglo_indices_partes_libro))
 		demora := time.Since(start).Seconds()
-		fmt.Printf("Demora: %d segundos", demora)
+		fmt.Printf("Demora: %v segundos", demora)
 
 		// Enviar chunks a otros DataNode
 		EnviarChunks(Propuesta)
@@ -711,7 +711,7 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		start := time.Now()
 		EscribirEnLog_Centralizado(respuesta_propuesta_NN, ID, len(Arreglo_indices_partes_libro))
 		demora := time.Since(start).Seconds()
-		fmt.Printf("Demora: %d segundos", demora)
+		fmt.Printf("Demora: %v segundos", demora)
 
 		// Enviar chunks a otros DataNode
 		EnviarChunks_Centralizado(respuesta_propuesta_NN)
