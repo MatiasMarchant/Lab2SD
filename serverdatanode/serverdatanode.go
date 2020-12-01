@@ -175,7 +175,7 @@ func (s *Server) DownloaderDescargaLibro(ctx context.Context, peticion_chunk *Me
 	ChunkFileName := peticion_chunk.Mensaje
 	fmt.Printf("Enviando chunk:  %s", ChunkFileName+"\n")
 
-	newFileChunk, err := os.Open(ChunkFileName)
+	newFileChunk, err := os.Open("Chunks/"+ChunkFileName)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
