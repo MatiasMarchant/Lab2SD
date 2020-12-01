@@ -31,8 +31,6 @@ func enviar_a_DataNode1(mensaje_cliente string) {
 
 		if err_DN1 != nil {
 			fmt.Printf("> Sin respuesta DataNode1.\n")
-		} else {
-			//fmt.Printf("|Cliente| DataNode 1 responde: %s", respuesta_DN1.Mensaje)
 		}
 
 	}
@@ -57,8 +55,6 @@ func enviar_a_DataNode2(mensaje_cliente string) {
 
 		if err_DN2 != nil {
 			fmt.Printf("> Sin respuesta DataNode2.\n")
-		} else {
-			//fmt.Printf("|Cliente| DataNode 2 responde: %s", respuesta_DN2.Mensaje)
 		}
 
 	}
@@ -83,10 +79,7 @@ func enviar_a_DataNode3(mensaje_cliente string) {
 
 		if err_DN3 != nil {
 			fmt.Printf("> Sin respuesta DataNode3.\n")
-		} else {
-			//fmt.Printf("|Cliente| DataNode 3 responde: %s", respuesta_DN3.Mensaje)
 		}
-
 	}
 }
 
@@ -109,15 +102,7 @@ func main() {
 
 	go func() {
 		for {
-
-			//time.Sleep(10 * time.Second)
-
-			//mensajeaD1 := "Mensaje de prueba NameNode a DataNode 1\n"
-			//mensajeaD2 := "Mensaje de prueba NameNode a DataNode 2\n"
-			//mensajeaD3 := "Mensaje de prueba NameNode a DataNode 3\n"
-			//enviar_a_DataNode1(mensajeaD1)
-			//enviar_a_DataNode2(mensajeaD2)
-			//enviar_a_DataNode3(mensajeaD3)			
+		
 		}
 	}()
 
