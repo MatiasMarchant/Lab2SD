@@ -582,6 +582,7 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 			fmt.Println("- Propuesta a DN1:", Propuesta.PartesDN1)
 			fmt.Println("- Propuesta a DN2:", Propuesta.PartesDN2)
 			fmt.Println("- Propuesta a DN3:", Propuesta.PartesDN3)
+			fmt.Printf("\n")
 
 			// Envio de propuesta por casos
 			// Caso 1: DN3 y DN1 vivos
@@ -696,6 +697,7 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		fmt.Println("- Propuesta a DN1:", respuesta_propuesta_NN.PartesDN1)
 		fmt.Println("- Propuesta a DN2:", respuesta_propuesta_NN.PartesDN2)
 		fmt.Println("- Propuesta a DN3:", respuesta_propuesta_NN.PartesDN3)
+		fmt.Printf("\n")
 
 		ID := 1
 		EscribirEnLog_Centralizado(respuesta_propuesta_NN, ID, len(Arreglo_indices_partes_libro))
