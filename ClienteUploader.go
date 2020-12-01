@@ -22,14 +22,16 @@ func main() {
 	fmt.Print("\nIngresar nombre de carpeta donde están libros\n")
 	fmt.Print("> ")
 	var carpeta_libros string
-	_, err := fmt.Scanln(&carpeta_libros)
-	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		return
-	}
-	carpeta_libros = strings.TrimRight(carpeta_libros, "\n")
-	
+	_, err_scan := fmt.Scanln(&carpeta_libros)
+
 	for {
+		fmt.Print("---- Libros ----")
+		if err_scan != nil {
+			fmt.Fprintln(os.Stderr, err)
+			return
+		}
+		carpeta_libros = strings.TrimRight(carpeta_libros, "\n")
+
 		// https://stackoverflow.com/questions/14668850/list-directory-in-go
 		files, err_files := ioutil.ReadDir("./" + carpeta_libros + "/")
 		if err_files != nil {
