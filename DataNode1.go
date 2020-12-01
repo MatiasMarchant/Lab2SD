@@ -268,7 +268,7 @@ func EnviarChunks(Propuesta serverdatanode.Propuesta) {
 	for _, indicechunk := range Propuesta.PartesDN1 {
 		ChunkFileName := indicechunk
 		fmt.Printf("# Enviando chunk a DN1: %s", ChunkFileName+"\n")
-		newFileChunk, err := os.Open(ChunkFileName)
+		newFileChunk, err := os.Open("Chunks/"+ChunkFileName)
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
@@ -304,7 +304,7 @@ func EnviarChunks(Propuesta serverdatanode.Propuesta) {
 	for _, indicechunk := range Propuesta.PartesDN2 {
 		ChunkFileName := indicechunk
 		fmt.Printf("# Enviando chunk a DN2: %s", ChunkFileName+"\n")
-		newFileChunk, err := os.Open(ChunkFileName)
+		newFileChunk, err := os.Open("Chunks/"+ChunkFileName)
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
@@ -339,7 +339,7 @@ func EnviarChunks(Propuesta serverdatanode.Propuesta) {
 	for _, indicechunk := range Propuesta.PartesDN3 {
 		ChunkFileName := indicechunk
 		fmt.Printf("# Enviando chunk a DN3: %s", ChunkFileName+"\n")
-		newFileChunk, err := os.Open(ChunkFileName)
+		newFileChunk, err := os.Open("Chunks/"+ChunkFileName)
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
@@ -382,7 +382,7 @@ func EnviarChunks_Centralizado(Propuesta servernamenode.Propuestagrpc) {
 	for _, indicechunk := range PropuestasPartesDN1 {
 		ChunkFileName := indicechunk
 		fmt.Printf("# Enviando chunk a DN1: %s", ChunkFileName+"\n")
-		newFileChunk, err := os.Open(ChunkFileName)
+		newFileChunk, err := os.Open("Chunks/"+ChunkFileName)
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
@@ -418,7 +418,7 @@ func EnviarChunks_Centralizado(Propuesta servernamenode.Propuestagrpc) {
 	for _, indicechunk := range PropuestasPartesDN2 {
 		ChunkFileName := indicechunk
 		fmt.Printf("# Enviando chunk a DN2: %s", ChunkFileName+"\n")
-		newFileChunk, err := os.Open(ChunkFileName)
+		newFileChunk, err := os.Open("Chunks/"+ChunkFileName)
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
@@ -453,7 +453,7 @@ func EnviarChunks_Centralizado(Propuesta servernamenode.Propuestagrpc) {
 	for _, indicechunk := range PropuestasPartesDN3 {
 		ChunkFileName := indicechunk
 		fmt.Printf("# Enviando chunk a DN3: %s", ChunkFileName+"\n")
-		newFileChunk, err := os.Open(ChunkFileName)
+		newFileChunk, err := os.Open("Chunks/"+ChunkFileName)
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
