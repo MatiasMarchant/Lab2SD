@@ -15,6 +15,80 @@ import (
     "time"
 )
 
+func enviar_a_DataNode1(mensaje_cliente string) bool {
+	//--------------------------------------------------------------------
+	// Conexion a DataNode 1
+	var conn_DN1 *grpc.ClientConn
+	conn_DN1, err_DN1 := grpc.Dial("dist37:9001", grpc.WithInsecure())
+	flag := true
+	if err_DN1 != nil {
+		flag = false
+	} else {
+		defer conn_DN1.Close()
+		cDataNode1 := serverdatanode.NewDataNodeServiceClient(conn_DN1)
+		mensajetest_1 := serverdatanode.MensajeTest{
+			Mensaje: mensaje_cliente,
+		}
+		_, err_DN1 := cDataNode1.EnvioMensajeTest(context.Background(), &mensajetest_1)
+		if err_DN1 != nil {
+			flag = false
+		} else {
+			flag = true
+		}
+	}
+	return flag
+}
+
+func enviar_a_DataNode2(mensaje_cliente string) bool {
+	//--------------------------------------------------------------------
+	// Conexion a DataNode 2
+	var conn_DN2 *grpc.ClientConn
+	conn_DN2, err_DN2 := grpc.Dial("dist38:9002", grpc.WithInsecure())
+	flag := true
+	if err_DN2 != nil {
+		flag = false
+	} else {
+		defer conn_DN2.Close()
+		cDataNode2 := serverdatanode.NewDataNodeServiceClient(conn_DN2)
+		mensajetest_DN2 := serverdatanode.MensajeTest{
+			Mensaje: mensaje_cliente,
+		}
+		_, err_DN2 := cDataNode2.EnvioMensajeTest(context.Background(), &mensajetest_DN2)
+		if err_DN2 != nil {
+			flag = false
+		} else {
+			flag = true
+		}
+	}
+	return flag
+}
+
+
+func enviar_a_DataNode3(mensaje_cliente string) bool{
+	//--------------------------------------------------------------------
+	// Conexion a DataNode 3
+	var conn_DN3 *grpc.ClientConn
+	conn_DN3, err_DN3 := grpc.Dial("dist39:9003", grpc.WithInsecure())
+	flag := true
+	if err_DN3 != nil {
+		flag = false
+	} else {
+		defer conn_DN3.Close()
+		cDataNode3 := serverdatanode.NewDataNodeServiceClient(conn_DN3)
+		mensajetest_3 := serverdatanode.MensajeTest{
+			Mensaje: mensaje_cliente,
+		}
+		_, err_DN3 := cDataNode3.EnvioMensajeTest(context.Background(), &mensajetest_3)
+		if err_DN3 != nil {
+			flag = false
+		} else {
+			flag = true
+		}
+	}
+	return flag
+}
+
+
 func main() {
 	fmt.Printf("#### ClienteUploader ####\n\n")
 	
@@ -77,9 +151,38 @@ func main() {
 		dist[1] = "dist38:9002"
 		dist[2] = "dist39:9003"
 
-		s := rand.NewSource(time.Now().UnixNano())
-		random := rand.New(s)
-		valor_random := random.Intn(3)
+		err1 := enviar_a_DataNode1("Cliente pregunta estas vivo?\n")
+		flagDN1vivo := true
+		if err1 != true {
+			flagDN1vivo = false
+		}	
+		err2 := enviar_a_DataNode2("Cliente pregunta estas vivo?\n")
+		flagDN2vivo := true
+		if err2 != true {
+			flagDN2vivo = false
+		}	
+		err3 := enviar_a_DataNode3("Cliente pregunta estas vivo?\n")
+		flagDN3vivo := true
+		if err3 != true {
+			flagDN3vivo = false
+		}
+
+
+		for{
+			s := rand.NewSource(time.Now().UnixNano())
+			random := rand.New(s)
+			valor_random := random.Intn(3)
+			if valor_random == 0 && flagDN1vivo{
+				break
+			} 
+			if valor_random == 1 && flagDN2vivo{
+				break
+			} 
+			if valor_random == 2 && flagDN3vivo{
+				break
+			} 
+
+		}
 
 		var conn_DN *grpc.ClientConn
 		conn_DN, err_DN := grpc.Dial(dist[valor_random], grpc.WithInsecure())
