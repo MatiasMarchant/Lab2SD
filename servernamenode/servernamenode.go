@@ -22,6 +22,82 @@ type Propuesta struct {
 type Server struct {
 }
 
+//-------------------------------------------------------------------------------------------------------------
+func enviar_a_DataNode1(mensaje_cliente string) bool {
+	//--------------------------------------------------------------------
+	// Conexion a DataNode 1
+	var conn_DN1 *grpc.ClientConn
+	conn_DN1, err_DN1 := grpc.Dial("dist37:9001", grpc.WithInsecure())
+	flag := true
+	if err_DN1 != nil {
+		flag = false
+	} else {
+		defer conn_DN1.Close()
+		cDataNode1 := serverdatanode.NewDataNodeServiceClient(conn_DN1)
+		mensajetest_1 := serverdatanode.MensajeTest{
+			Mensaje: mensaje_cliente,
+		}
+		_, err_DN1 := cDataNode1.EnvioMensajeTest(context.Background(), &mensajetest_1)
+		if err_DN1 != nil {
+			flag = false
+		} else {
+			flag = true
+		}
+	}
+	return flag
+}
+
+func enviar_a_DataNode2(mensaje_cliente string) bool {
+	//--------------------------------------------------------------------
+	// Conexion a DataNode 2
+	var conn_DN2 *grpc.ClientConn
+	conn_DN2, err_DN2 := grpc.Dial("dist38:9002", grpc.WithInsecure())
+	flag := true
+	if err_DN2 != nil {
+		flag = false
+	} else {
+		defer conn_DN2.Close()
+		cDataNode2 := serverdatanode.NewDataNodeServiceClient(conn_DN2)
+		mensajetest_DN2 := serverdatanode.MensajeTest{
+			Mensaje: mensaje_cliente,
+		}
+		_, err_DN2 := cDataNode2.EnvioMensajeTest(context.Background(), &mensajetest_DN2)
+		if err_DN2 != nil {
+			flag = false
+		} else {
+			flag = true
+		}
+	}
+	return flag
+}
+
+
+func enviar_a_DataNode3(mensaje_cliente string) bool{
+	//--------------------------------------------------------------------
+	// Conexion a DataNode 3
+	var conn_DN3 *grpc.ClientConn
+	conn_DN3, err_DN3 := grpc.Dial("dist39:9003", grpc.WithInsecure())
+	flag := true
+	if err_DN3 != nil {
+		flag = false
+	} else {
+		defer conn_DN3.Close()
+		cDataNode3 := serverdatanode.NewDataNodeServiceClient(conn_DN3)
+		mensajetest_3 := serverdatanode.MensajeTest{
+			Mensaje: mensaje_cliente,
+		}
+		_, err_DN3 := cDataNode3.EnvioMensajeTest(context.Background(), &mensajetest_3)
+		if err_DN3 != nil {
+			flag = false
+		} else {
+			flag = true
+		}
+	}
+	return flag
+}
+
+//-----------------------------------------------------------------------------------------------------------------
+
 func listaDeLibros() string {
 	listado := ""
 	nLibro := 0
@@ -124,7 +200,7 @@ func (s *Server) EscribirEnLog(ctx context.Context, message *EscrituraLog) (*Men
 	}
 	defer f.Close()
 
-	// Checkear si el libro ya existe, o podemos asumir que el
+	// Podemos asumir que el
 	// mismo libro no se sube mas de una vez
 
 	// Asumiendo q el mismo libro no se sube mas de una vez:
@@ -170,6 +246,114 @@ func (s *Server) EscribirEnLog(ctx context.Context, message *EscrituraLog) (*Men
 	return &MensajeTest{Mensaje: "bien"}, nil
 }
 
+func generar_nueva_propuesta(Propuesta *Propuestagrpc, flagDN1vivo bool, flagDN2vivo bool, flagDN3vivo bool)() (*Propuestagrpc, error){
+	propuesta_DN1 := strings.Split(Propuesta.PartesDN1, ",")
+	propuesta_DN2 := strings.Split(Propuesta.PartesDN2, ",")
+	propuesta_DN3 := strings.Split(Propuesta.PartesDN3, ",")
+
+	// DN1 muerto. DN2 y DN3 vivos
+	if !flagDN1vivo && flagDN2vivo && flagDN3vivo{
+		Propuesta.PartesDN1 = " "
+		for i, prop := range propuesta_DN1 { 
+			if i%2 == 0{
+				propuesta_DN2 = append(propuesta_DN2, prop)
+			} else{
+				propuesta_DN3 = append(propuesta_DN3, prop)
+			}
+		}
+	}
+	// DN2 muerto. DN1 y DN3 vivos
+	if !flagDN2vivo && flagDN1vivo && flagDN3vivo{
+		Propuesta.PartesDN2 = " "
+		for i, prop := range propuesta_DN2 { 
+			if i%2 == 0{
+				propuesta_DN1 = append(propuesta_DN1, prop)
+			} else{
+				propuesta_DN3 = append(propuesta_DN3, prop)
+			}
+		}
+	}
+	// DN3 muerto. DN1 y DN2 vivos
+	if !flagDN3vivo && flagDN1vivo && flagDN2vivo{
+		Propuesta.PartesDN3 = " "
+		for i, prop := range propuesta_DN3 { 
+			if i%2 == 0{
+				propuesta_DN1 = append(propuesta_DN1, prop)
+			} else{
+				propuesta_DN3 = append(propuesta_DN3, prop)
+			}
+		}
+	}
+	// DN3 vivo. DN1 y DN2 muertos
+	if !flagDN1vivo && !flagDN2vivo && flagDN3vivo{
+		Propuesta.PartesDN1 = " "
+		Propuesta.PartesDN2 = " "
+		propuesta_DN3 = append(propuesta_DN3, propuesta_DN1...)
+		propuesta_DN3 = append(propuesta_DN3, propuesta_DN2...)
+		Propuesta.PartesDN3 = strings.Join(propuesta_DN3, ",")
+		
+	}
+	// DN2 vivo. DN1 y DN3 muertos
+	if !flagDN1vivo && !flagDN3vivo && flagDN2vivo{
+		Propuesta.PartesDN1 = " "
+		Propuesta.PartesDN3 = " "
+		propuesta_DN2 = append(propuesta_DN2, propuesta_DN1...)
+		propuesta_DN2 = append(propuesta_DN2, propuesta_DN3...)
+		Propuesta.PartesDN2 = strings.Join(propuesta_DN2, ",")
+		
+	}
+	// DN1 vivo. DN2 y DN3 muertos
+	if !flagDN2vivo && !flagDN3vivo && flagDN1vivo{
+		Propuesta.PartesDN2 = " "
+		Propuesta.PartesDN3 = " "
+		propuesta_DN1 = append(propuesta_DN1, propuesta_DN2...)
+		propuesta_DN1 = append(propuesta_DN1, propuesta_DN3...)
+		Propuesta.PartesDN1 = strings.Join(propuesta_DN1, ",")
+		
+	}
+
+	return Propuesta
+	
+	
+
+}
+
 func (s *Server) Propuesta_Centralizado(ctx context.Context, Propuesta *Propuestagrpc) (*Propuestagrpc, error) {
-	return Propuesta, nil
+	fmt.Printf("> Propuesta recibida\n")
+
+	err1 := enviar_a_DataNode1("NameNode pregunta estas vivo?\n")
+	flagDN1vivo := true
+	if err1 != true {
+		flagDN1vivo = false
+	}
+
+	err2 := enviar_a_DataNode2("NameNode pregunta estas vivo?\n")
+	flagDN2vivo := true
+	if err2 != true {
+		flagDN2vivo = false
+	}
+
+	err3 := enviar_a_DataNode3("NameNode pregunta estas vivo?\n")
+	flagDN3vivo := true
+	if err3 != true {
+		flagDN3vivo = false
+	}
+
+	if flagDN1vivo && flagDN2vivo && flagDN3vivo{
+		fmt.Printf("> Propuesta aceptada\n")
+		return Propuesta, nil
+	} else{
+		fmt.Printf("%t,%t,%t", flagDN1vivo,flagDN2vivo,flagDN3vivo)
+		fmt.Printf("> Propuesta rechazada\n")
+
+		nuevaPropuesta = generar_nueva_propuesta(Propuesta, flagDN1vivo, flagDN2vivo, flagDN3vivo)
+
+		fmt.Printf("> Nueva propuesta generada\n")
+		return nuevaPropuesta, nil
+	}
+
+
+
+
+	
 }

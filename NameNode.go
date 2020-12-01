@@ -6,12 +6,12 @@ import (
 
 	"fmt"
 	"net"
-	"serverdatanode"
+	//"serverdatanode"
 	"servernamenode"
 	
 	//"time"
 )
-
+/*
 func enviar_a_DataNode1(mensaje_cliente string) {
 	//--------------------------------------------------------------------
 	// Conexion a DataNode 1
@@ -81,7 +81,7 @@ func enviar_a_DataNode3(mensaje_cliente string) {
 			fmt.Printf("> Sin respuesta DataNode3.\n")
 		}
 	}
-}
+}*/
 
 func main() {
 	// Conexion gRPC
@@ -99,12 +99,6 @@ func main() {
 	grpcServer := grpc.NewServer()
 
 	servernamenode.RegisterNameNodeServiceServer(grpcServer, &s)
-
-	go func() {
-		for {
-		
-		}
-	}()
 
 	if err := grpcServer.Serve(lis); err != nil {
 		fmt.Println("NameNode falla siendo un servidor gRPC en el puerto 9000: %v", err)
