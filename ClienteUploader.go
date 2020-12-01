@@ -151,19 +151,19 @@ func main() {
 		dist[1] = "dist38:9002"
 		dist[2] = "dist39:9003"
 
-		err1 := enviar_a_DataNode1("Cliente pregunta estas vivo?\n")
+		errDN1 := enviar_a_DataNode1("Cliente pregunta estas vivo?\n")
 		flagDN1vivo := true
-		if err1 != true {
+		if errDN1 != true {
 			flagDN1vivo = false
 		}	
-		err2 := enviar_a_DataNode2("Cliente pregunta estas vivo?\n")
+		errDN2 := enviar_a_DataNode2("Cliente pregunta estas vivo?\n")
 		flagDN2vivo := true
-		if err2 != true {
+		if errDN2 != true {
 			flagDN2vivo = false
 		}	
-		err3 := enviar_a_DataNode3("Cliente pregunta estas vivo?\n")
+		errDN3 := enviar_a_DataNode3("Cliente pregunta estas vivo?\n")
 		flagDN3vivo := true
-		if err3 != true {
+		if errDN3 != true {
 			flagDN3vivo = false
 		}
 
