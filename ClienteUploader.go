@@ -97,6 +97,11 @@ func main() {
 
 			// Write to disk
 			fileName := strings.TrimRight(files[integerdice_libro_a_subir].Name(), ".pdf") + "_" + strconv.FormatUint(i, 10)
+			_, err4 := os.Create(fileName)
+
+			if err4 != nil {
+				log.Fatalf("Error al crear archivo: %s", err4)
+			}
 
 			fmt.Println("> Dividiendo en: ", fileName)
 
