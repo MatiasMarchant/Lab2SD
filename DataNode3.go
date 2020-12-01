@@ -383,6 +383,8 @@ func EnviarChunks_Centralizado(Propuesta servernamenode.Propuestagrpc) {
 	PropuestasPartesDN3 := strings.Split(Propuesta.PartesDN3, ",")
 
 	for _, indicechunk := range PropuestasPartesDN1 {
+		fmt.Println("?")
+		fmt.Println(indicechunk)
 		ChunkFileName := indicechunk
 		fmt.Printf("# Enviando chunk a DN1: %s", ChunkFileName+"\n")
 		newFileChunk, err := os.Open("Chunks/"+ChunkFileName)
@@ -688,10 +690,9 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		respuesta_propuesta_NN := Enviar_Propuesta_NameNode(Propuesta_grpc)
 
 		fmt.Printf("La \"propuesta\" quedo:\n")
-		fmt.Printf("Nombre libro: %s\n", NombreLibroSubido)
-		fmt.Println("PartesDN1: %v", respuesta_propuesta_NN.PartesDN1)
-		fmt.Println("PartesDN2: %v", respuesta_propuesta_NN.PartesDN2)
-		fmt.Println("PartesDN3: %v", respuesta_propuesta_NN.PartesDN3)
+		fmt.Println("- Propuesta a DN1:", respuesta_propuesta_NN.PartesDN1)
+		fmt.Println("- Propuesta a DN2:", respuesta_propuesta_NN.PartesDN2)
+		fmt.Println("- Propuesta a DN3:", respuesta_propuesta_NN.PartesDN3)
 
 		ID := 1
 		EscribirEnLog_Centralizado(respuesta_propuesta_NN, ID, len(Arreglo_indices_partes_libro))

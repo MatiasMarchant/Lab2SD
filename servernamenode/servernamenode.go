@@ -338,8 +338,8 @@ func (s *Server) Propuesta_Centralizado(ctx context.Context, Propuesta *Propuest
 		fmt.Printf("> Propuesta aceptada\n")
 		return Propuesta, nil
 	} else{
-		fmt.Printf("%t,%t,%t", flagDN1vivo,flagDN2vivo,flagDN3vivo)
 		fmt.Printf("> Propuesta rechazada\n")
+		fmt.Printf("DataNode1: %t, DataNode2: %t, DataNode3: %t\n", flagDN1vivo,flagDN2vivo,flagDN3vivo)
 
 		nuevaPropuesta, _ := generar_nueva_propuesta(Propuesta, flagDN1vivo, flagDN2vivo, flagDN3vivo)
 
