@@ -94,12 +94,9 @@ func main() {
 			partBuffer := make([]byte, partSize)
 
 			file.Read(partBuffer)
-			
-			fileName := strings.TrimRight(files[integerdice_libro_a_subir].Name(), ".pdf") + "_" + strconv.FormatUint(i, 10)
 
-			if err4 != nil {
-				log.Fatalf("Error al crear archivo: %s", err4)
-			}
+			// Write to disk
+			fileName := strings.TrimRight(files[integerdice_libro_a_subir].Name(), ".pdf") + "_" + strconv.FormatUint(i, 10)
 
 			fmt.Println("> Dividiendo en: ", fileName)
 
