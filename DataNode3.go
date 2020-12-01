@@ -34,7 +34,7 @@ func enviar_a_NameNode(mensaje_cliente string) {
 		}
 
 		_, err_NN := cNameNodeNN.EnvioMensajeTest(context.Background(), &mensajetestNN)
-		fmt.Printf(">>> Mensaje enviado\n")
+		// fmt.Printf(">>> Mensaje enviado\n")
 		if err_NN != nil {
 			fmt.Printf("> Sin respuesta NameNode.\n")
 		} 
@@ -61,7 +61,7 @@ func enviar_a_DataNode1(mensaje_cliente string) bool {
 		}
 
 		_, err_DN1 := cDataNode1.EnvioMensajeTest(context.Background(), &mensajetest_1)
-		fmt.Printf(">>> Mensaje enviado\n")
+		// fmt.Printf(">>> Mensaje enviado\n")
 		if err_DN1 != nil {
 			fmt.Printf("> Sin respuesta DataNode1.\n")
 			flag = false
@@ -91,7 +91,7 @@ func enviar_a_DataNode2(mensaje_cliente string) bool {
 		}
 
 		_, err_DN2 := cDataNode2.EnvioMensajeTest(context.Background(), &mensajetest_DN2)
-		fmt.Printf(">>> Mensaje enviado\n")
+		// fmt.Printf(">>> Mensaje enviado\n")
 		if err_DN2 != nil {
 			fmt.Printf("> Sin respuesta DataNode2.\n")
 			flag = false
@@ -128,7 +128,7 @@ func Enviar_Propuesta(propuesta serverdatanode.Propuesta, destinatario string) b
 			cDataNode1 := serverdatanode.NewDataNodeServiceClient(conn_DN1)
 			// Enviar propuesta por gRPC
 			respuesta_DN1, err_DN1 := cDataNode1.Propuesta_Distribuido(context.Background(), &Propuesta_grpc)
-			fmt.Printf(">>> Mensaje enviado\n")
+			// fmt.Printf(">>> Mensaje enviado\n")
 			if err_DN1 != nil {
 				fmt.Printf("> Error al enviar propuesta.\n")
 				return false
@@ -151,7 +151,7 @@ func Enviar_Propuesta(propuesta serverdatanode.Propuesta, destinatario string) b
 			cDataNode2 := serverdatanode.NewDataNodeServiceClient(conn_DN2)
 			// Enviar propuesta por gRPC
 			respuesta_DN2, err_DN2 := cDataNode2.Propuesta_Distribuido(context.Background(), &Propuesta_grpc)
-			fmt.Printf(">>> Mensaje enviado\n")
+			// fmt.Printf(">>> Mensaje enviado\n")
 			if err_DN2 != nil {
 				fmt.Printf("> Error al enviar propuesta.\n")
 				return false
@@ -175,7 +175,7 @@ func Enviar_Propuesta(propuesta serverdatanode.Propuesta, destinatario string) b
 			cDataNode3 := serverdatanode.NewDataNodeServiceClient(conn_DN3)
 
 			respuesta_DN3, err_DN3 := cDataNode3.Propuesta_Distribuido(context.Background(), &Propuesta_grpc)
-			fmt.Printf(">>> Mensaje enviado\n")
+			// fmt.Printf(">>> Mensaje enviado\n")
 			if err_DN3 != nil {
 				fmt.Printf("> Error al enviar propuesta.\n")
 				return false
@@ -202,7 +202,7 @@ func Enviar_Propuesta_NameNode(propuesta servernamenode.Propuestagrpc) servernam
 	cNameNode := servernamenode.NewNameNodeServiceClient(conn_NN)
 	// Enviar propuesta por gRPC
 	respuesta_NN, err_NN := cNameNode.Propuesta_Centralizado(context.Background(), &propuesta)
-	fmt.Printf(">>> Mensaje enviado\n")
+	// fmt.Printf(">>> Mensaje enviado\n")
 	if err_NN != nil {
 		log.Fatalf("> Error al enviar propuesta a NameNode.\n")			
 	}
@@ -242,7 +242,7 @@ func EscribirEnLog(Propuesta serverdatanode.Propuesta, ID int, cant_partes int) 
 			PartesDN3:   strings.Join(Propuesta.PartesDN3, ","),
 		}
 		cNameNodeNN.EscribirEnLog(context.Background(), &mensaje)
-		fmt.Printf(">>> Mensaje enviado\n")
+		// fmt.Printf(">>> Mensaje enviado\n")
 	}
 }
 
@@ -265,7 +265,7 @@ func EscribirEnLog_Centralizado(Propuesta servernamenode.Propuestagrpc, ID int, 
 			PartesDN3:  Propuesta.PartesDN3,
 		}
 		cNameNodeNN.EscribirEnLog(context.Background(), &mensaje)
-		fmt.Printf(">>> Mensaje enviado\n")
+		// fmt.Printf(">>> Mensaje enviado\n")
 	}
 }
 
@@ -304,7 +304,7 @@ func EnviarChunks(Propuesta serverdatanode.Propuesta) {
 
 		// gRPC
 		cDataNode1.UploaderSubeLibro(context.Background(), &ChunkLibro)
-		fmt.Printf(">>> Mensaje enviado\n")
+		// fmt.Printf(">>> Mensaje enviado\n")
 	}
 	for _, indicechunk := range Propuesta.PartesDN2 {
 		ChunkFileName := indicechunk
@@ -340,7 +340,7 @@ func EnviarChunks(Propuesta serverdatanode.Propuesta) {
 
 		// gRPC
 		cDataNode2.UploaderSubeLibro(context.Background(), &ChunkLibro)
-		fmt.Printf(">>> Mensaje enviado\n")
+		// fmt.Printf(">>> Mensaje enviado\n")
 	}
 	for _, indicechunk := range Propuesta.PartesDN3 {
 		ChunkFileName := indicechunk
@@ -376,7 +376,7 @@ func EnviarChunks(Propuesta serverdatanode.Propuesta) {
 
 		// gRPC
 		cDataNode3.UploaderSubeLibro(context.Background(), &ChunkLibro)
-		fmt.Printf(">>> Mensaje enviado\n")
+		// fmt.Printf(">>> Mensaje enviado\n")
 	}
 }
 
@@ -421,7 +421,7 @@ func EnviarChunks_Centralizado(Propuesta servernamenode.Propuestagrpc) {
 
 			// gRPC
 			cDataNode1.UploaderSubeLibro(context.Background(), &ChunkLibro)
-			fmt.Printf(">>> Mensaje enviado\n")
+			// fmt.Printf(">>> Mensaje enviado\n")
 		}
 	}
 	for _, indicechunk := range PropuestasPartesDN2 {
@@ -459,7 +459,7 @@ func EnviarChunks_Centralizado(Propuesta servernamenode.Propuestagrpc) {
 
 			// gRPC
 			cDataNode2.UploaderSubeLibro(context.Background(), &ChunkLibro)
-			fmt.Printf(">>> Mensaje enviado\n")
+			// fmt.Printf(">>> Mensaje enviado\n")
 		}
 	}
 	for _, indicechunk := range PropuestasPartesDN3 {
@@ -497,7 +497,7 @@ func EnviarChunks_Centralizado(Propuesta servernamenode.Propuestagrpc) {
 
 			// gRPC
 			cDataNode3.UploaderSubeLibro(context.Background(), &ChunkLibro)
-			fmt.Printf(">>> Mensaje enviado\n")
+			// fmt.Printf(">>> Mensaje enviado\n")
 		}
 	}
 }

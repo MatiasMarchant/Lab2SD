@@ -39,7 +39,7 @@ func enviar_a_DataNode1(mensaje_cliente string) bool {
 			Mensaje: mensaje_cliente,
 		}
 		_, err_DN1 := cDataNode1.EnvioMensajeTest(context.Background(), &mensajetest_1)
-		fmt.Printf(">>> Mensaje enviado\n")
+		// fmt.Printf(">>> Mensaje enviado\n")
 		if err_DN1 != nil {
 			flag = false
 		} else {
@@ -64,7 +64,7 @@ func enviar_a_DataNode2(mensaje_cliente string) bool {
 			Mensaje: mensaje_cliente,
 		}
 		_, err_DN2 := cDataNode2.EnvioMensajeTest(context.Background(), &mensajetest_DN2)
-		fmt.Printf(">>> Mensaje enviado\n")
+		// fmt.Printf(">>> Mensaje enviado\n")
 		if err_DN2 != nil {
 			flag = false
 		} else {
@@ -90,7 +90,7 @@ func enviar_a_DataNode3(mensaje_cliente string) bool{
 			Mensaje: mensaje_cliente,
 		}
 		_, err_DN3 := cDataNode3.EnvioMensajeTest(context.Background(), &mensajetest_3)
-		fmt.Printf(">>> Mensaje enviado\n")
+		// fmt.Printf(">>> Mensaje enviado\n")
 		if err_DN3 != nil {
 			flag = false
 		} else {

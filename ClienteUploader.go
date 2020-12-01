@@ -30,7 +30,7 @@ func enviar_a_DataNode1(mensaje_cliente string) bool {
 			Mensaje: mensaje_cliente,
 		}
 		_, err_DN1 := cDataNode1.EnvioMensajeTest(context.Background(), &mensajetest_1)
-		fmt.Printf(">>> Mensaje enviado\n")
+		// fmt.Printf(">>> Mensaje enviado\n")
 		if err_DN1 != nil {
 			flag = false
 		} else {
@@ -55,7 +55,7 @@ func enviar_a_DataNode2(mensaje_cliente string) bool {
 			Mensaje: mensaje_cliente,
 		}
 		_, err_DN2 := cDataNode2.EnvioMensajeTest(context.Background(), &mensajetest_DN2)
-		fmt.Printf(">>> Mensaje enviado\n")
+		// fmt.Printf(">>> Mensaje enviado\n")
 		if err_DN2 != nil {
 			flag = false
 		} else {
@@ -81,7 +81,7 @@ func enviar_a_DataNode3(mensaje_cliente string) bool{
 			Mensaje: mensaje_cliente,
 		}
 		_, err_DN3 := cDataNode3.EnvioMensajeTest(context.Background(), &mensajetest_3)
-		fmt.Printf(">>> Mensaje enviado\n")
+		// fmt.Printf(">>> Mensaje enviado\n")
 		if err_DN3 != nil {
 			flag = false
 		} else {
@@ -212,7 +212,7 @@ func main() {
 				Chunk:  partBuffer,
 			}
 			respuesta, _ := cDataNode.UploaderSubeLibro(context.Background(), &ChunkLibro)
-			fmt.Printf(">>> Mensaje enviado\n")
+			// fmt.Printf(">>> Mensaje enviado\n")
 			fmt.Println(respuesta.Mensaje)
 
 		}
@@ -221,7 +221,7 @@ func main() {
 		// para que así el DN proceda a hacer la propuesta.
 		// Asume que el DN esta corriendo
 		_, err := cDataNode.UploaderTerminoDeSubirLibro(context.Background(), &serverdatanode.MensajeTest{Mensaje: strings.TrimRight(files[integerdice_libro_a_subir].Name(), ".pdf")})
-		fmt.Printf(">>> Mensaje enviado\n")
+		// fmt.Printf(">>> Mensaje enviado\n")
 		if err != nil {
 			fmt.Printf("Error al avisar al DN que se subio libro %s: %v\n", files[integerdice_libro_a_subir], err)
 		}
