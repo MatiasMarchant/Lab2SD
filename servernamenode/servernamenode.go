@@ -246,7 +246,7 @@ func (s *Server) EscribirEnLog(ctx context.Context, message *EscrituraLog) (*Men
 	return &MensajeTest{Mensaje: "bien"}, nil
 }
 
-func generar_nueva_propuesta(Propuesta *Propuestagrpc, flagDN1vivo bool, flagDN2vivo bool, flagDN3vivo bool)() (*Propuestagrpc, error){
+func generar_nueva_propuesta(Propuesta *Propuestagrpc, flagDN1vivo bool, flagDN2vivo bool, flagDN3vivo bool) (*Propuestagrpc, error){
 	propuesta_DN1 := strings.Split(Propuesta.PartesDN1, ",")
 	propuesta_DN2 := strings.Split(Propuesta.PartesDN2, ",")
 	propuesta_DN3 := strings.Split(Propuesta.PartesDN3, ",")
@@ -314,8 +314,6 @@ func generar_nueva_propuesta(Propuesta *Propuestagrpc, flagDN1vivo bool, flagDN2
 
 	return Propuesta
 	
-	
-
 }
 
 func (s *Server) Propuesta_Centralizado(ctx context.Context, Propuesta *Propuestagrpc) (*Propuestagrpc, error) {
