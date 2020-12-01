@@ -31,12 +31,12 @@ func (s *Server) EnvioMensajeTest(ctx context.Context, message *MensajeTest) (*M
 func (s *Server) UploaderSubeLibro(ctx context.Context, eddChunkLibro *ChunkLibro) (*MensajeTest, error) {
 	fmt.Printf("> Se recibe chunk: %s\n", eddChunkLibro.Nombre)
 
-	fileName := eddChunkLibro.Nombre
+	fileName := "Chunks/"+eddChunkLibro.Nombre
 	_, err := os.Create(fileName)
 	if err != nil {
 		log.Fatalf("Error al crear archivo: %s", err)
 	}
-	ioutil.WriteFile("Chunks/"+fileName, eddChunkLibro.Chunk, os.ModeAppend)
+	ioutil.WriteFile(fileName, eddChunkLibro.Chunk, os.ModeAppend)
 
 	return &MensajeTest{Mensaje: "Parte subida"}, nil
 }

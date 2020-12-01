@@ -25,7 +25,7 @@ func main() {
 	_, err_scan := fmt.Scanln(&carpeta_libros)
 
 	for {
-		fmt.Print("---- Libros ----")
+		fmt.Print("-------- Libros --------\n")
 		if err_scan != nil {
 			fmt.Fprintln(os.Stderr, err_scan)
 			return
@@ -94,10 +94,8 @@ func main() {
 			partBuffer := make([]byte, partSize)
 
 			file.Read(partBuffer)
-
-			// Write to disk
+			
 			fileName := strings.TrimRight(files[integerdice_libro_a_subir].Name(), ".pdf") + "_" + strconv.FormatUint(i, 10)
-			_, err4 := os.Create(fileName)
 
 			if err4 != nil {
 				log.Fatalf("Error al crear archivo: %s", err4)
