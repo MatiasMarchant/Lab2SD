@@ -493,7 +493,7 @@ func EnviarChunks_Centralizado(Propuesta servernamenode.Propuestagrpc) {
 func HacerPropuesta(metodo string, NombreLibroSubido string) {
 	var Arreglo_indices_partes_libro []string // Guarda los nombres de los chunks en el directorio
 	//-------------------------------------------------------------------------------------------------------------------------
-	fmt.Print("---------------------------------\n")
+	fmt.Print("\n---------------------------------")
 	if metodo == "distribuido" {
 		fmt.Print("\n# Algoritmo Distribuido #\n\n")
 		// Enviar mensajes a datanodes para ver si están vivos
