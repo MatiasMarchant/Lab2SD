@@ -27,7 +27,7 @@ func main() {
 	for {
 		fmt.Print("---- Libros ----")
 		if err_scan != nil {
-			fmt.Fprintln(os.Stderr, err)
+			fmt.Fprintln(os.Stderr, err_scan)
 			return
 		}
 		carpeta_libros = strings.TrimRight(carpeta_libros, "\n")
@@ -117,7 +117,7 @@ func main() {
 		// Una vez termina de enviar un libro, le comunica al DN que terminó
 		// para que así el DN proceda a hacer la propuesta.
 		// Asume que el DN esta corriendo
-		_, err = cDataNode.UploaderTerminoDeSubirLibro(context.Background(), &serverdatanode.MensajeTest{Mensaje: strings.TrimRight(files[integerdice_libro_a_subir].Name(), ".pdf")})
+		_, err := cDataNode.UploaderTerminoDeSubirLibro(context.Background(), &serverdatanode.MensajeTest{Mensaje: strings.TrimRight(files[integerdice_libro_a_subir].Name(), ".pdf")})
 		if err != nil {
 			fmt.Printf("Error al avisar al DN que se subio libro %s: %v\n", files[integerdice_libro_a_subir], err)
 		}
