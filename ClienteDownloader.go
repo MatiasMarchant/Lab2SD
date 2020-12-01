@@ -38,7 +38,7 @@ func pedir_a_DataNode1(chunk string) *serverdatanode.ChunkLibro{
 			Mensaje: chunk,
 		}
 		chunk_retorno, err_DN1 := cDataNode1.DownloaderDescargaLibro(context.Background(), &peticion_chunk_DN1)
-		fmt.Printf(">>> Mensaje enviado")
+		fmt.Printf(">>> Mensaje enviado\n")
 		if err_DN1 != nil {
 			fmt.Printf("> Sin respuesta DataNode 1.\n")
 			return &chunk_vacio
@@ -69,7 +69,7 @@ func pedir_a_DataNode2(chunk string) *serverdatanode.ChunkLibro{
 			Mensaje: chunk,
 		}
 		chunk_retorno, err_DN2 := cDataNode2.DownloaderDescargaLibro(context.Background(), &peticion_chunk_DN2)
-		fmt.Printf(">>> Mensaje enviado")
+		fmt.Printf(">>> Mensaje enviado\n")
 		if err_DN2 != nil {
 			fmt.Printf("> Sin respuesta DataNode 2.\n")
 			return &chunk_vacio
@@ -100,7 +100,7 @@ func pedir_a_DataNode3(chunk string) *serverdatanode.ChunkLibro{
 			Mensaje: chunk,
 		}
 		chunk_retorno, err_DN3 := cDataNode3.DownloaderDescargaLibro(context.Background(), &peticion_chunk_DN3)
-		fmt.Printf(">>> Mensaje enviado")
+		fmt.Printf(">>> Mensaje enviado\n")
 		if err_DN3 != nil {
 			fmt.Printf("> Sin respuesta DataNode 3.\n")
 			return &chunk_vacio
@@ -238,7 +238,7 @@ func main() {
 			}
 	
 			respuestaNN_listado, err_NN := cNameNodeNN.EnvioMensajeTest(context.Background(), &peticionNN)
-			fmt.Printf(">>> Mensaje enviado")
+			fmt.Printf(">>> Mensaje enviado\n")
 			if err_NN != nil {
 				fmt.Print("Error al obtener listado: %s", err_NN)
 			} else {
@@ -264,7 +264,7 @@ func main() {
 				Mensaje: "listadoLibros",
 			}		
 			respuestaNN, err_NN := cNameNodeNN.EnvioMensajeTest(context.Background(), &mensajeNN)
-			fmt.Printf(">>> Mensaje enviado")
+			fmt.Printf(">>> Mensaje enviado\n")
 			if err_NN != nil {
 				fmt.Print("Error al obtener listado: %s", err_NN)
 			} else {
@@ -276,7 +276,7 @@ func main() {
 				}
 
 				respuestaNN, err_NN := cNameNodeNN.EnvioMensajeTest(context.Background(), &mensajeNN)
-				fmt.Printf(">>> Mensaje enviado")
+				fmt.Printf(">>> Mensaje enviado\n")
 				if err_NN != nil {
 					fmt.Print("Error al obtener respuesta de NameNode: %s", err_NN)
 				} else {
