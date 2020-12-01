@@ -1,7 +1,7 @@
 package main
 
 import (
-	"golang.org/x/net/context"
+	//"golang.org/x/net/context"
 	"google.golang.org/grpc"
 
 	"fmt"
