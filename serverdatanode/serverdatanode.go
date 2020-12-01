@@ -173,7 +173,7 @@ func (s *Server) Propuesta_Distribuido(ctx context.Context, Propuesta *Propuesta
 
 func (s *Server) DownloaderDescargaLibro(ctx context.Context, peticion_chunk *MensajeTest) (*ChunkLibro, error) {
 	ChunkFileName := peticion_chunk.Mensaje
-	fmt.Printf("Enviando chunk:  %s", ChunkFileName+"\n")
+	fmt.Printf("> Enviando chunk:  %s", ChunkFileName+"\n")
 
 	newFileChunk, err := os.Open("Chunks/"+ChunkFileName)
 	if err != nil {
