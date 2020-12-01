@@ -386,110 +386,115 @@ func EnviarChunks_Centralizado(Propuesta servernamenode.Propuestagrpc) {
 	PropuestasPartesDN3 := strings.Split(Propuesta.PartesDN3, ",")
 
 	for _, indicechunk := range PropuestasPartesDN1 {
-		ChunkFileName := indicechunk
-		fmt.Printf("# Enviando chunk a DN1: %s", ChunkFileName+"\n")
-		newFileChunk, err := os.Open("Chunks/"+ChunkFileName)
-		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
-		}
-		defer newFileChunk.Close()
-		chunkInfo, err := newFileChunk.Stat()
-		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
-		}
-		var chunkSize int64 = chunkInfo.Size()
-		chunkBufferBytes := make([]byte, chunkSize)
-		newFileChunk.Read(chunkBufferBytes)
+		if indicechunk != " "{
+			ChunkFileName := indicechunk
+			fmt.Printf("# Enviando chunk a DN1: %s", ChunkFileName+"\n")
+			newFileChunk, err := os.Open("Chunks/"+ChunkFileName)
+			if err != nil {
+				fmt.Println(err)
+				os.Exit(1)
+			}
+			defer newFileChunk.Close()
+			chunkInfo, err := newFileChunk.Stat()
+			if err != nil {
+				fmt.Println(err)
+				os.Exit(1)
+			}
+			var chunkSize int64 = chunkInfo.Size()
+			chunkBufferBytes := make([]byte, chunkSize)
+			newFileChunk.Read(chunkBufferBytes)
 
-		ChunkLibro := serverdatanode.ChunkLibro{
-			Nombre: ChunkFileName,
-			Chunk:  chunkBufferBytes,
+			ChunkLibro := serverdatanode.ChunkLibro{
+				Nombre: ChunkFileName,
+				Chunk:  chunkBufferBytes,
+			}
+
+			// Conexion
+			var connDN1 *grpc.ClientConn
+			connDN1, errDN1 := grpc.Dial("dist37:9001", grpc.WithInsecure())
+			if errDN1 != nil {
+				log.Fatalf("Error al enviar chunk: %v", errDN1)
+			}
+			defer connDN1.Close()
+			cDataNode1 := serverdatanode.NewDataNodeServiceClient(connDN1)
+
+			// gRPC
+			cDataNode1.UploaderSubeLibro(context.Background(), &ChunkLibro)
 		}
-
-		// Conexion
-		var connDN1 *grpc.ClientConn
-		connDN1, errDN1 := grpc.Dial("dist37:9001", grpc.WithInsecure())
-		if errDN1 != nil {
-			log.Fatalf("Error al enviar chunk: %v", errDN1)
-		}
-		defer connDN1.Close()
-		cDataNode1 := serverdatanode.NewDataNodeServiceClient(connDN1)
-
-		// gRPC
-		cDataNode1.UploaderSubeLibro(context.Background(), &ChunkLibro)
-
 	}
 	for _, indicechunk := range PropuestasPartesDN2 {
-		ChunkFileName := indicechunk
-		fmt.Printf("# Enviando chunk a DN2: %s", ChunkFileName+"\n")
-		newFileChunk, err := os.Open("Chunks/"+ChunkFileName)
-		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
-		}
-		defer newFileChunk.Close()
-		chunkInfo, err := newFileChunk.Stat()
-		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
-		}
-		var chunkSize int64 = chunkInfo.Size()
-		chunkBufferBytes := make([]byte, chunkSize)
-		newFileChunk.Read(chunkBufferBytes)
+		if indicechunk != " "{
+			ChunkFileName := indicechunk
+			fmt.Printf("# Enviando chunk a DN2: %s", ChunkFileName+"\n")
+			newFileChunk, err := os.Open("Chunks/"+ChunkFileName)
+			if err != nil {
+				fmt.Println(err)
+				os.Exit(1)
+			}
+			defer newFileChunk.Close()
+			chunkInfo, err := newFileChunk.Stat()
+			if err != nil {
+				fmt.Println(err)
+				os.Exit(1)
+			}
+			var chunkSize int64 = chunkInfo.Size()
+			chunkBufferBytes := make([]byte, chunkSize)
+			newFileChunk.Read(chunkBufferBytes)
 
-		ChunkLibro := serverdatanode.ChunkLibro{
-			Nombre: ChunkFileName,
-			Chunk:  chunkBufferBytes,
-		}
+			ChunkLibro := serverdatanode.ChunkLibro{
+				Nombre: ChunkFileName,
+				Chunk:  chunkBufferBytes,
+			}
 
-		// Conexion
-		var connDN2 *grpc.ClientConn
-		connDN2, errDN2 := grpc.Dial("dist38:9002", grpc.WithInsecure())
-		if errDN2 != nil {
-			log.Fatalf("Error al enviar chunk: %v", errDN2)
-		}
-		defer connDN2.Close()
-		cDataNode2 := serverdatanode.NewDataNodeServiceClient(connDN2)
+			// Conexion
+			var connDN2 *grpc.ClientConn
+			connDN2, errDN2 := grpc.Dial("dist38:9002", grpc.WithInsecure())
+			if errDN2 != nil {
+				log.Fatalf("Error al enviar chunk: %v", errDN2)
+			}
+			defer connDN2.Close()
+			cDataNode2 := serverdatanode.NewDataNodeServiceClient(connDN2)
 
-		// gRPC
-		cDataNode2.UploaderSubeLibro(context.Background(), &ChunkLibro)
+			// gRPC
+			cDataNode2.UploaderSubeLibro(context.Background(), &ChunkLibro)
+		}
 	}
 	for _, indicechunk := range PropuestasPartesDN3 {
-		ChunkFileName := indicechunk
-		fmt.Printf("# Enviando chunk a DN3: %s", ChunkFileName+"\n")
-		newFileChunk, err := os.Open("Chunks/"+ChunkFileName)
-		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
-		}
-		defer newFileChunk.Close()
-		chunkInfo, err := newFileChunk.Stat()
-		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
-		}
-		var chunkSize int64 = chunkInfo.Size()
-		chunkBufferBytes := make([]byte, chunkSize)
-		newFileChunk.Read(chunkBufferBytes)
+		if indicechunk != " "{
+			ChunkFileName := indicechunk
+			fmt.Printf("# Enviando chunk a DN3: %s", ChunkFileName+"\n")
+			newFileChunk, err := os.Open("Chunks/"+ChunkFileName)
+			if err != nil {
+				fmt.Println(err)
+				os.Exit(1)
+			}
+			defer newFileChunk.Close()
+			chunkInfo, err := newFileChunk.Stat()
+			if err != nil {
+				fmt.Println(err)
+				os.Exit(1)
+			}
+			var chunkSize int64 = chunkInfo.Size()
+			chunkBufferBytes := make([]byte, chunkSize)
+			newFileChunk.Read(chunkBufferBytes)
 
-		ChunkLibro := serverdatanode.ChunkLibro{
-			Nombre: ChunkFileName,
-			Chunk:  chunkBufferBytes,
-		}
+			ChunkLibro := serverdatanode.ChunkLibro{
+				Nombre: ChunkFileName,
+				Chunk:  chunkBufferBytes,
+			}
 
-		// Conexion
-		var connDN3 *grpc.ClientConn
-		connDN3, errDN3 := grpc.Dial("dist39:9003", grpc.WithInsecure())
-		if errDN3 != nil {
-			log.Fatalf("Error al enviar chunk: %v", errDN3)
-		}
-		defer connDN3.Close()
-		cDataNode3 := serverdatanode.NewDataNodeServiceClient(connDN3)
+			// Conexion
+			var connDN3 *grpc.ClientConn
+			connDN3, errDN3 := grpc.Dial("dist39:9003", grpc.WithInsecure())
+			if errDN3 != nil {
+				log.Fatalf("Error al enviar chunk: %v", errDN3)
+			}
+			defer connDN3.Close()
+			cDataNode3 := serverdatanode.NewDataNodeServiceClient(connDN3)
 
-		// gRPC
-		cDataNode3.UploaderSubeLibro(context.Background(), &ChunkLibro)
+			// gRPC
+			cDataNode3.UploaderSubeLibro(context.Background(), &ChunkLibro)
+		}
 	}
 }
 
