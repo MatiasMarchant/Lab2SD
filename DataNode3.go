@@ -270,7 +270,7 @@ func EscribirEnLog_Centralizado(Propuesta servernamenode.Propuestagrpc, ID int, 
 func EnviarChunks(Propuesta serverdatanode.Propuesta) {
 	for _, indicechunk := range Propuesta.PartesDN1 {
 		ChunkFileName := indicechunk
-		fmt.Printf("Enviando chunk a DN1: %s", ChunkFileName+"\n")
+		fmt.Printf("# Enviando chunk a DN1: %s", ChunkFileName+"\n")
 		newFileChunk, err := os.Open(ChunkFileName)
 		if err != nil {
 			fmt.Println(err)
@@ -306,7 +306,7 @@ func EnviarChunks(Propuesta serverdatanode.Propuesta) {
 	}
 	for _, indicechunk := range Propuesta.PartesDN2 {
 		ChunkFileName := indicechunk
-		fmt.Printf("Enviando chunk a DN2: %s", ChunkFileName+"\n")
+		fmt.Printf("# Enviando chunk a DN2: %s", ChunkFileName+"\n")
 		newFileChunk, err := os.Open(ChunkFileName)
 		if err != nil {
 			fmt.Println(err)
@@ -341,7 +341,7 @@ func EnviarChunks(Propuesta serverdatanode.Propuesta) {
 	}
 	for _, indicechunk := range Propuesta.PartesDN3 {
 		ChunkFileName := indicechunk
-		fmt.Printf("Enviando chunk a DN3: %s", ChunkFileName+"\n")
+		fmt.Printf("# Enviando chunk a DN3: %s", ChunkFileName+"\n")
 		newFileChunk, err := os.Open(ChunkFileName)
 		if err != nil {
 			fmt.Println(err)
@@ -384,7 +384,7 @@ func EnviarChunks_Centralizado(Propuesta servernamenode.Propuestagrpc) {
 
 	for _, indicechunk := range PropuestasPartesDN1 {
 		ChunkFileName := indicechunk
-		fmt.Printf("Enviando chunk a DN1: %s", ChunkFileName+"\n")
+		fmt.Printf("# Enviando chunk a DN1: %s", ChunkFileName+"\n")
 		newFileChunk, err := os.Open(ChunkFileName)
 		if err != nil {
 			fmt.Println(err)
@@ -420,7 +420,7 @@ func EnviarChunks_Centralizado(Propuesta servernamenode.Propuestagrpc) {
 	}
 	for _, indicechunk := range PropuestasPartesDN2 {
 		ChunkFileName := indicechunk
-		fmt.Printf("Enviando chunk a DN2: %s", ChunkFileName+"\n")
+		fmt.Printf("# Enviando chunk a DN2: %s", ChunkFileName+"\n")
 		newFileChunk, err := os.Open(ChunkFileName)
 		if err != nil {
 			fmt.Println(err)
@@ -455,7 +455,7 @@ func EnviarChunks_Centralizado(Propuesta servernamenode.Propuestagrpc) {
 	}
 	for _, indicechunk := range PropuestasPartesDN3 {
 		ChunkFileName := indicechunk
-		fmt.Printf("Enviando chunk a DN3: %s", ChunkFileName+"\n")
+		fmt.Printf("# Enviando chunk a DN3: %s", ChunkFileName+"\n")
 		newFileChunk, err := os.Open(ChunkFileName)
 		if err != nil {
 			fmt.Println(err)
@@ -493,6 +493,7 @@ func EnviarChunks_Centralizado(Propuesta servernamenode.Propuestagrpc) {
 func HacerPropuesta(metodo string, NombreLibroSubido string) {
 	var Arreglo_indices_partes_libro []string // Guarda los nombres de los chunks en el directorio
 	//-------------------------------------------------------------------------------------------------------------------------
+	fmt.Print("---------------------------------\n")
 	if metodo == "distribuido" {
 		fmt.Print("\n# Algoritmo Distribuido #\n\n")
 		// Enviar mensajes a datanodes para ver si están vivos
@@ -527,6 +528,7 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 
 		fmt.Printf("> Partes a repartir:\n")
 		fmt.Println(Arreglo_indices_partes_libro)
+		fmt.Printf("\n")
 
 		// Ver cuales hay vivos y repartir con serverdatanode.Propuesta
 		aprobado := false
@@ -546,19 +548,7 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 			respuesta_propuesta_DN1 := false
 			respuesta_propuesta_DN2 := false
 			Arreglo_copia := Arreglo_indices_partes_libro
-			fmt.Printf("%v\n", Arreglo_copia)
-			/*
-				PartesDN1 := []string{}
-				PartesDN2 := []string{}
-				PartesDN3 := []string{}
 
-				Propuesta := serverdatanode.Propuesta{
-					NombreLibroSubido: NombreLibroSubido,
-					PartesDN1:         PartesDN1,
-					PartesDN2:         PartesDN2,
-					PartesDN3:         PartesDN3,
-				}
-			*/
 			Propuesta.PartesDN3 = append(Propuesta.PartesDN3, Arreglo_copia[len(Arreglo_copia)-1])
 			i := len(Arreglo_copia) - 1
 			// Borrar elemento
@@ -589,10 +579,9 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 			}
 
 			fmt.Printf("La \"propuesta\" quedo:\n")
-			fmt.Printf("Nombre libro: %s\n", NombreLibroSubido)
-			fmt.Println("- Propuesta a DN1: %v", Propuesta.PartesDN1)
-			fmt.Println("- Propuesta a DN2: %v", Propuesta.PartesDN2)
-			fmt.Println("- Propuesta a DN3: %v", Propuesta.PartesDN3)
+			fmt.Println("- Propuesta a DN1:", Propuesta.PartesDN1)
+			fmt.Println("- Propuesta a DN2:", Propuesta.PartesDN2)
+			fmt.Println("- Propuesta a DN3:", Propuesta.PartesDN3)
 
 			// Envio de propuesta por casos
 			// Caso 1: DN3 y DN1 vivos
@@ -623,9 +612,6 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		}
 
 		// Si llega aca, entonces aprobado == true y se documenta en el registro del NameNode
-		fmt.Println("Valor de aprobado: %v", aprobado)
-
-		fmt.Println("\nNombre libro en propuesta: %s", Propuesta.NombreLibroSubido)
 
 		// Llamar funcion escritura sobre log namenode
 		// Si todos responden -> Escribir con gRPC
