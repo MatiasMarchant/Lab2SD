@@ -7,7 +7,7 @@ Integrantes:
 Grupo: N&M's
 
 
-La disposición de los roles de las máquinas virtuales y los pasos a seguir son los siguiente:
+La disposición de los roles de las máquinas virtuales y los pasos a seguir son los siguientes:
 
 - Ingresar, en todas las máquinas, a la carpeta “Lab2SD” con el comando ‘cd Lab2SD’.
 
