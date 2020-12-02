@@ -20,8 +20,11 @@ NameNode y al menos un Datanode, a continuación cada caso:
     Dist40 -> ClienteUploader (make clienteuploader)
     Dist40 -> ClienteDownloader (make clientedownloader)
 
+- Al ejecutar un DataNode se debe elegir el algoritmo que se desea correr, una vez que se ingresa 
+la preferencia el DataNode podrá recibir mensajes.
 
-### Consideraciones extra
+
+### Consideraciones extra ###
 
 Se asume que los libros son todos con peso > 750 kB c/u
 
