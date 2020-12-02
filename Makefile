@@ -1,5 +1,5 @@
 build:
-	go build -o bin/main camion.go
+	go build -o bin/main DataNode1.go
 
 datanode1:
 	go run DataNode1.go
@@ -18,6 +18,15 @@ clientedownloader:
 
 clienteuploader:
 	go run ClienteUploader.go
+
+cleanchunks:
+	rm -f Chunks/*
+
+cleandescargas:
+	rm -f Descargas/*
+
+cleanlog:
+	rm -f log.txt
 
 compile:
 	# 32-Bit Systems
