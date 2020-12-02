@@ -6,6 +6,7 @@ Integrantes:
 
 Grupo: N&M's
 
+El informe se encuentra en el directorio raíz de cada máquina, al igual que este README.
 
 La disposición de los roles de las máquinas virtuales y los pasos a seguir son los siguientes:
 
