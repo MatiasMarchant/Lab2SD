@@ -6,13 +6,13 @@ import (
 	"google.golang.org/grpc"
 	"io/ioutil"
 	"log"
+	"math/rand"
 	"net"
+	"os"
 	"serverdatanode"
 	"servernamenode"
-	"os"
 	"strings"
-	"math/rand"
-    "time"
+	"time"
 )
 
 //-------------------------------------------------------------------------------------------------------------
@@ -41,7 +41,6 @@ func enviar_a_NameNode(mensaje_cliente string) {
 
 	}
 }
-
 
 //-------------------------------------------------------------------------------------------------------------
 // Envía un mensaje a DataNode2, retorna un bool que indica si DataNode2 está disponible, true = disponible, false = no disponible.
@@ -109,7 +108,10 @@ func enviar_a_DataNode3(mensaje_cliente string) bool {
 }
 
 //-------------------------------------------------------------------------------------------------------------
-//
+// Enviar_Propuesta recibe como parámetros una propuesta de distribución de chunks, y un string destinatario indicando
+// a qué datanode se le debe enviar esa propuesta, dentro de la misma se llama a Propuesta_Distribuido que usa gRPC
+// para que el datanode destinatario revise conflictos en la propuesta.
+// La función retorna true si la propuesta es aprobada y false si no
 func Enviar_Propuesta(propuesta serverdatanode.Propuesta, destinatario string) bool {
 
 	// Transformacion propuesta para que sea enviable por grpc
@@ -199,15 +201,15 @@ func Enviar_Propuesta(propuesta serverdatanode.Propuesta, destinatario string) b
 // Recibe una propuesta que se envía al NameNode, retorna una propuesta.
 // Si NameNode aprobó la propuesta inicial se retorna la misma propuesta.
 // Si NameNode rechazó la propuesta se retorna una nueva propuesta, válida.
-func Enviar_Propuesta_NameNode(propuesta servernamenode.Propuestagrpc) servernamenode.Propuestagrpc{
+func Enviar_Propuesta_NameNode(propuesta servernamenode.Propuestagrpc) servernamenode.Propuestagrpc {
 
 	// Caso NameNode (para centralizado)
 	// Conexion a NameNode
 	var conn_NN *grpc.ClientConn
 	conn_NN, err_NN := grpc.Dial("dist40:9000", grpc.WithInsecure())
 	if err_NN != nil {
-		log.Fatalf("¡Sin conexión con NameNode!\n")	
-	} 
+		log.Fatalf("¡Sin conexión con NameNode!\n")
+	}
 	defer conn_NN.Close()
 
 	cNameNode := servernamenode.NewNameNodeServiceClient(conn_NN)
@@ -215,7 +217,7 @@ func Enviar_Propuesta_NameNode(propuesta servernamenode.Propuestagrpc) servernam
 	respuesta_NN, err_NN := cNameNode.Propuesta_Centralizado(context.Background(), &propuesta)
 	// fmt.Printf(">>> Mensaje enviado\n")
 	if err_NN != nil {
-		log.Fatalf("> Error al enviar propuesta a NameNode.\n")			
+		log.Fatalf("> Error al enviar propuesta a NameNode.\n")
 	}
 	return *respuesta_NN
 }
@@ -255,7 +257,7 @@ func EscribirEnLog(Propuesta serverdatanode.Propuesta, ID int, cant_partes int) 
 		}
 		cNameNodeNN.EscribirEnLog(context.Background(), &mensaje)
 		// fmt.Printf(">>> Mensaje enviado\n")
-	}	
+	}
 }
 
 //-------------------------------------------------------------------------------------------------------------
@@ -274,13 +276,13 @@ func EscribirEnLog_Centralizado(Propuesta servernamenode.Propuestagrpc, ID int, 
 		mensaje := servernamenode.EscrituraLog{
 			NombreLibro: Propuesta.NombreLibroSubido,
 			CantPartes:  int32(cant_partes),
-			PartesDN1:  Propuesta.PartesDN1,
-			PartesDN2:  Propuesta.PartesDN2,
-			PartesDN3:  Propuesta.PartesDN3,
+			PartesDN1:   Propuesta.PartesDN1,
+			PartesDN2:   Propuesta.PartesDN2,
+			PartesDN3:   Propuesta.PartesDN3,
 		}
 		cNameNodeNN.EscribirEnLog(context.Background(), &mensaje)
 		// fmt.Printf(">>> Mensaje enviado\n")
-	}	
+	}
 }
 
 //-------------------------------------------------------------------------------------------------------------
@@ -290,7 +292,7 @@ func EnviarChunks(Propuesta serverdatanode.Propuesta) {
 	for _, indicechunk := range Propuesta.PartesDN1 {
 		ChunkFileName := indicechunk
 		fmt.Printf("# Enviando chunk a DN1: %s", ChunkFileName+"\n")
-		newFileChunk, err := os.Open("Chunks/"+ChunkFileName)
+		newFileChunk, err := os.Open("Chunks/" + ChunkFileName)
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
@@ -327,7 +329,7 @@ func EnviarChunks(Propuesta serverdatanode.Propuesta) {
 	for _, indicechunk := range Propuesta.PartesDN2 {
 		ChunkFileName := indicechunk
 		fmt.Printf("# Enviando chunk a DN2: %s", ChunkFileName+"\n")
-		newFileChunk, err := os.Open("Chunks/"+ChunkFileName)
+		newFileChunk, err := os.Open("Chunks/" + ChunkFileName)
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
@@ -364,7 +366,7 @@ func EnviarChunks(Propuesta serverdatanode.Propuesta) {
 	for _, indicechunk := range Propuesta.PartesDN3 {
 		ChunkFileName := indicechunk
 		fmt.Printf("# Enviando chunk a DN3: %s", ChunkFileName+"\n")
-		newFileChunk, err := os.Open("Chunks/"+ChunkFileName)
+		newFileChunk, err := os.Open("Chunks/" + ChunkFileName)
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
@@ -396,23 +398,23 @@ func EnviarChunks(Propuesta serverdatanode.Propuesta) {
 		// gRPC
 		cDataNode3.UploaderSubeLibro(context.Background(), &ChunkLibro)
 		// fmt.Printf(">>> Mensaje enviado\n")
-	}	
+	}
 }
 
 //-------------------------------------------------------------------------------------------------------------
 // Recibe una propuesta y envía los chunks hacia las direcciones escritas en la propuesta. Se utiliza en el algoritmo centralizado.
 func EnviarChunks_Centralizado(Propuesta servernamenode.Propuestagrpc) {
-	
+
 	PropuestasPartesDN1 := strings.Split(Propuesta.PartesDN1, ",")
 	PropuestasPartesDN2 := strings.Split(Propuesta.PartesDN2, ",")
 	PropuestasPartesDN3 := strings.Split(Propuesta.PartesDN3, ",")
 
 	// Se envía los chunks de DataNode1
 	for _, indicechunk := range PropuestasPartesDN1 {
-		if indicechunk != " "{
+		if indicechunk != " " {
 			ChunkFileName := indicechunk
 			fmt.Printf("# Enviando chunk a DN1: %s", ChunkFileName+"\n")
-			newFileChunk, err := os.Open("Chunks/"+ChunkFileName)
+			newFileChunk, err := os.Open("Chunks/" + ChunkFileName)
 			if err != nil {
 				fmt.Println(err)
 				os.Exit(1)
@@ -444,15 +446,15 @@ func EnviarChunks_Centralizado(Propuesta servernamenode.Propuestagrpc) {
 			// gRPC
 			cDataNode1.UploaderSubeLibro(context.Background(), &ChunkLibro)
 			// fmt.Printf(">>> Mensaje enviado\n")
-		}	
+		}
 
 	}
 	// Se envía los chunks de DataNode2
 	for _, indicechunk := range PropuestasPartesDN2 {
-		if indicechunk != " "{
+		if indicechunk != " " {
 			ChunkFileName := indicechunk
 			fmt.Printf("# Enviando chunk a DN2: %s", ChunkFileName+"\n")
-			newFileChunk, err := os.Open("Chunks/"+ChunkFileName)
+			newFileChunk, err := os.Open("Chunks/" + ChunkFileName)
 			if err != nil {
 				fmt.Println(err)
 				os.Exit(1)
@@ -484,14 +486,14 @@ func EnviarChunks_Centralizado(Propuesta servernamenode.Propuestagrpc) {
 			// gRPC
 			cDataNode2.UploaderSubeLibro(context.Background(), &ChunkLibro)
 			// fmt.Printf(">>> Mensaje enviado\n")
-		}	
+		}
 	}
 	// Se envía los chunks de DataNode3
 	for _, indicechunk := range PropuestasPartesDN3 {
-		if indicechunk != " "{
+		if indicechunk != " " {
 			ChunkFileName := indicechunk
 			fmt.Printf("# Enviando chunk a DN3: %s", ChunkFileName+"\n")
-			newFileChunk, err := os.Open("Chunks/"+ChunkFileName)
+			newFileChunk, err := os.Open("Chunks/" + ChunkFileName)
 			if err != nil {
 				fmt.Println(err)
 				os.Exit(1)
@@ -523,7 +525,7 @@ func EnviarChunks_Centralizado(Propuesta servernamenode.Propuestagrpc) {
 			// gRPC
 			cDataNode3.UploaderSubeLibro(context.Background(), &ChunkLibro)
 			// fmt.Printf(">>> Mensaje enviado\n")
-		}	
+		}
 	}
 }
 
@@ -531,10 +533,13 @@ func EnviarChunks_Centralizado(Propuesta servernamenode.Propuestagrpc) {
 // Recibe un string 'metodo' que indica el algoritmo, puede ser "distribuido" o "centralizado".
 // También recibe el nombre del libro. No retorna nada ya que envía la propuesta internamente.
 
-// Para el algoritmo distribuido ..................................
+// Para el algoritmo distribuido revisa qué DataNodes están activos y confecciona la propuesta distribuyendo
+// un chunk a cada DataNode y el resto se los deja a sí mismo. Luego se llama a la función Enviar_Propuesta
+// que retorna true si la propuesta es aceptada por los demás DataNodes y si se aprueba la propuesta
+// entonces se llama a la función EscribirEnLog para escribir en el log del NameNode y luego distribuir los chunks.
 
-// Para el algoritmo centralizado, primero se asigna un chunk para cada DataNode y luego se asignan al azar. 
-// Se envía la propuesta el NameNode y este responde con una propuesta válida, se escribe en el LOG y se 
+// Para el algoritmo centralizado, primero se asigna un chunk para cada DataNode y luego se asignan al azar.
+// Se envía la propuesta el NameNode y este responde con una propuesta válida, se escribe en el LOG y se
 // guardan los chunks siguiendo la propuesta.
 func HacerPropuesta(metodo string, NombreLibroSubido string) {
 	var Arreglo_indices_partes_libro []string // Guarda los nombres de los chunks en el directorio
@@ -666,7 +671,6 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		// Enviar chunks a otros DataNode
 		EnviarChunks(Propuesta)
 
-
 	} else if metodo == "centralizado" { // Centralizado
 		//-------------------------------------------------------------------------------------------------------------------------
 		fmt.Print("\n# Algoritmo Centralizado #\n\n")
@@ -684,7 +688,6 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		fmt.Printf("> Partes a repartir:\n")
 		fmt.Println(Arreglo_indices_partes_libro)
 
-
 		var PartesDN1 []string
 		var PartesDN2 []string
 		var PartesDN3 []string
@@ -701,10 +704,10 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		Propuesta.PartesDN3 = []string{}
 
 		// Diferente para cada DataNodo
-		for i, nombre_chunk := range Arreglo_indices_partes_libro{
+		for i, nombre_chunk := range Arreglo_indices_partes_libro {
 			if i == 0 {
 				Propuesta.PartesDN1 = append(Propuesta.PartesDN1, nombre_chunk)
-			} else if i == 1{
+			} else if i == 1 {
 				Propuesta.PartesDN2 = append(Propuesta.PartesDN2, nombre_chunk)
 			} else if i == 2 {
 				Propuesta.PartesDN3 = append(Propuesta.PartesDN3, nombre_chunk)
@@ -715,7 +718,7 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 				valor_random := random.Intn(3)
 				if valor_random == 0 {
 					Propuesta.PartesDN1 = append(Propuesta.PartesDN1, nombre_chunk)
-				} else if valor_random == 1{
+				} else if valor_random == 1 {
 					Propuesta.PartesDN2 = append(Propuesta.PartesDN2, nombre_chunk)
 				} else if valor_random == 2 {
 					Propuesta.PartesDN3 = append(Propuesta.PartesDN3, nombre_chunk)
@@ -727,9 +730,9 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 
 		Propuesta_grpc := servernamenode.Propuestagrpc{
 			NombreLibroSubido: Propuesta.NombreLibroSubido,
-			PartesDN1: strings.Join(Propuesta.PartesDN1, ","),
-			PartesDN2: strings.Join(Propuesta.PartesDN2, ","),
-			PartesDN3: strings.Join(Propuesta.PartesDN3, ","),
+			PartesDN1:         strings.Join(Propuesta.PartesDN1, ","),
+			PartesDN2:         strings.Join(Propuesta.PartesDN2, ","),
+			PartesDN3:         strings.Join(Propuesta.PartesDN3, ","),
 		}
 
 		// respuesta_propuesta_NN es una propuesta
@@ -755,7 +758,6 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 	} else {
 		log.Fatalf("Error en metodo")
 	}
-	
 
 }
 
@@ -773,9 +775,9 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error al ingresar opción: %s", err)
 	}
-	if algoritmo == 1{
+	if algoritmo == 1 {
 		eleccion_algoritmo = "distribuido"
-	} else if algoritmo == 2{
+	} else if algoritmo == 2 {
 		eleccion_algoritmo = "centralizado"
 	} else {
 		log.Fatalf("Error al ingresar opción: %s", algoritmo)
@@ -795,7 +797,7 @@ func main() {
 	// Servidor gRPC
 	grpcServer := grpc.NewServer()
 
-	serverdatanode.RegisterDataNodeServiceServer(grpcServer, &s)	
+	serverdatanode.RegisterDataNodeServiceServer(grpcServer, &s)
 
 	go func() {
 		for {
@@ -803,7 +805,7 @@ func main() {
 				// Llamar funcion
 				NombreLibroSubido := s.NombreLibroSubido // Va sin ".pdf"
 				s.FlagLibroSubido = false
-				HacerPropuesta(eleccion_algoritmo, NombreLibroSubido) 
+				HacerPropuesta(eleccion_algoritmo, NombreLibroSubido)
 			}
 		}
 	}()

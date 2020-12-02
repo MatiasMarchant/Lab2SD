@@ -38,7 +38,7 @@ func (s *Server) EnvioMensajeTest(ctx context.Context, message *MensajeTest) (*M
 func (s *Server) UploaderSubeLibro(ctx context.Context, eddChunkLibro *ChunkLibro) (*MensajeTest, error) {
 	fmt.Printf("> Se recibe chunk: %s\n", eddChunkLibro.Nombre)
 
-	fileName := "Chunks/"+eddChunkLibro.Nombre
+	fileName := "Chunks/" + eddChunkLibro.Nombre
 	_, err := os.Create(fileName)
 	if err != nil {
 		log.Fatalf("Error al crear archivo: %s", err)
@@ -61,7 +61,9 @@ func (s *Server) UploaderTerminoDeSubirLibro(ctx context.Context, NombreLibro *M
 }
 
 //-------------------------------------------------------------------------------------------------------------
-//
+// Propuesta_Distribuido recibe una propuesta a través de gRPC, y se encarga de revisar conflictos
+// (como que un nodo caido tenga chunks asignados, o como que un nodo funcionando no tenga chunks asignados)
+// una vez terminada la revisión de conflictos, retorna true si aprueba la propuesta y false si no
 func (s *Server) Propuesta_Distribuido(ctx context.Context, Propuesta *Propuestagrpc) (*Booleano, error) {
 	// Revisar conflictos
 	// Que quienes tengan chunks estén vivos
@@ -192,7 +194,7 @@ func (s *Server) DownloaderDescargaLibro(ctx context.Context, peticion_chunk *Me
 	ChunkFileName := peticion_chunk.Mensaje
 	fmt.Printf("> Enviando chunk:  %s", ChunkFileName+"\n")
 
-	newFileChunk, err := os.Open("Chunks/"+ChunkFileName)
+	newFileChunk, err := os.Open("Chunks/" + ChunkFileName)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
