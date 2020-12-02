@@ -666,7 +666,7 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		// Enviar chunks a otros DataNode
 		EnviarChunks(Propuesta)
 
-		//
+
 	} else if metodo == "centralizado" { // Centralizado
 		//-------------------------------------------------------------------------------------------------------------------------
 		fmt.Print("\n# Algoritmo Centralizado #\n\n")

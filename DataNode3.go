@@ -661,7 +661,7 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 		// Enviar chunks a otros DataNode
 		EnviarChunks(Propuesta)
 
-		//
+
 	} else if metodo == "centralizado" { // Centralizado
 		//-------------------------------------------------------------------------------------------------------------------------
 		fmt.Print("\n# Algoritmo Centralizado #\n\n")
@@ -704,7 +704,7 @@ func HacerPropuesta(metodo string, NombreLibroSubido string) {
 			} else if i == 2 {
 				Propuesta.PartesDN2 = append(Propuesta.PartesDN2, nombre_chunk)
 			} else {
-				// asignación al azar
+				// Asignación al azar
 				s := rand.NewSource(time.Now().UnixNano())
 				random := rand.New(s)
 				valor_random := random.Intn(3)
