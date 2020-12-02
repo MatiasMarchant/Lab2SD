@@ -25,7 +25,7 @@ y al menos un Datanode, a continuación cada caso:
 DataNode podrá recibir mensajes.
 
 - Al momento de enviar esta tarea, no hay libros subidos ni descargados, por lo que no existe el archivo "log.txt", se
-debe ejecutar primero el ClienteUploader para subir un libro, y luego el ClienteDownloader.
+debe ejecutar primero el ClienteUploader para subir un libro, en donde se creará el LOG, y luego ejecutar el ClienteDownloader.
 
 - Los DataNodes almacenan los Chunks en la carpeta "Chunks", se puede ingresar con ‘cd Chunks', en la máquina correspondiente.
 
