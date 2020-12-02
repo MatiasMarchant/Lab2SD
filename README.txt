@@ -24,16 +24,18 @@ y al menos un Datanode, a continuación cada caso:
 - Al ejecutar un DataNode se debe elegir el algoritmo que se desea correr, una vez que se ingresa la preferencia el 
 DataNode podrá recibir mensajes.
 
-- Los DataNodes almacenan los Chunks en la carpeta "Chunks", se puede ingresar con ‘cd Chunks' en la máquina correspondiente.
+- Los DataNodes almacenan los Chunks en la carpeta "Chunks", se puede ingresar con ‘cd Chunks', en la máquina correspondiente.
 
 - El ClienteDownloader almacena los Chunks en la carpeta "Chunks", se puede ingresar con ‘cd Chunks'; los libros descargados 
 por el ClienteDownloader se almacenan en la carpeta "Descargas", se puede ingresar con ‘cd Chunks', en la máquina Dist40.
 
 - Los libros que sube el ClienteUploader se encuentran en la carpeta "Libros", se puede ingresar con ‘cd Chunks'.
 
-- Si se desea eliminar los archivos de las carpetas "Chunks", se debe ejecutar 'make cleanchunks' en la máquina deseada.
-- Si se desea eliminar los archivos de la Descarga, en la máquina Dist40, se debe ejecutar 'make cleandescargas'.
+- Si se desean eliminar los archivos de las carpetas "Chunks", se debe ejecutar 'make cleanchunks' en la máquina deseada.
+- Si se desean eliminar los archivos de la Descarga, en la máquina Dist40, se debe ejecutar 'make cleandescargas'.
 - Si se desea eliminar el archivo 'log.txt', en la máquina Dist40, se debe ejecutar 'make cleanlog'.
+
+- Para cerrar una ejecución ingresar en la consola 'Ctrl + C'.
 
 ### Consideraciones extra ###
 
