@@ -124,6 +124,8 @@ func listaDeLibros() string {
 			} //else {
 			//	listado += n + " " + p_linea + "\n"
 			//}
+			fmt.Printf("Vacio?\n")
+			fmt.Println(p_linea)
 			listado += n + " " + p_linea + "\n"
 			
 		}
