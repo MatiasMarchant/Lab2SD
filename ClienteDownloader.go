@@ -15,7 +15,8 @@ import (
 	"strings"
 )
 
-
+//-------------------------------------------------------------------------------------------------------------
+// Envía un mensaje a DataNode1, retorna un bool que indica si el DataNode1 está disponible, true = disponible, false = no disponible.
 func pedir_a_DataNode1(chunk string) *serverdatanode.ChunkLibro{
 	//--------------------------------------------------------------------
 	// Conexion a DataNode 1
@@ -47,6 +48,8 @@ func pedir_a_DataNode1(chunk string) *serverdatanode.ChunkLibro{
 	}
 }
 
+//-------------------------------------------------------------------------------------------------------------
+// Envía un mensaje a DataNode2, retorna un bool que indica si el DataNode2 está disponible, true = disponible, false = no disponible.
 func pedir_a_DataNode2(chunk string) *serverdatanode.ChunkLibro{
 	//--------------------------------------------------------------------
 	// Conexion a DataNode 2
@@ -78,6 +81,8 @@ func pedir_a_DataNode2(chunk string) *serverdatanode.ChunkLibro{
 	}
 }
 
+//-------------------------------------------------------------------------------------------------------------
+// Envía un mensaje a DataNode3, retorna un bool que indica si el DataNode3 está disponible, true = disponible, false = no disponible.
 func pedir_a_DataNode3(chunk string) *serverdatanode.ChunkLibro{
 	//--------------------------------------------------------------------
 	// Conexion a DataNode 3
@@ -109,6 +114,10 @@ func pedir_a_DataNode3(chunk string) *serverdatanode.ChunkLibro{
 	}
 }
 
+//-----------------------------------------------------------------------------------------------------------------
+// Recibe el nombre de un libro y un string 'chunks', este string contiene las direcciones de los chunks del libro.
+// Se iteran los chunks y se contacta con el DataNode correspondiente para solicitar el chunk.
+// Se retorna un arreglo de Chunks, esto es un arreglo de 'message ChunkLibro'.
 func getChunksLibro(tituloLibro string, chunks string) [] serverdatanode.ChunkLibro{
 
 	str_chunks_arr := strings.Split(chunks, "\n")
@@ -141,6 +150,8 @@ func getChunksLibro(tituloLibro string, chunks string) [] serverdatanode.ChunkLi
 	return chunks_libro
 }
 
+//-----------------------------------------------------------------------------------------------------------------
+// Recibe un chunk y se guarda en la carpeta Chunks.
 func guardarChunk(chunk serverdatanode.ChunkLibro){
 	fileName := "Chunks/" + chunk.Nombre
 	_, err := os.Create(fileName)
@@ -150,6 +161,9 @@ func guardarChunk(chunk serverdatanode.ChunkLibro){
 	ioutil.WriteFile(fileName, chunk.Chunk, os.ModeAppend)
 }
 
+//-----------------------------------------------------------------------------------------------------------------
+// Recibe un arreglo de chunks y los junta para generar un solo archivo, también recibe el nombre del libro.
+// A medida que se juntan los chunks se va creando el libro (pdf) en su totalidad, en la carpeta Descargas.
 func juntarChunks(tituloLibro string, chunksLibro [] serverdatanode.ChunkLibro){
 	// verificar si existen chunks vacios
 	for _, chunk := range chunksLibro{
@@ -170,7 +184,8 @@ func juntarChunks(tituloLibro string, chunksLibro [] serverdatanode.ChunkLibro){
 		pos_int, _ := strconv.Atoi(pos)
 		orden[pos_int] = i
 	}
-		
+	
+	// Crear el libro en la carpeta descargas
 	newFileName := "Descargas/"+tituloLibro+".pdf"
 	_, err := os.Create(newFileName)
 	if err != nil {
@@ -229,7 +244,7 @@ func main() {
 			log.Fatalf("Error al ingresar opción: %s", err)
 		}
 	
-		
+		// Se solicita el listado de libros
 		if opcion == 1 {
 			//---------------------------------------------------------------------------------------------------------------
 			// Pedir listado de libros disponibles
@@ -247,7 +262,8 @@ func main() {
 				fmt.Print("--------------------\n")
 			}
 
-			//---------------------------------------------------------------------------------------------------------------
+		//---------------------------------------------------------------------------------------------------------------
+		// Se desea descargar un libro
 		} else if opcion == 2{
 			//---------------------------------------------------------------------------------------------------------------
 			// Descargar Libro
@@ -275,6 +291,7 @@ func main() {
 					Mensaje: "ubicacion "+tituloLibro,
 				}
 
+				// Se solicita al NameNode las ubicaciones de los Chunks del libro 'tituloLibro'
 				respuestaNN, err_NN := cNameNodeNN.EnvioMensajeTest(context.Background(), &mensajeNN)
 				// fmt.Printf(">>> Mensaje enviado\n")
 				if err_NN != nil {
@@ -282,6 +299,7 @@ func main() {
 				} else {
 					chunks := respuestaNN.Mensaje
 					fmt.Println("> Recibiendo Chunks...")
+					// Se obtienen los chunks del libro, y se juntan, descargando el libro.
 					chunksLibro := getChunksLibro(tituloLibro, chunks)
 					juntarChunks(tituloLibro, chunksLibro)
 				}

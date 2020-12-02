@@ -15,6 +15,8 @@ import (
     "time"
 )
 
+//-------------------------------------------------------------------------------------------------------------
+// Envía un mensaje a DataNode1, retorna un bool que indica si el DataNode1 está disponible, true = disponible, false = no disponible.
 func enviar_a_DataNode1(mensaje_cliente string) bool {
 	//--------------------------------------------------------------------
 	// Conexion a DataNode 1
@@ -40,6 +42,8 @@ func enviar_a_DataNode1(mensaje_cliente string) bool {
 	return flag
 }
 
+//-------------------------------------------------------------------------------------------------------------
+// Envía un mensaje a DataNode2, retorna un bool que indica si el DataNode2 está disponible, true = disponible, false = no disponible.
 func enviar_a_DataNode2(mensaje_cliente string) bool {
 	//--------------------------------------------------------------------
 	// Conexion a DataNode 2
@@ -65,7 +69,8 @@ func enviar_a_DataNode2(mensaje_cliente string) bool {
 	return flag
 }
 
-
+//-------------------------------------------------------------------------------------------------------------
+// Envía un mensaje a DataNode3, retorna un bool que indica si el DataNode3 está disponible, true = disponible, false = no disponible.
 func enviar_a_DataNode3(mensaje_cliente string) bool{
 	//--------------------------------------------------------------------
 	// Conexion a DataNode 3
@@ -101,6 +106,7 @@ func main() {
 	var carpeta_libros string
 	_, err_scan := fmt.Scanln(&carpeta_libros)
 
+	// Se imprimen los libros disponibles para subir
 	for {
 		fmt.Print("-------- Libros --------\n")
 		if err_scan != nil {
@@ -127,6 +133,8 @@ func main() {
 			log.Fatalf("Error al recibir variable indice_libro_a_subir: %s", err2)
 		}
 
+		//-----------------------------------------------------------------------------------------
+		// Una vez escogido el libro a subir, se divide en Chunks y se envía a un DataNode al azar.
 		integerdice_libro_a_subir, _ := strconv.Atoi(strings.TrimRight(indice_libro_a_subir, "\n"))
 		fmt.Println("Libro escogido:", files[integerdice_libro_a_subir].Name())
 
@@ -196,6 +204,7 @@ func main() {
 		defer conn_DN.Close()
 		cDataNode := serverdatanode.NewDataNodeServiceClient(conn_DN)
 
+		// Se envían todos los chunks
 		for i := uint64(0); i < totalPartsNum; i++ {
 			partSize := int(math.Min(fileChunk, float64(fileSize-int64(i*fileChunk))))
 			partBuffer := make([]byte, partSize)

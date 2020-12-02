@@ -10,6 +10,8 @@ import (
 	"os"
 )
 
+// Struct Propuesta, contiene strings con el nombre del libro subido, y los chunks (partes) para cada nodo,
+// que forman parte de la propuesta.
 type Propuesta struct {
 	NombreLibroSubido string
 	PartesDN1         []string
@@ -17,16 +19,22 @@ type Propuesta struct {
 	PartesDN3         []string // Strings para hacer la concatenacion mas facil
 }
 
+//
 type Server struct {
 	FlagLibroSubido   bool
 	NombreLibroSubido string
 	FlagOcupandoLog   bool
 }
 
+//-------------------------------------------------------------------------------------------------------------
+// Esta función recibe mensajes mediante Protocol Buffers. Retorna cualquier mensaje.
+// Se utiliza para verificar si el DataNode está disponible
 func (s *Server) EnvioMensajeTest(ctx context.Context, message *MensajeTest) (*MensajeTest, error) {
 	return &MensajeTest{Mensaje: "respuestaDataNode"}, nil
 }
 
+//-------------------------------------------------------------------------------------------------------------
+// Recibe un Chunk de un libro y lo almacena. Si se guardó exitosamente retorna el mensaje "Parte subida"
 func (s *Server) UploaderSubeLibro(ctx context.Context, eddChunkLibro *ChunkLibro) (*MensajeTest, error) {
 	fmt.Printf("> Se recibe chunk: %s\n", eddChunkLibro.Nombre)
 
@@ -40,6 +48,8 @@ func (s *Server) UploaderSubeLibro(ctx context.Context, eddChunkLibro *ChunkLibr
 	return &MensajeTest{Mensaje: "Parte subida"}, nil
 }
 
+//-------------------------------------------------------------------------------------------------------------
+// Recibe el nombre de un libro, indicando que se terminó de subir. Se actualizan los valores de 's' Server
 func (s *Server) UploaderTerminoDeSubirLibro(ctx context.Context, NombreLibro *MensajeTest) (*MensajeTest, error) {
 	fmt.Printf("Se termino de subir el libro: %s", NombreLibro.Mensaje)
 	// Cambiar s.Flag y s.NombreLibroSubido para que en DataNode.go
@@ -50,6 +60,8 @@ func (s *Server) UploaderTerminoDeSubirLibro(ctx context.Context, NombreLibro *M
 	return &MensajeTest{Mensaje: "retorno"}, nil
 }
 
+//-------------------------------------------------------------------------------------------------------------
+//
 func (s *Server) Propuesta_Distribuido(ctx context.Context, Propuesta *Propuestagrpc) (*Booleano, error) {
 	// Revisar conflictos
 	// Que quienes tengan chunks estén vivos
@@ -174,6 +186,8 @@ func (s *Server) Propuesta_Distribuido(ctx context.Context, Propuesta *Propuesta
 	return &RespuestaBooleano, nil
 }
 
+//-------------------------------------------------------------------------------------------------------------
+// Recibe un mensaje de petición para enviar un Chunk. Se recupera el Chunk solicitado y se retorna.
 func (s *Server) DownloaderDescargaLibro(ctx context.Context, peticion_chunk *MensajeTest) (*ChunkLibro, error) {
 	ChunkFileName := peticion_chunk.Mensaje
 	fmt.Printf("> Enviando chunk:  %s", ChunkFileName+"\n")

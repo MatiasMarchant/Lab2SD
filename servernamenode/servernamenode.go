@@ -13,6 +13,8 @@ import (
 	"serverdatanode"
 )
 
+// Struct Propuesta, contiene strings con el nombre del libro subido, y los chunks (partes) para cada nodo,
+// que forman parte de la propuesta.
 type Propuesta struct {
 	NombreLibroSubido string
 	PartesDN1         []string
@@ -24,6 +26,7 @@ type Server struct {
 }
 
 //-------------------------------------------------------------------------------------------------------------
+// Envía un mensaje a DataNode1, retorna un bool que indica si el DataNode1 está disponible, true = disponible, false = no disponible.
 func enviar_a_DataNode1(mensaje_cliente string) bool {
 	//--------------------------------------------------------------------
 	// Conexion a DataNode 1
@@ -49,6 +52,8 @@ func enviar_a_DataNode1(mensaje_cliente string) bool {
 	return flag
 }
 
+//-----------------------------------------------------------------------------------------------------------------
+// Envía un mensaje a DataNode2, retorna un bool que indica si el DataNode2 está disponible, true = disponible, false = no disponible.
 func enviar_a_DataNode2(mensaje_cliente string) bool {
 	//--------------------------------------------------------------------
 	// Conexion a DataNode 2
@@ -74,7 +79,8 @@ func enviar_a_DataNode2(mensaje_cliente string) bool {
 	return flag
 }
 
-
+//-----------------------------------------------------------------------------------------------------------------
+// Envía un mensaje a DataNode3, retorna un bool que indica si el DataNode3 está disponible, true = disponible, false = no disponible.
 func enviar_a_DataNode3(mensaje_cliente string) bool{
 	//--------------------------------------------------------------------
 	// Conexion a DataNode 3
@@ -101,7 +107,7 @@ func enviar_a_DataNode3(mensaje_cliente string) bool{
 }
 
 //-----------------------------------------------------------------------------------------------------------------
-
+// Retorna un string que corresponde al listado de libros disponibles. Para esto se lee el archivo LOG.
 func listaDeLibros() string {
 	listado := ""
 	nLibro := 0
@@ -123,9 +129,7 @@ func listaDeLibros() string {
 			} else {
 				listado += n + " " + p_linea + "\n"
 			}
-			//listado += n + " " + p_linea + "\n"
-			
-			
+			//listado += n + " " + p_linea + "\n"	
 		}
 	}
 
@@ -136,6 +140,8 @@ func listaDeLibros() string {
 	return listado
 }
 
+//-----------------------------------------------------------------------------------------------------------------
+// Retorna un string que corresponde a la ubicación de los chunks del libro 'tituloLibro'. Para esto se lee el archivo LOG.
 func ubicacionLibro(tituloLibro string) string {
 	file, err := os.Open("log.txt")
 	if err != nil {
@@ -176,6 +182,9 @@ func ubicacionLibro(tituloLibro string) string {
 	return chunks_totales
 }
 
+//-----------------------------------------------------------------------------------------------------------------
+// Esta función recibe mensajes mediante Protocol Buffers. Retorna el message MensajeTest.
+// Dependiendo del mensaje entrante, puede retornar el listado de libros o la ubicación de un libro.
 func (s *Server) EnvioMensajeTest(ctx context.Context, message *MensajeTest) (*MensajeTest, error) {
 
 	if message.Mensaje == "listadoLibros" {
@@ -203,6 +212,9 @@ func stringInSlice(a string, list []string) bool {
 	return false
 }
 
+//-----------------------------------------------------------------------------------------------------------------
+// Escribe en el archivo 'log.txt' la distribución de los chunks de un libro.
+// Los mensajes se reciben mediante Protocol Buffers.
 func (s *Server) EscribirEnLog(ctx context.Context, message *EscrituraLog) (*MensajeTest, error) {
 	f, err := os.OpenFile("log.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
@@ -257,6 +269,9 @@ func (s *Server) EscribirEnLog(ctx context.Context, message *EscrituraLog) (*Men
 	return &MensajeTest{Mensaje: "bien"}, nil
 }
 
+//-----------------------------------------------------------------------------------------------------------------
+// Recibe una propuesta (ya rechazada) y los bools de cada DataNode, que indican si están disponibles o no.
+// Se genera una nueva propuesta, donde el o los DataNodes no disponibles no tienen chunks.
 func generar_nueva_propuesta(Propuesta *Propuestagrpc, flagDN1vivo bool, flagDN2vivo bool, flagDN3vivo bool) (*Propuestagrpc, error){
 	propuesta_DN1 := strings.Split(Propuesta.PartesDN1, ",")
 	propuesta_DN2 := strings.Split(Propuesta.PartesDN2, ",")
@@ -323,6 +338,10 @@ func generar_nueva_propuesta(Propuesta *Propuestagrpc, flagDN1vivo bool, flagDN2
 	return Propuesta, nil	
 }
 
+//-----------------------------------------------------------------------------------------------------------------
+// Recibe una propuesta y se analiza si es válida, para esto se verifica la disponibilida de los DataNodes, si
+// existe un DataNode que no está disponible, se rechaza y se genera otra propuesta válida.
+// Si la propuesta entrante es válida, se retorna esta propuesta. Si se rechaza, se retorna la nueva propuesta válida.
 func (s *Server) Propuesta_Centralizado(ctx context.Context, Propuesta *Propuestagrpc) (*Propuestagrpc, error) {
 	fmt.Printf("> Propuesta recibida\n")
 
@@ -356,9 +375,5 @@ func (s *Server) Propuesta_Centralizado(ctx context.Context, Propuesta *Propuest
 		fmt.Printf("> Nueva propuesta generada\n")
 		return nuevaPropuesta, nil
 	}
-
-
-
-
 	
 }
