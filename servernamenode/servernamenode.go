@@ -118,15 +118,12 @@ func listaDeLibros() string {
 		if _, err := strconv.Atoi(p_linea); err != nil {
 			nLibro += 1
 			n := strconv.Itoa(nLibro)
-			if p_linea == " "{
-				fmt.Printf("Vacio\n")
-				fmt.Println(p_linea)
-			} //else {
-			//	listado += n + " " + p_linea + "\n"
-			//}
-			fmt.Printf("Vacio?\n")
-			fmt.Println(p_linea)
-			listado += n + " " + p_linea + "\n"
+			if p_linea == ""{
+				listado += n + " " + "No hay libros disponibles para descargar" + "\n"
+			} else {
+				listado += n + " " + p_linea + "\n"
+			}
+			
 			
 		}
 	}
