@@ -15,6 +15,8 @@ import (
     "time"
 )
 
+//-------------------------------------------------------------------------------------------------------------
+// Envía un mensaje a NameNode, retorna un bool que indica si NameNode está disponible, true = disponible, false = no disponible.
 func enviar_a_NameNode(mensaje_cliente string) {
 	//--------------------------------------------------------------------
 	// Conexion a NameNode
@@ -40,6 +42,9 @@ func enviar_a_NameNode(mensaje_cliente string) {
 	}
 }
 
+
+//-------------------------------------------------------------------------------------------------------------
+// Envía un mensaje a DataNode1, retorna un bool que indica si DataNode1 está disponible, true = disponible, false = no disponible.
 func enviar_a_DataNode1(mensaje_cliente string) bool {
 	//--------------------------------------------------------------------
 	// Conexion a DataNode 1
@@ -71,8 +76,8 @@ func enviar_a_DataNode1(mensaje_cliente string) bool {
 	return flag
 }
 
-
-
+//-------------------------------------------------------------------------------------------------------------
+// Envía un mensaje a DataNode3, retorna un bool que indica si DataNode3 está disponible, true = disponible, false = no disponible.
 func enviar_a_DataNode3(mensaje_cliente string) bool {
 	//--------------------------------------------------------------------
 	// Conexion a DataNode 3
@@ -104,8 +109,8 @@ func enviar_a_DataNode3(mensaje_cliente string) bool {
 	return flag
 }
 
-
-
+//-------------------------------------------------------------------------------------------------------------
+//
 func Enviar_Propuesta(propuesta serverdatanode.Propuesta, destinatario string) bool {
 	// Transformacion propuesta para que sea enviable por grpc
 
@@ -191,6 +196,10 @@ func Enviar_Propuesta(propuesta serverdatanode.Propuesta, destinatario string) b
 	return false
 }
 
+//-------------------------------------------------------------------------------------------------------------
+// Recibe una propuesta que se envía al NameNode, retorna una propuesta.
+// Si NameNode aprobó la propuesta inicial se retorna la misma propuesta.
+// Si NameNode rechazó la propuesta se retorna una nueva propuesta, válida.
 func Enviar_Propuesta_NameNode(propuesta servernamenode.Propuestagrpc) servernamenode.Propuestagrpc{
 
 	// Caso NameNode (para centralizado)
@@ -212,6 +221,8 @@ func Enviar_Propuesta_NameNode(propuesta servernamenode.Propuestagrpc) servernam
 	return *respuesta_NN
 }
 
+//-------------------------------------------------------------------------------------------------------------
+// Recibe una propuesta que se escribe en el archvivo "log.txt", se utiliza en el algoritmo distribuido.
 func EscribirEnLog(Propuesta serverdatanode.Propuesta, ID int, cant_partes int) {
 	// Llamar funcion escritura sobre log namenode
 	// Usar Ricart-Agrawala(Pedir acceso a lugar critico)
@@ -249,6 +260,8 @@ func EscribirEnLog(Propuesta serverdatanode.Propuesta, ID int, cant_partes int) 
 	}
 }
 
+//-------------------------------------------------------------------------------------------------------------
+// Recibe una propuesta que se escribe en el archvivo "log.txt", se utiliza en el algoritmo centralizado.
 func EscribirEnLog_Centralizado(Propuesta servernamenode.Propuestagrpc, ID int, cant_partes int) {
 
 	// Conexion NN
@@ -272,6 +285,8 @@ func EscribirEnLog_Centralizado(Propuesta servernamenode.Propuestagrpc, ID int, 
 	}
 }
 
+//-------------------------------------------------------------------------------------------------------------
+// Recibe una propuesta y envía los chunks hacia las direcciones escritas en la propuesta. Se utiliza en el algoritmo distribuido.
 func EnviarChunks(Propuesta serverdatanode.Propuesta) {
 	for _, indicechunk := range Propuesta.PartesDN1 {
 		ChunkFileName := indicechunk
@@ -383,6 +398,8 @@ func EnviarChunks(Propuesta serverdatanode.Propuesta) {
 	}
 }
 
+//-------------------------------------------------------------------------------------------------------------
+// Recibe una propuesta y envía los chunks hacia las direcciones escritas en la propuesta. Se utiliza en el algoritmo centralizado.
 func EnviarChunks_Centralizado(Propuesta servernamenode.Propuestagrpc) {
 	
 	PropuestasPartesDN1 := strings.Split(Propuesta.PartesDN1, ",")
@@ -505,6 +522,15 @@ func EnviarChunks_Centralizado(Propuesta servernamenode.Propuestagrpc) {
 	}
 }
 
+//-------------------------------------------------------------------------------------------------------------
+// Recibe un string 'metodo' que indica el algoritmo, puede ser "distribuido" o "centralizado".
+// También recibe el nombre del libro. No retorna nada ya que envía la propuesta internamente.
+
+// Para el algoritmo distribuido ..................................
+
+// Para el algoritmo centralizado, primero se asigna un chunk para cada DataNode y luego se asignan al azar. 
+// Se envía la propuesta el NameNode y este responde con una propuesta válida, se escribe en el LOG y se 
+// guardan los chunks siguiendo la propuesta.
 func HacerPropuesta(metodo string, NombreLibroSubido string) {
 	var Arreglo_indices_partes_libro []string // Guarda los nombres de los chunks en el directorio
 	//-------------------------------------------------------------------------------------------------------------------------
